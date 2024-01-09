@@ -5,7 +5,7 @@ internal class Program
     public static Random ran = new Random();
     static void Main(string[] args)
     {
-        Player.AddPlayer();
+
     }
     int SelectNum(int min, int max)
     {
@@ -30,6 +30,7 @@ internal class Program
 
 class Shop
 {
+    InventoryManager shopInven = new InventoryManager();
     public void ShopPrint()
     {
         Console.WriteLine("상점");
@@ -38,14 +39,15 @@ class Shop
         Console.WriteLine("[보유 골드]");
         Console.WriteLine(/*playerGold*/);
         Console.WriteLine("");
+        shopInven.DisplayInventory();
         Console.WriteLine("");
         Console.WriteLine("1. 아이템 구매");
         Console.WriteLine("0. 나가기");
         Console.WriteLine("");
         Console.WriteLine("원하시는 행동을 입력해주세요.");
         Console.Write(">>");
+        Console.ReadKey();
     }
-
 }
 class Player
 {

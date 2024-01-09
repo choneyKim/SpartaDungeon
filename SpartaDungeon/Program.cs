@@ -63,9 +63,9 @@ class Player
     public static void AddPlayer()
     {
         Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine() ?? "철수";
         Console.WriteLine("직업을 입력하여 주십시오.");
-        string job = Console.ReadLine();
+        string job = Console.ReadLine() ?? "백수";
         new Player(name, job);
     }
     public void Status()

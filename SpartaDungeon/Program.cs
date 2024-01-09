@@ -7,21 +7,27 @@ internal class Program
     {
         Player.AddPlayer();
     }
+    int SelectNum(int min, int max)
+    {
+        bool isNum;
+        bool isBreak = true;
+        int selectNum;
+        isNum = int.TryParse(Console.ReadLine(), out selectNum);
+        do
+        {
+            if (isNum == false)
+            {
+                Console.WriteLine("숫자를 입력해 주십시오");
+            }
+            else if (selectNum < min || selectNum > max) Console.WriteLine($"{min}~{max}의 숫자를 입력해주세요");
+            else isBreak = false;
+
+        } while (isBreak);
+        return selectNum;
+    }
 }
 
-//class Item
-//{
-//    public string Name { get; set; }
-//    public int Price { get; set; }
-//    public string Description { get; set; }
 
-//    public Item(string name, int price, string description)
-//    {
-//        Name = name;
-//        Price = price;
-//        Description = description;
-//    }
-//}
 class Shop
 {
     List<ShopInven> shopInventory = new List<ShopInven>(); 
@@ -122,8 +128,8 @@ class Monster
     public int Level { get; set; }
     public int HP { get; set; }
     public int ATK { get; set; }
-    //int monsterNum;
-    //int monsterName;
+    public bool IsDead => HP <= 0;
+   
     public static List<Monster> monsters = new List<Monster>();
 
     public Monster(string name, int level, int hP, int aTK)
@@ -163,9 +169,26 @@ class Monster
     }
     public static void DisplayMonster()
     {
-        for (int i = 0; i<monsters.Count; i++) 
+        for (int i = 0; i < monsters.Count; i++)
         {
-            Console.Write($"Lv. {monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
+            if (monsters[i].IsDead)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+            }
+            Console.Write($"Lv. {monsters[i].Level} {monsters[i].Name}  HP {(!monsters[i].IsDead ? monsters[i].HP : "Dead")}");
+            Console.WriteLine("");
+            Console.ResetColor();
         }
+    }
+    public static int AttackMonster(int selectNum)
+    {
+        int randomAtk;
+        int monsterAtkResult;
+        int monsterAtk = monsters[selectNum - 1].ATK;
+        if (monsterAtk % 10 == 0) randomAtk = monsterAtk / 10;
+        else randomAtk = (monsterAtk / 10) + 1;
+        monsterAtkResult = Program.ran.Next(monsterAtk - randomAtk, monsterAtk + randomAtk + 1);
+
+        return monsterAtkResult;
     }
 }

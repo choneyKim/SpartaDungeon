@@ -74,6 +74,9 @@ class Monster
     public int Level { get; set; }
     public int HP { get; set; }
     public int ATK { get; set; }
+    int monsterNum;
+    int monsterName;
+    public List<Monster> monsters = new List<Monster>();
 
     public Monster(string name, int level, int hP, int aTK)
     {
@@ -82,16 +85,41 @@ class Monster
         HP = hP;
         ATK = aTK;
     }
-    public void addMon1()
+
+
+    public void AddMonster()
     {
-        new Monster("미니언", 2, 15, 5);
+        monsterNum = new Random().Next(1, 5);
+
+        for (int i = 0; i < monsterNum; i++)
+        {
+            monsterName = new Random().Next(1, 4);
+            switch (monsterName)
+            {
+                case 1:
+                    {
+                        monsters.Add(new Monster("미니언", 2, 15, 5));
+                        break;
+                    }
+                case 2:
+                    {
+                        monsters.Add(new Monster("공허충", 3, 10, 9));
+                        break;
+                    }
+                case 3:
+                    {
+                        monsters.Add(new Monster("대포미니언", 5, 25, 8));
+                        break;
+                    }
+            }
+        }
+
     }
-    public void addMon2()
+    public void DisplayMonster()
     {
-        new Monster("공허충", 3, 10, 9);
-    }
-    public void addMon3()
-    {
-        new Monster("대포미니언", 5, 25, 8);
+        for (int i = 0; i<monsters.Count; i++) 
+        {
+            Console.Write($"Lv. {monsters[i].Level} {monsters[i].Name}  HP {monsters[i].HP}");
+        }
     }
 }

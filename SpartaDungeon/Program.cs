@@ -2,6 +2,7 @@
 
 internal class Program
 {
+    public static Random ran = new Random();
     static void Main(string[] args)
     {
         Player.AddPlayer();
@@ -23,6 +24,16 @@ internal class Program
 //}
 class Shop
 {
+    List<ShopInven> shopInventory = new List<ShopInven>(); 
+    class ShopInven
+    {
+        public bool canBuy;
+        public Item? item;
+        public ShopInven(Item item)
+        {
+            this.item = item;
+        }
+    }
     public void ShopPrint()
     {
         Console.WriteLine("상점");
@@ -32,7 +43,10 @@ class Shop
         Console.WriteLine(/*playerGold*/);
         Console.WriteLine("");
         Console.WriteLine("[아이템 목록]");
-        //sell ItemPrint
+        for (int i = 0; i < shopInventory.Count; i++)
+        {
+            Console.WriteLine();
+        }
         Console.WriteLine("");
         Console.WriteLine("1. 아이템 구매");
         Console.WriteLine("0. 나가기");
@@ -40,6 +54,7 @@ class Shop
         Console.WriteLine("원하시는 행동을 입력해주세요.");
         Console.Write(">>");
     }
+
 }
 class Player
 {
@@ -50,9 +65,21 @@ class Player
     float Def = 5;
     float Hp = 100;
     int Gold = 1500;
-    float M_Hp;
+    float M_Hp = 100;
     float Exp;
-    float M_Exp;
+    float M_Exp = 100;
+    public void CheckLvUp()
+    {
+        if (Exp >= M_Exp)
+        {
+            Lv++;
+            Atk += 0.5f;
+            Def++;
+            M_Hp += 10;
+            Exp = 0;
+            M_Exp *= 1.5f;
+        }
+    }
     public Player(string name, string job)
     {
         Name = name;
@@ -63,9 +90,9 @@ class Player
     public static void AddPlayer()
     {
         Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine() ?? "철수";
         Console.WriteLine("직업을 입력하여 주십시오.");
-        string job = Console.ReadLine();
+        string job = Console.ReadLine() ?? "백수";
         new Player(name, job);
     }
     public void Status()
@@ -95,9 +122,9 @@ class Monster
     public int Level { get; set; }
     public int HP { get; set; }
     public int ATK { get; set; }
-    int monsterNum;
-    int monsterName;
-    public List<Monster> monsters = new List<Monster>();
+    //int monsterNum;
+    //int monsterName;
+    public static List<Monster> monsters = new List<Monster>();
 
     public Monster(string name, int level, int hP, int aTK)
     {
@@ -108,14 +135,13 @@ class Monster
     }
 
 
-    public void AddMonster()
+    public static void AddMonster()
     {
-        monsterNum = new Random().Next(1, 5);
 
-        for (int i = 0; i < monsterNum; i++)
+        for (int i = 0; i < Program.ran.Next(1,5); i++)
         {
-            monsterName = new Random().Next(1, 4);
-            switch (monsterName)
+
+            switch (Program.ran.Next(1,4))
             {
                 case 1:
                     {
@@ -135,7 +161,7 @@ class Monster
             }
         }
     }
-    public void DisplayMonster()
+    public static void DisplayMonster()
     {
         for (int i = 0; i<monsters.Count; i++) 
         {

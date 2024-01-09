@@ -83,6 +83,6 @@ class Monster
     }
     public void addMon3()
     {
-        new Monster("대포미니언", 5, 25, 8);s
+        new Monster("대포미니언", 5, 25, 8);
     }
 }

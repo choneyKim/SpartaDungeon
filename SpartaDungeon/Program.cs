@@ -19,7 +19,26 @@ class Item
         Description = description;
     }
 }
-
+class Shop
+{
+    public void ShopPrint()
+    {
+        Console.WriteLine("상점");
+        Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+        Console.WriteLine("");
+        Console.WriteLine("[보유 골드]");
+        Console.WriteLine(/*playerGold*/);
+        Console.WriteLine("");
+        Console.WriteLine("[아이템 목록]");
+        //sell ItemPrint
+        Console.WriteLine("");
+        Console.WriteLine("1. 아이템 구매");
+        Console.WriteLine("0. 나가기");
+        Console.WriteLine("");
+        Console.WriteLine("원하시는 행동을 입력해주세요.");
+        Console.Write(">>");
+    }
+}
 class Player
 {
     string Name { get; set; }
@@ -113,7 +132,6 @@ class Monster
                     }
             }
         }
-
     }
     public void DisplayMonster()
     {

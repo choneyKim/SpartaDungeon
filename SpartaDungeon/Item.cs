@@ -5,13 +5,14 @@
     public string Name { get; set; }
     public int Price { get; set; }
     public string Description { get; set; }
+    public bool Equipped { get; set; } 
 
     public Item(string name, int price, string description)
     {
         Name = name;
         Price = price;
         Description = description;
-            Equipped = false;
+        Equipped = false;
     }
         //public void DisplayInventory()
         //{

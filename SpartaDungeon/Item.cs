@@ -1,4 +1,4 @@
-﻿namesapce Txt_Game
+﻿namespace Txt_Game
 {
     public class Item
 {

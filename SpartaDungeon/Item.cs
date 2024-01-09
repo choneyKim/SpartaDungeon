@@ -11,6 +11,11 @@
         Name = name;
         Price = price;
         Description = description;
+            Equipped = false;
     }
+        //public void DisplayInventory()
+        //{
+        //    string eqquippedStatus = equipped ? "[E]" : "";
+        //    Console.WriteLine($"{equipeedstatus}{name} | 가격 : {price} G | {Description}"    }
 }
 }

@@ -30,16 +30,6 @@ internal class Program
 
 class Shop
 {
-    List<ShopInven> shopInventory = new List<ShopInven>(); 
-    class ShopInven
-    {
-        public bool canBuy;
-        public Item? item;
-        public ShopInven(Item item)
-        {
-            this.item = item;
-        }
-    }
     public void ShopPrint()
     {
         Console.WriteLine("상점");
@@ -48,11 +38,6 @@ class Shop
         Console.WriteLine("[보유 골드]");
         Console.WriteLine(/*playerGold*/);
         Console.WriteLine("");
-        Console.WriteLine("[아이템 목록]");
-        for (int i = 0; i < shopInventory.Count; i++)
-        {
-            Console.WriteLine();
-        }
         Console.WriteLine("");
         Console.WriteLine("1. 아이템 구매");
         Console.WriteLine("0. 나가기");

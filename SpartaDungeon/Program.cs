@@ -8,40 +8,10 @@ internal class Program
         Console.WriteLine("잘못 된 입력 입니다");
         Console.ReadKey();
     }
-    private static void printStartLogo()
-    {
-        Console.WriteLine("=============================================================================");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("        ██░ ██  ▒█████   ██▓   ▓██   ██▓               ");
-        Console.WriteLine("       ▓██░ ██▒▒██▒  ██▒▓██▒    ▒██  ██▒               ");
-        Console.WriteLine("       ▒██▀▀██░▒██░  ██▒▒██░     ▒██ ██░               ");
-        Console.WriteLine("       ░▓█ ░██ ▒██   ██░▒██░     ░ ▐██▓░               ");
-        Console.WriteLine("       ░▓█▒░██▓░ ████▓▒░░██████▒ ░ ██▒▓░               ");
-        Console.WriteLine("       ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░  ██▒▒▒                 ");
-        Console.WriteLine("        ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░▓██ ░▒░                ");
-        Console.WriteLine("        ░  ░░ ░░ ░ ░ ▒    ░ ░   ▒ ▒ ░░                 ");
-        Console.WriteLine("        ░  ░  ░    ░ ░      ░  ░░ ░                    ");
-        Console.WriteLine("                                ░ ░                    ");
-        Console.WriteLine("        ▓█████▄  █    ██  ███▄    █   ▄████ ▓█████  ▒█████   ███▄    █   ");
-        Console.WriteLine("        ▒██▀ ██▌ ██  ▓██▒ ██ ▀█   █  ██▒ ▀█▒▓█   ▀ ▒██▒  ██▒ ██ ▀█   █   ");
-        Console.WriteLine("        ░██   █▌▓██  ▒██░▓██  ▀█ ██▒▒██░▄▄▄░▒███   ▒██░  ██▒▓██  ▀█ ██▒  ");
-        Console.WriteLine("        ░▓█▄   ▌▓▓█  ░██░▓██▒  ▐▌██▒░▓█  ██▓▒▓█  ▄ ▒██   ██░▓██▒  ▐▌██▒  ");
-        Console.WriteLine("        ░▒████▓ ▒▒█████▓ ▒██░   ▓██░░▒▓███▀▒░▒████▒░ ████▓▒░▒██░   ▓██░  ");
-        Console.WriteLine("        ▒▒▓  ▒ ░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒  ░▒   ▒ ░░ ▒░ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒    ");
-        Console.WriteLine("        ░ ▒  ▒ ░░▒░ ░ ░ ░ ░░   ░ ▒░  ░   ░  ░ ░  ░  ░ ▒ ▒░ ░ ░░   ░ ▒░   ");
-        Console.WriteLine("        ░ ░  ░  ░░░ ░ ░    ░   ░ ░ ░ ░   ░    ░   ░ ░ ░ ▒     ░   ░ ░    ");
-        Console.WriteLine("          ░       ░              ░       ░    ░  ░    ░ ░           ░   ");
-        Console.WriteLine("          ░                                                             ");
-        Console.WriteLine("");
-        Console.WriteLine("=============================================================================");
-        Console.WriteLine("                        PRESS ANYKEY TO START                                ");
-        Console.WriteLine("=============================================================================");
-        Console.ReadKey();
-    }
+    
     static void Main(string[] args)
     {
-        printStartLogo();
+        
     }
     int SelectNum(int min, int max)
     {

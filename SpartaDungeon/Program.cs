@@ -3,6 +3,12 @@
 internal class Program
 {
     public static Random ran = new Random();
+    public static void WrongInput()
+    {
+        Console.WriteLine("");
+        Console.WriteLine("잘못 된 입력 입니다");
+        Console.ReadKey();
+    }
     static void Main(string[] args)
     {
 
@@ -33,20 +39,75 @@ class Shop
     InventoryManager shopInven = new InventoryManager();
     public void ShopPrint()
     {
-        Console.WriteLine("상점");
-        Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
-        Console.WriteLine("");
-        Console.WriteLine("[보유 골드]");
-        Console.WriteLine(/*playerGold*/);
-        Console.WriteLine("");
-        shopInven.DisplayInventory();
-        Console.WriteLine("");
-        Console.WriteLine("1. 아이템 구매");
-        Console.WriteLine("0. 나가기");
-        Console.WriteLine("");
-        Console.WriteLine("원하시는 행동을 입력해주세요.");
-        Console.Write(">>");
-        Console.ReadKey();
+        while (true)
+        {
+            Console.WriteLine("상점");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine(/*playerGold*/);
+            Console.WriteLine("");
+            shopInven.DisplayInventory();
+            Console.WriteLine("");
+            Console.WriteLine("1. 아이템 구매");
+            Console.WriteLine("2. 아이템 판매");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>"); string? input = Console.ReadLine();
+            switch (input)
+            {
+                case "1": ShopBuy(); break;
+                case "2": ShopSell(); break;
+                case "0": return;
+                default: Program.WrongInput();continue;
+            }
+        }
+    }
+
+    void ShopBuy()
+    {
+        while (true)
+        {
+            Console.WriteLine("상점 - 아이템 구매");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine(/*playerGold*/);
+            shopInven.DisplayInventory();
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+            string? input = Console.ReadLine();
+            switch (input)
+            {
+                case "0": return;
+                default: Program.WrongInput(); continue;
+            }
+        }
+    }
+    void ShopSell()
+    {
+        while (true)
+        {
+            Console.WriteLine("상점 - 아이템 판매");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine(/*playerGold*/);
+            //playerInvenPrint
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>"); string? input = Console.ReadLine();
+            switch (input)
+            {
+                case "0": return;
+                default: Program.WrongInput(); continue;
+            }
+        }
     }
 }
 class Player
@@ -116,7 +177,7 @@ class Monster
     public int HP { get; set; }
     public int ATK { get; set; }
     public bool IsDead => HP <= 0;
-   
+
     public static List<Monster> monsters = new List<Monster>();
 
     public Monster(string name, int level, int hP, int aTK)
@@ -131,10 +192,10 @@ class Monster
     public static void AddMonster()
     {
 
-        for (int i = 0; i < Program.ran.Next(1,5); i++)
+        for (int i = 0; i < Program.ran.Next(1, 5); i++)
         {
 
-            switch (Program.ran.Next(1,4))
+            switch (Program.ran.Next(1, 4))
             {
                 case 1:
                     {

@@ -55,9 +55,9 @@ internal class Program
         Console.WriteLine(s3);
     }
     //중간 글자색바뀌게
-
     static void Main(string[] args)
     {
+        printStartLogo();
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
         sh.ShopPrint();
@@ -309,6 +309,7 @@ class Player
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
             string name = Console.ReadLine() ?? "철수";
             Console.WriteLine("직업을 입력하여 주십시오.");

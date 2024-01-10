@@ -59,32 +59,63 @@ internal class Program
     static void Main(string[] args)
     {
         printStartLogo();
+        //nP = 플레이어 객체
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
-        sh.ShopPrint();
         Monster.AddMonster();
         Battle stage1 = new Battle(nP);
         stage1.BattleDisplay();
-    }
-    int SelectNum(int min, int max)
-    {
-        bool isNum;
-        bool isBreak = true;
-        int selectNum;
-        isNum = int.TryParse(Console.ReadLine(), out selectNum);
-        do
+        Player player = Player.AddPlayer();
+        Shop shop = new Shop(player);
+        while (true)
         {
-            if (isNum == false)
-            {
-                Console.WriteLine("숫자를 입력해 주십시오");
-            }
-            else if (selectNum < min || selectNum > max) Console.WriteLine($"{min}~{max}의 숫자를 입력해주세요");
-            else isBreak = false;
+            Console.Clear();
+            Console.WriteLine("1. 상태 보기");
+            Console.WriteLine("2. 인벤토리");
+            Console.WriteLine("3. 상점");
+            Console.Write("원하시는 행동을 선택하세요: ");
 
-        } while (isBreak);
-        return selectNum;
+            string input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    nP.Status();
+                    break;
+                case "2":
+                    nP.ManageEquippedItems();
+                    break;
+                case "3":
+                    sh.ShopPrint();
+                    break;
+                default:
+                    WrongInput();
+                    break;
+            }
+        }
+
     }
 }
+
+//    int SelectNum(int min, int max)
+//    {
+//        bool isNum;
+//        bool isBreak = true;
+//        int selectNum;
+//        isNum = int.TryParse(Console.ReadLine(), out selectNum);
+//        do
+//        {
+//            if (isNum == false)
+//            {
+//                Console.WriteLine("숫자를 입력해 주십시오");
+//            }
+//            else if (selectNum < min || selectNum > max) Console.WriteLine($"{min}~{max}의 숫자를 입력해주세요");
+//            else isBreak = false;
+
+//        } while (isBreak);
+//        return selectNum;
+//    }
+//}
 
 
 class Shop

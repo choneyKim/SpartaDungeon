@@ -36,6 +36,7 @@ internal class Program
 
 class Shop
 {
+    Player p;
     InventoryManager shopInven = new InventoryManager();
     public void ShopPrint()
     {
@@ -81,10 +82,29 @@ class Shop
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
             string? input = Console.ReadLine();
-            switch (input)
+            if (Int32.TryParse(input,out int temp))
             {
-                case "0": return;
-                default: Program.WrongInput(); continue;
+                temp -= 1;
+                if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
+                {
+                    p.Gold -= shopInven.ItemAccess(temp).Price;
+                    p.inven.AddItem(shopInven.ItemAccess(temp));
+                    shopInven.RemoveItem(shopInven.ItemAccess(temp));
+                    continue;
+                }
+                else if (p.Gold < shopInven.ItemAccess(temp).Price)
+                {
+                    Console.WriteLine("돈이 부족합니다.");
+                    Console.ReadKey();continue;
+                }
+                else
+                {
+                    Program.WrongInput();continue;
+                }
+            }
+            else
+            {
+                Program.WrongInput(); continue;
             }
         }
     }
@@ -102,23 +122,27 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>"); string? input = Console.ReadLine();
-            switch (input)
+            if (Int32.TryParse(input, out int temp))
             {
-                case "0": return;
-                default: Program.WrongInput(); continue;
+
+            }
+            else
+            {
+                Program.WrongInput(); continue;
             }
         }
     }
 }
 class Player
 {
+    public InventoryManager inven;
     string Name { get; set; }
     int Lv = 1;
     string Job = "전사";
     float Atk = 10;
     float Def = 5;
     float Hp = 100;
-    int Gold = 1500;
+    public int Gold = 1500;
     float M_Hp = 100;
     float Exp;
     float M_Exp = 100;

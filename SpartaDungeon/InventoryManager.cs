@@ -21,7 +21,14 @@ namespace Txt_Game
         {
             Items.Remove(item);
         }
-
+        public int Count()
+        {
+            return Items.Count;
+        }
+        public Item ItemAccess(int index)
+        {
+            return Items[index];
+        }
         public void DisplayInventory()
         {
             Console.WriteLine("\n[아이템 목록]");

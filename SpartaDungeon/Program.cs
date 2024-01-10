@@ -225,13 +225,13 @@ class Player
         Console.WriteLine("=============================================================================");
         Console.WriteLine("");
 
-        Console.WriteLine("      ooooo   ooooo   .oooooo.   ooooo        oooooo   oooo                          ");
-        Console.WriteLine("      `888'   `888'  d8P'  `Y8b  `888'         `888.   .8'                           ");
-        Console.WriteLine("       888     888  888      888  888           `888. .8'                            ");
-        Console.WriteLine("       888ooooo888  888      888  888            `888.8'                             ");
-        Console.WriteLine("       888     888  888      888  888             `888'                              ");
-        Console.WriteLine("       888     888  `88b    d88'  888       o      888                               ");
-        Console.WriteLine("      o888o   o888o  `Y8bood8P'  o888ooooood8     o888o                              ");         
+        Console.WriteLine("       ooooo   ooooo   .oooooo.   ooooo        oooooo   oooo                          ");
+        Console.WriteLine("       `888'   `888'  d8P'  `Y8b  `888'         `888.   .8'                           ");
+        Console.WriteLine("        888     888  888      888  888           `888. .8'                            ");
+        Console.WriteLine("        888ooooo888  888      888  888            `888.8'                             ");
+        Console.WriteLine("        888     888  888      888  888             `888'                              ");
+        Console.WriteLine("        888     888  `88b    d88'  888       o      888                               ");
+        Console.WriteLine("       o888o   o888o  `Y8bood8P'  o888ooooood8     o888o                              ");         
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("                oooooooooo.   ooooo     ooo ooooo      ooo   .oooooo.    oooooooooooo    .oooooo.   ooooo      ooo ");

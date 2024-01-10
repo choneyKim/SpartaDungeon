@@ -520,7 +520,6 @@ class Battle
     }
     public void BattleDisplay()
     {
-
         while (true)
         {
             Console.Clear();
@@ -583,7 +582,7 @@ class Battle
             else
             {
                 string? input = Console.ReadLine();
-                if (Int32.TryParse(input, out int temp))
+                if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
                 {
                     temp -= 1;
                     BattleTurn(temp);

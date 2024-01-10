@@ -38,7 +38,9 @@ internal class Program
     }
     static void Main(string[] args)
     {
-        printStartLogo();
+        Player nP = Player.AddPlayer();
+        Shop sh = new Shop(nP);
+        sh.ShopPrint();
     }
     int SelectNum(int min, int max)
     {
@@ -102,8 +104,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(p.Gold);
-            Console.WriteLine("");
+            Console.WriteLine(p.Gold + "G");
             shopInven.DisplayInventory();
             Console.WriteLine("");
             Console.WriteLine("1. 아이템 구매");
@@ -131,7 +132,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(p.Gold);
+            Console.WriteLine(p.Gold + "G");
             shopInven.DisplayInventory();
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
@@ -178,7 +179,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(p.Gold);
+            Console.WriteLine(p.Gold + "G");
             p.inven.DisplayInventory();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
@@ -191,11 +192,11 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (p.inven.ItemAccess(temp).Name == p.WeaponSlot.Name)
+                if (p.inven.ItemAccess(temp).Name == (p.WeaponSlot != null ? p.WeaponSlot.Name:"No"))
                 {
                     p.WeaponSlot = null;
                 }
-                if (p.inven.ItemAccess(temp).Name == p.ArmorSlot.Name)
+                if (p.inven.ItemAccess(temp).Name == (p.ArmorSlot != null ? p.ArmorSlot.Name : "No"))
                 {
                     p.ArmorSlot = null;
                 }
@@ -293,10 +294,10 @@ class Player
             switch (selectedItem.type)
             {
                 case Item.ItemType.Weapon:
-                    WeaponSlot = selectedItem.Name == WeaponSlot.Name ? null : selectedItem;
+                    WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : WeaponSlot): selectedItem;
                     break;
                 case Item.ItemType.Armor:
-                    ArmorSlot = selectedItem.Name == ArmorSlot.Name ? null : selectedItem;
+                    ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : ArmorSlot) : selectedItem;
                     break;
             }
             

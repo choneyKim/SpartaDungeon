@@ -64,6 +64,7 @@ class Shop
         shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Def:20));
         shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Def:15));
         shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Def:130));
+        //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
 
     }
 

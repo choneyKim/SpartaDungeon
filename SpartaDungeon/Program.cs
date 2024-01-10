@@ -38,6 +38,37 @@ class Shop
 {
     Player p;
     InventoryManager shopInven = new InventoryManager();
+    public shop(Player player)
+    {
+        p = player;
+        InitializeItems();
+    }
+    private void InitializeItems()
+    {
+        //무기
+        shopInven.AddItem(new Item("버터 나이프", 100, "공격력 +2", "빵에 버터를 바르기에 적합한 나이프 입니다"));
+        shopInven.AddItem(new Item("소형 검", 200, "공격력 +5", "사냥에도 쓸만한 검입니다"));
+        shopInven.AddItem(new Item("청동검", 500, "공격력 +7", "사용한 흔적이 있는 청동검입니다"));
+        shopInven.AddItem(new Item("철창", 1000, "공격력 +10", "철로 만들어진 창입니다"));
+        shopInven.AddItem(new Item("철검", 2000, "공격력 +22", "창보다 빠르게 휘두를 수 있는 검입니다"));
+        shopInven.AddItem(new Item("강철창", 4000, "공격력 +50", "강철로 만든 강력한 창입니다"));
+        shopInven.AddItem(new Item("백금검", 17000, "공격력 +150", "백금으로 홀려서 강력한 공격을 가할 수 있습니다"));
+        shopInven.AddItem(new Item("얼음의 지팡이",35000, "공격력 +200", "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다"));
+        //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
+
+        //갑옷
+        shopInven.AddItem(new Item("천 옷", 100, "방어력 +2", "침대에서 잠자기 좋은 옷입니다"));
+        shopInven.AddItem(new Item("가죽 옷", 800, "방어력 +7", "동물의 할퀴기를 막기에 좋은 갑옷입니다"));
+        shopInven.AddItem(new Item("무쇠 갑옷", 1700, "방어력 +9", "무쇠로 만들어져 튼튼한 갑옷입니다."));
+        shopInven.AddItem(new Item("강철 갑옷", 3300, "방어력 +15", "강철로 만들어져 방어력이 향상된 갑옷 입니다."));
+        shopInven.AddItem(new Item("수정 갑옷", 4500, "방어력 +20", "신비한 수정으로 만들어진 갑옷 입니다."));
+        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "방어력 +15", "성스러운 기운이 깃든 갑옷 입니다."));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "방어력 +130", "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다"));
+        //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
+    }
+
+
+
     public void ShopPrint()
     {
         while (true)

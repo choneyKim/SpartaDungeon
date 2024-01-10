@@ -74,6 +74,7 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
@@ -102,6 +103,7 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점 - 아이템 구매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
@@ -148,6 +150,7 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점 - 아이템 판매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
@@ -208,13 +211,13 @@ class Player
     }
     public List<Item> playerItem = new List<Item>();
 
-    public static void AddPlayer()
+    public static Player AddPlayer()
     {
         Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
         string name = Console.ReadLine() ?? "철수";
         Console.WriteLine("직업을 입력하여 주십시오.");
         string job = Console.ReadLine() ?? "백수";
-        new Player(name, job);
+        return new Player(name, job);
     }
     public void Status()
     {

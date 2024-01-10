@@ -143,6 +143,10 @@ class Shop
             }
         }
     }
+    public Shop(Player p)
+    {
+        this.p = p;
+    }
 }
 class Player
 {

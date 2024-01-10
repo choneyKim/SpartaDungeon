@@ -5,7 +5,6 @@ internal class Program
     public static Random ran = new Random();
     public static void WrongInput()
     {
-        Console.WriteLine("");
         Console.WriteLine("잘못 된 입력 입니다");
         Console.ReadKey();
     }
@@ -65,7 +64,6 @@ class Shop
         shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Def:15));
         shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Def:130));
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
-
     }
 
 
@@ -74,6 +72,7 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
@@ -102,6 +101,7 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점 - 아이템 구매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
@@ -148,12 +148,13 @@ class Shop
     {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("상점 - 아이템 판매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold);
-            //playerInvenPrint
+            p.inven.DisplayInventory();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -165,7 +166,7 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                p.Gold += (int)(shopInven.ItemAccess(temp).Price * 0.85f);
+                p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);
                 shopInven.AddItem(p.inven.ItemAccess(temp));
                 p.inven.RemoveItem(p.inven.ItemAccess(temp));
             }
@@ -178,7 +179,7 @@ class Shop
 }
 class Player
 {
-    public InventoryManager inven;
+    public InventoryManager inven = new InventoryManager();
     string Name { get; set; }
     int Lv = 1;
     string Job = "전사";
@@ -207,6 +208,7 @@ class Player
         Job = job;
     }
     public List<Item> playerItem = new List<Item>();
+
 
     private static void printStartLogo()
     {
@@ -240,13 +242,16 @@ class Player
         Console.ReadKey();
     }
 
-    public static void AddPlayer()
+    
+
+    public static Player AddPlayer()
+
     {
         Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
         string name = Console.ReadLine() ?? "철수";
         Console.WriteLine("직업을 입력하여 주십시오.");
         string job = Console.ReadLine() ?? "백수";
-        new Player(name, job);
+        return new Player(name, job);
     }
     public void Status()
     {

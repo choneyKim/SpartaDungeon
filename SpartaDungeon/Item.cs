@@ -2,6 +2,10 @@
 {
     public class Item
     {
+        public enum ItemType
+        {
+            Weapon,Armor
+        }
         public string Name { get; set; }
         public int Price { get; set; }
         public string Description { get; set; }
@@ -9,8 +13,10 @@
         public float Atk { get; set; }
         public int Def { get; set; }
 
-        public Item(string name, int price,string description ,float Atk = 0,int Def = 0)
+        public Type type;
+        public Item(string name, int price,string description ,Type type,float Atk = 0,int Def = 0)
         {
+            this.type = type;
             Name = name;
             Price = price;
             Description = description;

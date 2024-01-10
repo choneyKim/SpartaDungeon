@@ -249,24 +249,24 @@ class Player
     {
         Console.WriteLine("=============================================================================");
         Console.WriteLine("");
+
+        Console.WriteLine("      ooooo   ooooo   .oooooo.   ooooo        oooooo   oooo                          ");
+        Console.WriteLine("      `888'   `888'  d8P'  `Y8b  `888'         `888.   .8'                           ");
+        Console.WriteLine("       888     888  888      888  888           `888. .8'                            ");
+        Console.WriteLine("       888ooooo888  888      888  888            `888.8'                             ");
+        Console.WriteLine("       888     888  888      888  888             `888'                              ");
+        Console.WriteLine("       888     888  `88b    d88'  888       o      888                               ");
+        Console.WriteLine("      o888o   o888o  `Y8bood8P'  o888ooooood8     o888o                              ");         
         Console.WriteLine("");
-        Console.WriteLine("         ▄█    █▄     ▄██████▄   ▄█       ▄██   ▄                          ");
-        Console.WriteLine("        ███    ███   ███    ███ ███       ███   ██▄                        ");
-        Console.WriteLine("        ███    ███   ███    ███ ███       ███▄▄▄███                        ");
-        Console.WriteLine("       ▄███▄▄▄▄███▄▄ ███    ███ ███       ▀▀▀▀▀▀███                        ");
-        Console.WriteLine("      ▀▀███▀▀▀▀███▀  ███    ███ ███       ▄██   ███                        ");
-        Console.WriteLine("        ███    ███   ███    ███ ███       ███   ███                        ");
-        Console.WriteLine("        ███    ███   ███    ███ ███▌    ▄ ███   ███                        ");
-        Console.WriteLine("        ███    █▀     ▀██████▀  █████▄▄██  ▀█████▀                         ");
-        Console.WriteLine("                            ▀                                          ");
-        Console.WriteLine("    ████████▄  ███    █▄  ███▄▄▄▄      ▄██████▄     ▄████████  ▄██████▄  ███▄▄▄▄   ");
-        Console.WriteLine("    ███   ▀███ ███    ███ ███▀▀▀██▄   ███    ███   ███    ███ ███    ███ ███▀▀▀██▄ ");
-        Console.WriteLine("    ███    ███ ███    ███ ███   ███   ███    █▀    ███    █▀  ███    ███ ███   ███ ");
-        Console.WriteLine("    ███    ███ ███    ███ ███   ███  ▄███         ▄███▄▄▄     ███    ███ ███   ███ ");
-        Console.WriteLine("    ███    ███ ███    ███ ███   ███ ▀▀███ ████▄  ▀▀███▀▀▀     ███    ███ ███   ███ ");
-        Console.WriteLine("    ███    ███ ███    ███ ███   ███   ███    ███   ███    █▄  ███    ███ ███   ███ ");
-        Console.WriteLine("    ███   ▄███ ███    ███ ███   ███   ███    ███   ███    ███ ███    ███ ███   ███ ");
-        Console.WriteLine("   ████████▀  ████████▀   ▀█   █▀    ████████▀    ██████████  ▀██████▀   ▀█   █▀  ");
+        Console.WriteLine("");
+        Console.WriteLine("                oooooooooo.   ooooo     ooo ooooo      ooo   .oooooo.    oooooooooooo    .oooooo.   ooooo      ooo ");
+        Console.WriteLine("                `888'   `Y8b  `888'     `8' `888b.     `8'  d8P'  `Y8b   `888'     `8  d8P'  `Y8b  `888b.     `8'  ");
+        Console.WriteLine("                 888      888  888       8   8 `88b.    8  888            888         888      888  8 `88b.    8   ");
+        Console.WriteLine("                 888      888  888       8   8   `88b.  8  888            888oooo8    888      888  8   `88b.  8   ");
+        Console.WriteLine("                 888      888  888       8   8     `88b.8  888     ooooo  888    '    888      888  8     `88b.8   ");
+        Console.WriteLine("                 888     d88'  `88.    .8'   8       `888  `88.    .88'   888       o `88b    d88'  8       `888   ");
+        Console.WriteLine("                o888bood8P'      `YbodP'    o8o        `8   `Y8bood8P'   o888ooooood8  `Y8bood8P'  o8o        `8   ");
+
         Console.WriteLine("");
         Console.WriteLine("=============================================================================");
         Console.WriteLine("                        PRESS ANYKEY TO START                                ");

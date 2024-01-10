@@ -371,6 +371,7 @@ class Player
     public void Status()
     { while (true)
         {
+            Console.Clear();
             Console.WriteLine("상태보기"); // 장착 반영 해야함
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
@@ -401,6 +402,7 @@ class Player
     public Item? ArmorSlot { get; set; }
     public void ManageEquippedItems()
     {
+        Console.Clear();
         Console.WriteLine("\n장착 관리");
         inven.DisplayInventory();
 

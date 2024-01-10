@@ -1,4 +1,6 @@
-﻿using Txt_Game;
+﻿using System.Reflection.Metadata;
+using System.Threading;
+using Txt_Game;
 
 internal class Program
 {
@@ -75,24 +77,24 @@ class Shop
     private void InitializeItems()
     {
         //무기
-        shopInven.AddItem(new Item("버터 나이프", 100,"빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
-        shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk : 5));
+        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
+        shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
         shopInven.AddItem(new Item("청동검", 500, "사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
         shopInven.AddItem(new Item("철창", 1000, "철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
-        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk:22));
-        shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk:50));
-        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk:150));
-        shopInven.AddItem(new Item("얼음의 지팡이",35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk:200));
+        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
+        shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
+        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
+        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
         //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
 
         //갑옷
-        shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def:2));
-        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def:7));
+        shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
+        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
         shopInven.AddItem(new Item("무쇠 갑옷", 1700, "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
-        shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def:15));
-        shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def:20));
-        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def:15));
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def:130));
+        shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
+        shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
+        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
     }
     public void ShopPrint()
@@ -118,7 +120,7 @@ class Shop
                 case "1": ShopBuy(); break;
                 case "2": ShopSell(); break;
                 case "0": return;
-                default: Program.WrongInput();continue;
+                default: Program.WrongInput(); continue;
             }
         }
     }
@@ -140,7 +142,7 @@ class Shop
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
             string? input = Console.ReadLine();
-            if (Int32.TryParse(input,out int temp))
+            if (Int32.TryParse(input, out int temp))
             {
                 if (temp == 0)
                 {
@@ -157,11 +159,11 @@ class Shop
                 else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
                 {
                     Console.WriteLine("돈이 부족합니다.");
-                    Console.ReadKey();continue;
+                    Console.ReadKey(); continue;
                 }
                 else
                 {
-                    Program.WrongInput();continue;
+                    Program.WrongInput(); continue;
                 }
             }
             else
@@ -192,7 +194,7 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (p.inven.ItemAccess(temp).Name == (p.WeaponSlot != null ? p.WeaponSlot.Name:"No"))
+                if (p.inven.ItemAccess(temp).Name == (p.WeaponSlot != null ? p.WeaponSlot.Name : "No"))
                 {
                     p.inven.ItemAccess(temp).Equipped = false;
                     p.WeaponSlot = null;
@@ -217,15 +219,17 @@ class Player
 {
     public InventoryManager inven = new InventoryManager();
     string Name { get; set; }
+    JOB job;
+    float Atk;
+    public float totalAtk { get { return (WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk) + job.atk; } }
+    float Def;
+    public float totalDef { get { return (ArmorSlot != null ? ArmorSlot.Def + Def : Def) + job.def; } }
+    public int Gold;
+    float Hp;
+    public float M_Hp;
     int Lv = 1;
-    string Job = "전사";
-    float Atk = 10;
-    float Def = 5;
-    float Hp = 100;
-    public int Gold = 1500;
-    float M_Hp = 100;
     float Exp;
-    float M_Exp = 100;
+    float M_Exp;
     public void CheckLvUp()
     {
         if (Exp >= M_Exp)
@@ -238,27 +242,77 @@ class Player
             M_Exp *= 1.5f;
         }
     }
-    public Player(string name, string job)
+    public Player(string name, JOB job)
     {
         Name = name;
-        Job = job;
+        this.job = job;
+        Atk = 10;
+        Def = 5;
+        Gold = 1500;
+        M_Hp = 100 + job.hp;
+        Hp = M_Hp;
+        Lv = 1;
+        M_Exp = 100;
     }
     public class JOB
     {
-        public string Warrior;
-
-        public string Wizard;
-
-        public string Chef;
+        public enum Job
+        {
+            Warrior, Wizrd, Chef
+        }
+        public string jobName = "백수";
+        public float atk;
+        public int def;
+        public int hp;
+        public JOB(Job job)
+        {
+            switch (job)
+            {
+                case Job.Warrior:
+                    jobName = "워리어";
+                    atk = 5;
+                    def = 3;
+                    hp = -5;
+                    break;
+                case Job.Wizrd:
+                    jobName = "워리어";
+                    atk = -5;
+                    def = -2;
+                    break;
+                case Job.Chef:
+                    jobName = "쉐프";
+                    def = 5;
+                    hp = 10;
+                    break;
+            }
+        }
     }
     public static Player AddPlayer()
-
     {
-        Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
-        string name = Console.ReadLine() ?? "철수";
-        Console.WriteLine("직업을 입력하여 주십시오.");
-        string job = Console.ReadLine() ?? "백수";
-        return new Player(name, job);
+        while (true)
+        {
+            Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
+            string name = Console.ReadLine() ?? "철수";
+            Console.WriteLine("직업을 입력하여 주십시오.");
+            Console.WriteLine("1.워리어 2.위자드 3.쉐프");
+            JOB job;
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    job = new JOB(JOB.Job.Warrior);
+                    break;
+                case "2":
+                    job = new JOB(JOB.Job.Wizrd);
+                    break;
+                case "3":
+                    job = new JOB(JOB.Job.Chef);
+                    break;
+                default:
+                    Program.WrongInput();
+                    continue;
+            }
+            return new Player(name, job);
+        }
     }
     public void Status()
     {
@@ -267,10 +321,10 @@ class Player
         Console.WriteLine("");
         Console.WriteLine($"이름. {Name}");
         Console.WriteLine($"Lv. {Lv.ToString("00")}");
-        Console.WriteLine($"Chad({Job})");
-        Console.WriteLine($"공격력:{Atk}");
-        Console.WriteLine($"방어력:{Def}");
-        Console.WriteLine($"체력:{Hp}");
+        Console.WriteLine($"Chad({job.jobName})");
+        Console.WriteLine($"공격력:{Atk + job.atk}");
+        Console.WriteLine($"방어력:{Def + job.def}");
+        Console.WriteLine($"체력:{Hp} / {M_Hp}");
         Console.WriteLine($"Gold:{Gold}");
         Console.WriteLine("");
         Console.WriteLine("0. 나가기");
@@ -304,13 +358,13 @@ class Player
             switch (selectedItem.type)
             {
                 case Item.ItemType.Weapon:
-                    WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : WeaponSlot): selectedItem;
+                    WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : WeaponSlot) : selectedItem;
                     break;
                 case Item.ItemType.Armor:
                     ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : ArmorSlot) : selectedItem;
                     break;
             }
-            
+
         }
         else if (userInput == "0")
         {

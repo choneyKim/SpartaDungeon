@@ -46,7 +46,7 @@ namespace Txt_Game
             DisplayInventory();
 
             Console.Write("장착 또는 해제할 아이템 번호를 입력하세요 (0. 나가기): ");
-            string userInput = Console.ReadLine();
+            string? userInput = Console.ReadLine();
 
             if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= Items.Count)
             {

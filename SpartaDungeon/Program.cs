@@ -194,10 +194,12 @@ class Shop
                 temp -= 1;
                 if (p.inven.ItemAccess(temp).Name == (p.WeaponSlot != null ? p.WeaponSlot.Name:"No"))
                 {
+                    p.inven.ItemAccess(temp).Equipped = false;
                     p.WeaponSlot = null;
                 }
                 if (p.inven.ItemAccess(temp).Name == (p.ArmorSlot != null ? p.ArmorSlot.Name : "No"))
                 {
+                    p.inven.ItemAccess(temp).Equipped = false;
                     p.ArmorSlot = null;
                 }
                 p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);

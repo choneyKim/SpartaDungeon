@@ -46,7 +46,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(/*playerGold*/);
+            Console.WriteLine(p.Gold);
             Console.WriteLine("");
             shopInven.DisplayInventory();
             Console.WriteLine("");
@@ -74,7 +74,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(/*playerGold*/);
+            Console.WriteLine(p.Gold);
             shopInven.DisplayInventory();
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
@@ -84,6 +84,10 @@ class Shop
             string? input = Console.ReadLine();
             if (Int32.TryParse(input,out int temp))
             {
+                if (temp == 0)
+                {
+                    return;
+                }
                 temp -= 1;
                 if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
                 {
@@ -92,7 +96,7 @@ class Shop
                     shopInven.RemoveItem(shopInven.ItemAccess(temp));
                     continue;
                 }
-                else if (p.Gold < shopInven.ItemAccess(temp).Price)
+                else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
                 {
                     Console.WriteLine("돈이 부족합니다.");
                     Console.ReadKey();continue;
@@ -116,7 +120,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine(/*playerGold*/);
+            Console.WriteLine(p.Gold);
             //playerInvenPrint
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
@@ -124,7 +128,14 @@ class Shop
             Console.Write(">>"); string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp))
             {
-
+                if (temp == 0)
+                {
+                    return;
+                }
+                temp -= 1;
+                p.Gold += (int)(shopInven.ItemAccess(temp).Price * 0.85f);
+                shopInven.AddItem(p.inven.ItemAccess(temp));
+                p.inven.RemoveItem(p.inven.ItemAccess(temp));
             }
             else
             {
@@ -179,7 +190,7 @@ class Player
         Console.WriteLine("캐릭터의 정보가 표시됩니다.");
         Console.WriteLine("");
         Console.WriteLine($"이름. {Name}");
-        Console.WriteLine($"Lv. {Lv}");
+        Console.WriteLine($"Lv. {Lv.ToString("00")}");
         Console.WriteLine($"Chad({Job})");
         Console.WriteLine($"공격력:{Atk}");
         Console.WriteLine($"방어력:{Def}");

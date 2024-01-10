@@ -59,14 +59,9 @@ internal class Program
     static void Main(string[] args)
     {
         printStartLogo();
-        //nP = 플레이어 객체
+        //nP == 플레이어 객체, sh == 샵 객체
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
-        Monster.AddMonster();
-        Battle stage1 = new Battle(nP);
-        stage1.BattleDisplay();
-        Player player = Player.AddPlayer();
-        Shop shop = new Shop(player);
         while (true)
         {
             Console.Clear();
@@ -92,8 +87,11 @@ internal class Program
                     WrongInput();
                     break;
             }
-        }
 
+        }
+        Monster.AddMonster();
+        Battle stage1 = new Battle(nP);
+        stage1.BattleDisplay();
     }
 }
 
@@ -118,7 +116,7 @@ internal class Program
 //}
 
 
-class Shop
+internal class Shop
 {
     Player p;
     InventoryManager shopInven = new InventoryManager();
@@ -127,6 +125,7 @@ class Shop
         p = player;
         InitializeItems();
     }
+    string.RightPad(totalWidth)/LeftPad
     private void InitializeItems()
     {
         //무기
@@ -370,22 +369,30 @@ class Player
         }
     }
     public void Status()
-    {
-        Console.WriteLine("상태보기"); // 장착 반영 해야함
-        Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-        Console.WriteLine("");
-        Console.WriteLine($"이름. {Name}");
-        Console.WriteLine($"Lv. {Lv.ToString("00")}");
-        Console.WriteLine($"Chad({job.jobName})");
-        Console.WriteLine($"공격력:{Atk}");
-        Console.WriteLine($"방어력:{Def}");
-        Console.WriteLine($"체력:{Hp} / {M_Hp}");
-        Console.WriteLine($"Gold:{Gold}");
-        Console.WriteLine("");
-        Console.WriteLine("0. 나가기");
-        Console.WriteLine("");
-        Console.WriteLine("원하시는 행동을 입력해 주세요.");
-        Console.Write(">>");
+    { while (true)
+        {
+            Console.WriteLine("상태보기"); // 장착 반영 해야함
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine("");
+            Console.WriteLine($"이름. {Name}");
+            Console.WriteLine($"Lv. {Lv.ToString("00")}");
+            Console.WriteLine($"Chad({job.jobName})");
+            Console.WriteLine($"공격력:{Atk}");
+            Console.WriteLine($"방어력:{Def}");
+            Console.WriteLine($"체력:{Hp} / {M_Hp}");
+            Console.WriteLine($"Gold:{Gold}");
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해 주세요.");
+            Console.Write(">>");
+            switch (Console.ReadLine())
+            {
+                case 
+                   
+            }
+        }
+
     }
     public Item? WeaponSlot { get; set; }
     public Item? ArmorSlot { get; set; }

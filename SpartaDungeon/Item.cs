@@ -10,11 +10,11 @@
         public int Price { get; set; }
         public string Description { get; set; }
         public bool Equipped { get; set; }
-        public float Atk { get; set; }
-        public int Def { get; set; }
+        public int Atk { get; private set; }
+        public int Def { get; private set; }
 
         public ItemType type;
-        public Item(string name, int price,string description ,ItemType type,float Atk = 0,int Def = 0)
+        public Item(string name, int price,string description ,ItemType type,int Atk = 0,int Def = 0)
         {
             this.type = type;
             Name = name;

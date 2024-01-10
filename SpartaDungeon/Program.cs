@@ -10,7 +10,7 @@ internal class Program
     }
     private static void printStartLogo()
     {
-        Console.WriteLine("=============================================================================");
+        Console.WriteLine("=====================================================================================================================");
         Console.WriteLine("");
 
         Console.WriteLine("      ooooo   ooooo   .oooooo.   ooooo        oooooo   oooo                          ");
@@ -31,9 +31,9 @@ internal class Program
         Console.WriteLine("                o888bood8P'      `YbodP'    o8o        `8   `Y8bood8P'   o888ooooood8  `Y8bood8P'  o8o        `8   ");
 
         Console.WriteLine("");
-        Console.WriteLine("=============================================================================");
-        Console.WriteLine("                        PRESS ANYKEY TO START                                ");
-        Console.WriteLine("=============================================================================");
+        Console.WriteLine("=======================================================================================================================");
+        Console.WriteLine("                                                  PRESS ANYKEY TO START                                                ");
+        Console.WriteLine("=======================================================================================================================");
         Console.ReadKey();
     }
     static void Main(string[] args)

@@ -207,6 +207,9 @@ class Player
         Name = name;
         Job = job;
     }
+
+    
+
     public List<Item> playerItem = new List<Item>();
 
 
@@ -215,26 +218,23 @@ class Player
         Console.WriteLine("=============================================================================");
         Console.WriteLine("");
         Console.WriteLine("");
-        Console.WriteLine("        ██░ ██  ▒█████   ██▓   ▓██   ██▓               ");
-        Console.WriteLine("       ▓██░ ██▒▒██▒  ██▒▓██▒    ▒██  ██▒               ");
-        Console.WriteLine("       ▒██▀▀██░▒██░  ██▒▒██░     ▒██ ██░               ");
-        Console.WriteLine("       ░▓█ ░██ ▒██   ██░▒██░     ░ ▐██▓░               ");
-        Console.WriteLine("       ░▓█▒░██▓░ ████▓▒░░██████▒ ░ ██▒▓░               ");
-        Console.WriteLine("       ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░  ██▒▒▒                 ");
-        Console.WriteLine("        ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░▓██ ░▒░                ");
-        Console.WriteLine("        ░  ░░ ░░ ░ ░ ▒    ░ ░   ▒ ▒ ░░                 ");
-        Console.WriteLine("        ░  ░  ░    ░ ░      ░  ░░ ░                    ");
-        Console.WriteLine("                                ░ ░                    ");
-        Console.WriteLine("        ▓█████▄  █    ██  ███▄    █   ▄████ ▓█████  ▒█████   ███▄    █   ");
-        Console.WriteLine("        ▒██▀ ██▌ ██  ▓██▒ ██ ▀█   █  ██▒ ▀█▒▓█   ▀ ▒██▒  ██▒ ██ ▀█   █   ");
-        Console.WriteLine("        ░██   █▌▓██  ▒██░▓██  ▀█ ██▒▒██░▄▄▄░▒███   ▒██░  ██▒▓██  ▀█ ██▒  ");
-        Console.WriteLine("        ░▓█▄   ▌▓▓█  ░██░▓██▒  ▐▌██▒░▓█  ██▓▒▓█  ▄ ▒██   ██░▓██▒  ▐▌██▒  ");
-        Console.WriteLine("        ░▒████▓ ▒▒█████▓ ▒██░   ▓██░░▒▓███▀▒░▒████▒░ ████▓▒░▒██░   ▓██░  ");
-        Console.WriteLine("        ▒▒▓  ▒ ░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒  ░▒   ▒ ░░ ▒░ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒    ");
-        Console.WriteLine("        ░ ▒  ▒ ░░▒░ ░ ░ ░ ░░   ░ ▒░  ░   ░  ░ ░  ░  ░ ▒ ▒░ ░ ░░   ░ ▒░   ");
-        Console.WriteLine("        ░ ░  ░  ░░░ ░ ░    ░   ░ ░ ░ ░   ░    ░   ░ ░ ░ ▒     ░   ░ ░    ");
-        Console.WriteLine("          ░       ░              ░       ░    ░  ░    ░ ░           ░   ");
-        Console.WriteLine("          ░                                                             ");
+        Console.WriteLine("         ▄█    █▄     ▄██████▄   ▄█       ▄██   ▄                          ");
+        Console.WriteLine("        ███    ███   ███    ███ ███       ███   ██▄                        ");
+        Console.WriteLine("        ███    ███   ███    ███ ███       ███▄▄▄███                        ");
+        Console.WriteLine("       ▄███▄▄▄▄███▄▄ ███    ███ ███       ▀▀▀▀▀▀███                        ");
+        Console.WriteLine("      ▀▀███▀▀▀▀███▀  ███    ███ ███       ▄██   ███                        ");
+        Console.WriteLine("        ███    ███   ███    ███ ███       ███   ███                        ");
+        Console.WriteLine("        ███    ███   ███    ███ ███▌    ▄ ███   ███                        ");
+        Console.WriteLine("        ███    █▀     ▀██████▀  █████▄▄██  ▀█████▀                         ");
+        Console.WriteLine("                            ▀                                          ");
+        Console.WriteLine("    ████████▄  ███    █▄  ███▄▄▄▄      ▄██████▄     ▄████████  ▄██████▄  ███▄▄▄▄   ");
+        Console.WriteLine("    ███   ▀███ ███    ███ ███▀▀▀██▄   ███    ███   ███    ███ ███    ███ ███▀▀▀██▄ ");
+        Console.WriteLine("    ███    ███ ███    ███ ███   ███   ███    █▀    ███    █▀  ███    ███ ███   ███ ");
+        Console.WriteLine("    ███    ███ ███    ███ ███   ███  ▄███         ▄███▄▄▄     ███    ███ ███   ███ ");
+        Console.WriteLine("    ███    ███ ███    ███ ███   ███ ▀▀███ ████▄  ▀▀███▀▀▀     ███    ███ ███   ███ ");
+        Console.WriteLine("    ███    ███ ███    ███ ███   ███   ███    ███   ███    █▄  ███    ███ ███   ███ ");
+        Console.WriteLine("    ███   ▄███ ███    ███ ███   ███   ███    ███   ███    ███ ███    ███ ███   ███ ");
+        Console.WriteLine("   ████████▀  ████████▀   ▀█   █▀    ████████▀    ██████████  ▀██████▀   ▀█   █▀  ");
         Console.WriteLine("");
         Console.WriteLine("=============================================================================");
         Console.WriteLine("                        PRESS ANYKEY TO START                                ");

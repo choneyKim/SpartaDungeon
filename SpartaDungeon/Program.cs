@@ -198,7 +198,7 @@ class Shop
                 {
                     p.WeaponSlot = null;
                 }
-                if (p.inven.ItemAccess(temp).Name == p.ArmorSlot.Name ??)
+                if (p.inven.ItemAccess(temp).Name == p.ArmorSlot.Name)
                 {
                     p.ArmorSlot = null;
                 }

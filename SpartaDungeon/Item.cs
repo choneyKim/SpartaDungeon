@@ -13,8 +13,8 @@
         public float Atk { get; set; }
         public int Def { get; set; }
 
-        public Type type;
-        public Item(string name, int price,string description ,Type type,float Atk = 0,int Def = 0)
+        public ItemType type;
+        public Item(string name, int price,string description ,ItemType type,float Atk = 0,int Def = 0)
         {
             this.type = type;
             Name = name;

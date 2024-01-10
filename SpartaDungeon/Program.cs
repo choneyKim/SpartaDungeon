@@ -209,7 +209,7 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>"); string? input = Console.ReadLine();
-            if (Int32.TryParse(input, out int temp))
+            if (Int32.TryParse(input, out int temp)&& temp <= p.inven.Count())
             {
                 if (temp == 0)
                 {

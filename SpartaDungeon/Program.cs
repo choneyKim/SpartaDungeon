@@ -240,6 +240,14 @@ class Player
         Name = name;
         Job = job;
     }
+    public class JOB
+    {
+        public string Warrior;
+
+        public string Wizard;
+
+        public string Chef;
+    }
     public static Player AddPlayer()
 
     {

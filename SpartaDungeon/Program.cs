@@ -208,6 +208,38 @@ class Player
     }
     public List<Item> playerItem = new List<Item>();
 
+    private static void printStartLogo()
+    {
+        Console.WriteLine("=============================================================================");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("        ██░ ██  ▒█████   ██▓   ▓██   ██▓               ");
+        Console.WriteLine("       ▓██░ ██▒▒██▒  ██▒▓██▒    ▒██  ██▒               ");
+        Console.WriteLine("       ▒██▀▀██░▒██░  ██▒▒██░     ▒██ ██░               ");
+        Console.WriteLine("       ░▓█ ░██ ▒██   ██░▒██░     ░ ▐██▓░               ");
+        Console.WriteLine("       ░▓█▒░██▓░ ████▓▒░░██████▒ ░ ██▒▓░               ");
+        Console.WriteLine("       ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░  ██▒▒▒                 ");
+        Console.WriteLine("        ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░▓██ ░▒░                ");
+        Console.WriteLine("        ░  ░░ ░░ ░ ░ ▒    ░ ░   ▒ ▒ ░░                 ");
+        Console.WriteLine("        ░  ░  ░    ░ ░      ░  ░░ ░                    ");
+        Console.WriteLine("                                ░ ░                    ");
+        Console.WriteLine("        ▓█████▄  █    ██  ███▄    █   ▄████ ▓█████  ▒█████   ███▄    █   ");
+        Console.WriteLine("        ▒██▀ ██▌ ██  ▓██▒ ██ ▀█   █  ██▒ ▀█▒▓█   ▀ ▒██▒  ██▒ ██ ▀█   █   ");
+        Console.WriteLine("        ░██   █▌▓██  ▒██░▓██  ▀█ ██▒▒██░▄▄▄░▒███   ▒██░  ██▒▓██  ▀█ ██▒  ");
+        Console.WriteLine("        ░▓█▄   ▌▓▓█  ░██░▓██▒  ▐▌██▒░▓█  ██▓▒▓█  ▄ ▒██   ██░▓██▒  ▐▌██▒  ");
+        Console.WriteLine("        ░▒████▓ ▒▒█████▓ ▒██░   ▓██░░▒▓███▀▒░▒████▒░ ████▓▒░▒██░   ▓██░  ");
+        Console.WriteLine("        ▒▒▓  ▒ ░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒  ░▒   ▒ ░░ ▒░ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒    ");
+        Console.WriteLine("        ░ ▒  ▒ ░░▒░ ░ ░ ░ ░░   ░ ▒░  ░   ░  ░ ░  ░  ░ ▒ ▒░ ░ ░░   ░ ▒░   ");
+        Console.WriteLine("        ░ ░  ░  ░░░ ░ ░    ░   ░ ░ ░ ░   ░    ░   ░ ░ ░ ▒     ░   ░ ░    ");
+        Console.WriteLine("          ░       ░              ░       ░    ░  ░    ░ ░           ░   ");
+        Console.WriteLine("          ░                                                             ");
+        Console.WriteLine("");
+        Console.WriteLine("=============================================================================");
+        Console.WriteLine("                        PRESS ANYKEY TO START                                ");
+        Console.WriteLine("=============================================================================");
+        Console.ReadKey();
+    }
+
     public static void AddPlayer()
     {
         Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");

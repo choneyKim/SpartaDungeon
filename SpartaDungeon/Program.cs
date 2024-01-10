@@ -104,9 +104,6 @@ internal class Program
             }
 
         }
-        Monster.AddMonster();
-        Battle stage1 = new Battle(nP);
-        stage1.BattleDisplay();
     }
 }
 
@@ -131,7 +128,7 @@ internal class Program
 //}
 
 
-internal class Shop
+class Shop
 {
     Player p;
     InventoryManager shopInven = new InventoryManager();
@@ -191,7 +188,6 @@ internal class Shop
             }
         }
     }
-
     void ShopBuy()
     {
         while (true)
@@ -220,7 +216,7 @@ internal class Shop
                 {
                     p.Gold -= shopInven.ItemAccess(temp).Price;
                     p.inven.AddItem(shopInven.ItemAccess(temp));
-                    shopInven.RemoveItem(shopInven.ItemAccess(temp));
+                    //shopInven.RemoveItem(shopInven.ItemAccess(temp));
                     continue;
                 }
                 else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
@@ -476,8 +472,6 @@ class Monster
         Hp = hP;
         Atk = aTK;
     }
-
-
     public static void AddMonster()
     {
 

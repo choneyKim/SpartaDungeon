@@ -221,9 +221,9 @@ class Player
     string Name { get; set; }
     JOB job;
     float Atk;
-    public float totalAtk { get { return (WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk) + job.atk; } }
+    public float totalAtk { get { return WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk; } }
     float Def;
-    public float totalDef { get { return (ArmorSlot != null ? ArmorSlot.Def + Def : Def) + job.def; } }
+    public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
     float Hp;
     public float M_Hp;
@@ -246,8 +246,8 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 10;
-        Def = 5;
+        Atk = 10 + job.atk;
+        Def = 5 + job.def;
         Gold = 1500;
         M_Hp = 100 + job.hp;
         Hp = M_Hp;
@@ -316,14 +316,14 @@ class Player
     }
     public void Status()
     {
-        Console.WriteLine("상태보기");
+        Console.WriteLine("상태보기"); // 장착 반영 해야함
         Console.WriteLine("캐릭터의 정보가 표시됩니다.");
         Console.WriteLine("");
         Console.WriteLine($"이름. {Name}");
         Console.WriteLine($"Lv. {Lv.ToString("00")}");
         Console.WriteLine($"Chad({job.jobName})");
-        Console.WriteLine($"공격력:{Atk + job.atk}");
-        Console.WriteLine($"방어력:{Def + job.def}");
+        Console.WriteLine($"공격력:{Atk}");
+        Console.WriteLine($"방어력:{Def}");
         Console.WriteLine($"체력:{Hp} / {M_Hp}");
         Console.WriteLine($"Gold:{Gold}");
         Console.WriteLine("");

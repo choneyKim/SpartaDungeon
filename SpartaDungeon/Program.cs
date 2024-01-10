@@ -32,10 +32,28 @@ internal class Program
 
         Console.WriteLine("");
         Console.WriteLine("=======================================================================================================================");
-        Console.WriteLine("                                                  PRESS ANYKEY TO START                                                ");
+        ShowHighlightedText("                                                  PRESS ANYKEY TO START                                                ");
+        //이렇게 사용 \*^^*/
         Console.WriteLine("=======================================================================================================================");
         Console.ReadKey();
     }
+    private static void ShowHighlightedText(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+    //글자색 변경(console.ForgroundColor),리셋(ResetColor)
+    private static void PrintTextWithHighlights(string s1, string s2, string s3 = "")
+    {
+        Console.Write(s1);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write(s2);
+        Console.ResetColor();
+        Console.WriteLine(s3);
+    }
+    //중간 글자색바뀌게
+
     static void Main(string[] args)
     {
         Player nP = Player.AddPlayer();
@@ -100,7 +118,7 @@ class Shop
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("상점");
+            Console.WriteLine("| 상점 |");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");

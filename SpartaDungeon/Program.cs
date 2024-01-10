@@ -89,9 +89,6 @@ internal class Program
             }
 
         }
-        Monster.AddMonster();
-        Battle stage1 = new Battle(nP);
-        stage1.BattleDisplay();
     }
 }
 
@@ -116,7 +113,7 @@ internal class Program
 //}
 
 
-internal class Shop
+class Shop
 {
     Player p;
     InventoryManager shopInven = new InventoryManager();
@@ -176,7 +173,6 @@ internal class Shop
             }
         }
     }
-
     void ShopBuy()
     {
         while (true)
@@ -461,8 +457,6 @@ class Monster
         Hp = hP;
         Atk = aTK;
     }
-
-
     public static void AddMonster()
     {
 

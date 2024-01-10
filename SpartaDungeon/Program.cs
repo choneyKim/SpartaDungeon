@@ -125,7 +125,7 @@ internal class Shop
         p = player;
         InitializeItems();
     }
-    string.RightPad(totalWidth)/LeftPad
+    //string.RightPad(totalWidth)/LeftPad
     private void InitializeItems()
     {
         //무기
@@ -388,8 +388,11 @@ class Player
             Console.Write(">>");
             switch (Console.ReadLine())
             {
-                case 
-                   
+                case "0":
+                    return;
+                default:
+                    Program.WrongInput();
+                    break;
             }
         }
 

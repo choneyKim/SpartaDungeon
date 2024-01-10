@@ -35,7 +35,7 @@ internal class Program
 
         Console.WriteLine("");
         Console.WriteLine("=======================================================================================================================");
-        ShowHighlightedText("                                                  PRESS ANYKEY TO START                                                ");
+        ShowHighlightedText_M("                                                  PRESS ANYKEY TO START                                                ");
         //이렇게 사용 \*^^*/
         Console.WriteLine("=======================================================================================================================");
         Console.ReadKey();
@@ -53,7 +53,7 @@ internal class Program
         Console.WriteLine(text);
         Console.ResetColor();
     }
-    //노란색
+    //노란
     public static void ShowHighlightedText_G(string text)
     {
         Console.ForegroundColor = ConsoleColor.Gray;
@@ -61,7 +61,7 @@ internal class Program
         Console.ResetColor();
     }
     //회색
-    private static void PrintTextWithHighlights(string s1, string s2, string s3 = "")
+    public static void PrintTextWithHighlights(string s1, string s2, string s3 = "")
     {
         Console.Write(s1);
         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -550,7 +550,7 @@ class Battle
         while (true)
         {
             Console.Clear();
-            Program.ShowHighlightedText("Battle!!");
+            Program.ShowHighlightedText_M("Battle!!");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -588,7 +588,7 @@ class Battle
                 IsClear = Monster.monsters[i].IsDead && IsClear;
             }
             Console.Clear();
-            Program.ShowHighlightedText("Battle!!_공격대상 선택");
+            Program.ShowHighlightedText_M("Battle!!_공격대상 선택");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -624,9 +624,9 @@ class Battle
     public void BattleResult(bool isdead)
     {
         Console.Clear();
-        Program.ShowHighlightedText("Battle!! - Result");
+        Program.ShowHighlightedText_M("Battle!! - Result");
         Console.WriteLine();
-        Program.ShowHighlightedText(p.IsDead ? "You Lose" : "Victory");
+        Program.ShowHighlightedText_M(p.IsDead ? "You Lose" : "Victory");
         Console.WriteLine();
         Console.WriteLine(p.IsDead ? "" : $"던전에서 몬스터{Monster.monsters.Count}마리를 잡았습니다.");
         Console.WriteLine();
@@ -644,7 +644,7 @@ class Battle
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
             Console.Clear();
-            Program.ShowHighlightedText("Battle!!");
+            Program.ShowHighlightedText_M("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
             Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.Atk}]"); //Damage 계산이 아직 안되서 player.Atk사용
@@ -661,7 +661,7 @@ class Battle
                 if (Monster.monsters[i].IsDead == false)
                 {
                     Console.Clear();
-                    Program.ShowHighlightedText("Battle!!");
+                    Program.ShowHighlightedText_M("Battle!!");
                     Console.WriteLine();
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
                     Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {Monster.monsters[i].Atk}]");

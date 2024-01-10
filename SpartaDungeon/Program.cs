@@ -205,7 +205,7 @@ internal class Shop
                 {
                     p.Gold -= shopInven.ItemAccess(temp).Price;
                     p.inven.AddItem(shopInven.ItemAccess(temp));
-                    shopInven.RemoveItem(shopInven.ItemAccess(temp));
+                    //shopInven.RemoveItem(shopInven.ItemAccess(temp));
                     continue;
                 }
                 else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)

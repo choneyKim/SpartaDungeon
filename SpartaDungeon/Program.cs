@@ -40,13 +40,27 @@ internal class Program
         Console.WriteLine("=======================================================================================================================");
         Console.ReadKey();
     }
-    public static void ShowHighlightedText(string text)
+    public static void ShowHighlightedText_M(string text)
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine(text);
         Console.ResetColor();
     }
     //글자색 변경(console.ForgroundColor),리셋(ResetColor)
+    public static void ShowHighlightedText_Y(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+    //노란색
+    public static void ShowHighlightedText_G(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+    //회색
     private static void PrintTextWithHighlights(string s1, string s2, string s3 = "")
     {
         Console.Write(s1);
@@ -65,10 +79,11 @@ internal class Program
         while (true)
         {
             Console.Clear();
+
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
-            Console.Write("원하시는 행동을 선택하세요: ");
+            Console.Write("원하시는 행동을 선택하세요 ");
 
             string? input = Console.ReadLine();
 

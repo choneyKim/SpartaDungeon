@@ -92,7 +92,6 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
-
     static void Main(string[] args)
     {
         printStartLogo();
@@ -197,7 +196,7 @@ class Shop
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("| 상점 |");
+            Program.PrintTextWithHighlights("|"," 상점 ","|");
             Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
@@ -226,10 +225,14 @@ class Shop
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("상점 - 아이템 구매");
-            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Program.PrintTextWithHighlights(" |"," 상점","|");
+            Program.PrintTextWithHighlights("아이템 ","구매","");
             Console.WriteLine("");
-            Console.WriteLine("[보유 골드]");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Console.WriteLine("");
+            Program.PrintTextWithHighlights("[","보유 골드","]");
             Console.WriteLine(p.Gold + "G");
             shopInven.DisplayShopInventory();
             Console.WriteLine("");
@@ -273,16 +276,18 @@ class Shop
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("상점 - 아이템 판매");
+            Program.PrintTextWithHighlights(" |", " 상점", "|");
+            Program.PrintTextWithHighlights("아이템"," 판매","");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
-            Console.WriteLine("[보유 골드]");
+            Program.PrintTextWithHighlights("[", "보유 골드", "]");
             Console.WriteLine(p.Gold + "G");
             p.inven.DisplayInventory();
             Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>"); string? input = Console.ReadLine();
+
             if (Int32.TryParse(input, out int temp) && temp <= p.inven.Count())
             {
                 if (temp == 0)

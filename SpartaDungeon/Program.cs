@@ -31,6 +31,7 @@ internal class Program
             Program.Firstlettercolor("2.", " 인벤토리");
             Program.Firstlettercolor("3.", " 상점");
             Program.Firstlettercolor("4.", " 전투 시작");
+            Program.Firstlettercolor("5.", " 회복아이템");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
 
@@ -48,12 +49,41 @@ internal class Program
                 case "4":
                     battle.BattleDisplay();
                     break;
+                case "5":
+                    Recovery();
+                    break;
                 default:
                     WrongInput();
                     break;
             }
         }
     }
+
+    private static void Recovery()
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            PrintTextWithHighlights("[", "회복", "]");
+            Console.WriteLine("포션을 사용하면 체력을 30 회복 할 수 있습니다.");
+            Console.WriteLine("");
+            Firstlettercolor("1.", " 사용하기");
+            Firstlettercolor("0.", " 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>"); string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "0":
+                    return;
+                default:
+                    WrongInput();
+                    break;
+            }
+        }
+    }
+
     public static void WrongInput()
     {
         Console.Write("잘못 된 입력 입니다");

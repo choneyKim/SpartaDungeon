@@ -172,29 +172,29 @@ internal class Program
     }
     //첫글자 색상변경(마젠타)
 
+
+
+    //    int SelectNum(int min, int max)
+    //    {
+    //        bool isNum;
+    //        bool isBreak = true;
+    //        int selectNum;
+    //        isNum = int.TryParse(Console.ReadLine(), out selectNum);
+    //        do
+    //        {
+    //            if (isNum == false)
+    //            {
+    //                Console.WriteLine("숫자를 입력해 주십시오");
+    //            }
+    //            else if (selectNum < min || selectNum > max) Console.WriteLine($"{min}~{max}의 숫자를 입력해주세요");
+    //            else isBreak = false;
+
+    //        } while (isBreak);
+    //        return selectNum;
+    //    }
+    //}
+
 }
-
-//    int SelectNum(int min, int max)
-//    {
-//        bool isNum;
-//        bool isBreak = true;
-//        int selectNum;
-//        isNum = int.TryParse(Console.ReadLine(), out selectNum);
-//        do
-//        {
-//            if (isNum == false)
-//            {
-//                Console.WriteLine("숫자를 입력해 주십시오");
-//            }
-//            else if (selectNum < min || selectNum > max) Console.WriteLine($"{min}~{max}의 숫자를 입력해주세요");
-//            else isBreak = false;
-
-//        } while (isBreak);
-//        return selectNum;
-//    }
-//}
-
-
 class Shop
 {
     Player p;
@@ -228,11 +228,8 @@ class Shop
         shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
         shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
         shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
-<<<<<<< Updated upstream
         shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
-=======
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
->>>>>>> Stashed changes
+
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
     }
     public static int GetPrintableLength(string str)
@@ -241,11 +238,8 @@ class Shop
         foreach (char c in str)
         {
             if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter)
-<<<<<<< Updated upstream
             {
-=======
-                    {
->>>>>>> Stashed changes
+
                 length += 2; // 한글같이 길이가 긴 문자에 대해 길이를 2로 취급 
             }
             else
@@ -255,12 +249,11 @@ class Shop
         }
         return length;
     }
-
     public static string PadRightForMixedText(string str, int totlalLength)
     {
         int currentLenghth = GetPrintableLength(str);
         int paddingg = totlalLength - currentLenghth;
-        return str.PadRight(str.Length+paddingg);
+        return str.PadRight(str.Length + paddingg);
     }
 
     private void AddShopItem(string name, int price, string description, Item.ItemType type, int stat)
@@ -286,17 +279,11 @@ class Shop
             for (int i = 0; i < shopInven.Count(); i++)
             {
                 Item items = shopInven.ItemAccess(i);
-<<<<<<< Updated upstream
                 Console.Write(PadRightForMixedText($"{items.Name} ", 15));
                 Console.Write(PadRightForMixedText($"| 가격: {items.Price} G ", 20));
-                Console.Write(PadRightForMixedText($"| {(items.type==0?"공격력":"방어력")} {(items.type == 0 ? $"{items.Atk}" : $"{items.Def}")}", 15));
-                Console.WriteLine(PadRightForMixedText($"| {items.Description}", 30));
-=======
-                Console.Write(PadRightForMixedText($"{items.Name}",15));
-                Console.Write(PadRightForMixedText($" | 가격: {items.Price}G", 20));
                 Console.Write(PadRightForMixedText($"| {(items.type == 0 ? "공격력" : "방어력")} {(items.type == 0 ? $"{items.Atk}" : $"{items.Def}")}", 15));
-                Console.WriteLine(PadRightForMixedText($" | {items.Description}", 35));
->>>>>>> Stashed changes
+                Console.WriteLine(PadRightForMixedText($"| {items.Description}", 30));
+
             }
             Console.WriteLine("");
             Program.Firstlettercolor("1.", " 아이템 구매");
@@ -305,7 +292,7 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
             Console.SetCursorPosition(2, 15 + shopInven.Count());
-           
+
             string? input = Console.ReadLine();
             switch (input)
             {
@@ -426,6 +413,10 @@ class Shop
 }
 
 
+
+    
+
+  
 class Player
 {
     public InventoryManager inven = new InventoryManager();

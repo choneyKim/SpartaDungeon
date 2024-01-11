@@ -34,4 +34,19 @@
         //    string eqquippedStatus = equipped ? "[E]" : "";
         //    Console.WriteLine($"{equipeedstatus}{name} | 가격 : {price} G | {Description}"    }
     }
+
+    public class Potion
+    {
+        public string Name { get; }
+        public int Point { get; } 
+        public string Dis { get; }
+
+        public Potion(string name,int point,string dis)
+        {
+            this.Name = name;
+            this.Point = point;
+            this.Dis = dis;
+        }
+        
+    }
 }

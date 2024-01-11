@@ -141,6 +141,7 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
+
 }
 
 //    int SelectNum(int min, int max)
@@ -233,9 +234,9 @@ class Shop
         {
             Console.Clear();
             Program.PrintTextWithHighlights("|", " 상점 ", "|");
-            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++++");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
-            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++++");
             Console.WriteLine("");
             Program.PrintTextWithHighlights("[ ", "보유 골드", "]");
             Console.WriteLine(p.Gold + " G");
@@ -385,6 +386,8 @@ class Player
     public int Gold;
     public float Hp;
     public float M_Hp;
+    public int mp;
+    public int M_mp;
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
     float Exp;
@@ -399,6 +402,7 @@ class Player
             M_Hp += 10;
             Exp = 0;
             M_Exp *= 1.5f;
+            M_mp += 10;
         }
     }
     public Player(string name, JOB job)
@@ -412,6 +416,8 @@ class Player
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 100;
+        M_mp = 100 + job.mp;
+        mp = M_mp;
     }
     public class JOB
     {
@@ -423,6 +429,7 @@ class Player
         public float atk;
         public int def;
         public int hp;
+        public int mp;
         public JOB(Job job)
         {
             switch (job)
@@ -661,6 +668,8 @@ class Battle
     }
     public void BattleDisplay()
     {
+        Monster.monsters.RemoveAll(x => x.IsDead == false);
+        Monster.AddMonster();
         while (true)
         {
             Console.Clear();
@@ -685,6 +694,7 @@ class Battle
                     playerHp = p.Hp;
                     BattleAttack();
                 }
+                else Program.WrongInput(); continue;
             }
             else
             {
@@ -694,7 +704,6 @@ class Battle
     }
     public void BattleAttack()
     {
-        Monster.AddMonster();
         while (true)
         {
             bool IsClear = true;
@@ -719,6 +728,7 @@ class Battle
 
             if (IsClear)
             {
+                Monster.monsters.RemoveAll(x => x.IsDead == true);
                 BattleResult(p.IsDead);
             }
             else
@@ -726,8 +736,15 @@ class Battle
                 string? input = Console.ReadLine();
                 if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
                 {
-                    temp -= 1;
-                    BattleTurn(temp);
+                    if (temp == 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        temp -= 1;
+                        BattleTurn(temp);
+                    }
                 }
                 else
                 {

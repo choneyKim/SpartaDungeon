@@ -141,46 +141,6 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
-
-    static void Main(string[] args)
-    {
-        printStartLogo();
-        //nP == 플레이어 객체, sh == 샵 객체
-        Player nP = Player.AddPlayer();
-        Shop sh = new Shop(nP);
-        Potion HP_po = new Potion("힐포션",15,"체력을 15 회복.");
-
-        while (true)
-        {
-            Console.Clear();
-
-            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
-            Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
-            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
-            Console.WriteLine("");
-            Program.Firstlettercolor("1.", " 상태 보기");
-            Program.Firstlettercolor("2.", " 인벤토리");
-            Program.Firstlettercolor("3.", " 상점");
-            Console.WriteLine("");
-            Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
-
-            switch (input)
-            {
-                case "1":
-                    nP.Status();
-                    break;
-                case "2":
-                    nP.ManageEquippedItems();
-                    break;
-                case "3":
-                    sh.ShopPrint();
-                    break;
-                default:
-                    WrongInput();
-                    break;
-            }
-        }
-    }
 }
 
 //    int SelectNum(int min, int max)

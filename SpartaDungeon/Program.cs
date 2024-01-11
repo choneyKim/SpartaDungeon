@@ -202,9 +202,14 @@ class Shop
             Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("");
             Program.PrintTextWithHighlights("[ ","보유 골드","]");
-            Console.WriteLine( p.Gold + "G" );
-            shopInven.DisplayShopInventory();
-
+            Console.WriteLine( p.Gold + " G" );
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < shopInven.Count(); i++)
+            {
+                Item items = shopInven.ItemAccess(i);
+                Console.WriteLine($"{items.Name} | 가격: {items.Price} G | {items.Description}");
+            }
             Console.WriteLine("");
             Program.Firstlettercolor("1."," 아이템 구매");
             Program.Firstlettercolor("2."," 아이템 판매");
@@ -233,7 +238,7 @@ class Shop
             Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("");
             Program.PrintTextWithHighlights("[","보유 골드","]");
-            Console.WriteLine(p.Gold + "G");
+            Console.WriteLine(p.Gold + " G");
             shopInven.DisplayShopInventory();
             Console.WriteLine("");
             Program.Firstlettercolor("0."," 나가기");
@@ -281,7 +286,7 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Program.PrintTextWithHighlights("[", "보유 골드", "]");
-            Console.WriteLine(p.Gold + "G");
+            Console.WriteLine(p.Gold + " G");
             p.inven.DisplayInventory();
             Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");

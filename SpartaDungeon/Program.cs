@@ -635,6 +635,8 @@ class Battle
     }
     public void BattleDisplay()
     {
+        Monster.monsters.RemoveAll(x => x.IsDead == false);
+        Monster.AddMonster();
         while (true)
         {
             Console.Clear();
@@ -659,6 +661,7 @@ class Battle
                     playerHp = p.Hp;
                     BattleAttack();
                 }
+                else Program.WrongInput(); continue;
             }
             else
             {
@@ -668,7 +671,6 @@ class Battle
     }
     public void BattleAttack()
     {
-        Monster.AddMonster();
         while (true)
         {
             bool IsClear = true;
@@ -693,6 +695,7 @@ class Battle
 
             if (IsClear)
             {
+                Monster.monsters.RemoveAll(x => x.IsDead == true);
                 BattleResult(p.IsDead);
             }
             else
@@ -700,8 +703,15 @@ class Battle
                 string? input = Console.ReadLine();
                 if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
                 {
-                    temp -= 1;
-                    BattleTurn(temp);
+                    if (temp == 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        temp -= 1;
+                        BattleTurn(temp);
+                    }
                 }
                 else
                 {

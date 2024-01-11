@@ -6,6 +6,17 @@ using Txt_Game;
 internal class Program
 {
     public static Random ran = new Random();
+
+    static void Main(string[] args)
+    {
+        printStartLogo();
+        //nP == 플레이어 객체, sh == 샵 객체
+        Player nP = Player.AddPlayer();
+        Shop sh = new Shop(nP);
+        Battle battle = new Battle(nP,sh);
+        MainManu(nP,sh,battle);
+        
+    }
     public static void WrongInput()
     {
         Console.Write("잘못 된 입력 입니다");
@@ -93,12 +104,8 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
-    static void Main(string[] args)
+    public static void MainManu(Player nP, Shop sh, Battle battle)
     {
-        printStartLogo();
-        //nP == 플레이어 객체, sh == 샵 객체
-        Player nP = Player.AddPlayer();
-        Shop sh = new Shop(nP);
         while (true)
         {
             Console.Clear();
@@ -110,6 +117,7 @@ internal class Program
             Program.Firstlettercolor("1.", " 상태 보기");
             Program.Firstlettercolor("2.", " 인벤토리");
             Program.Firstlettercolor("3.", " 상점");
+            Program.Firstlettercolor("4.", " 전투 시작");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
 
@@ -123,6 +131,9 @@ internal class Program
                     break;
                 case "3":
                     sh.ShopPrint();
+                    break;
+                case "4":
+                    battle.BattleDisplay();
                     break;
                 default:
                     WrongInput();
@@ -609,15 +620,17 @@ class Monster
         return monsterAtkResult;
     }
 }
-
 class Battle
 {
     Player p;
     Monster m;
+    Battle b;
+    Shop s;
     float playerHp;
-    public Battle(Player p)
+    public Battle(Player p, Shop s)
     {
         this.p = p;
+        this.s = s;
     }
     public void BattleDisplay()
     {
@@ -630,7 +643,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
@@ -654,6 +667,7 @@ class Battle
     }
     public void BattleAttack()
     {
+        Monster.AddMonster();
         while (true)
         {
             bool IsClear = true;
@@ -668,7 +682,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
@@ -710,7 +724,7 @@ class Battle
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
         Console.ReadKey();
-        BattleDisplay(); //메인메뉴 생성시 메인메뉴로 이동
+        Program.MainManu(p,s,b); 
 
     }
     public void BattleTurn(int temp)

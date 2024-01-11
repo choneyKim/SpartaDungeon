@@ -526,27 +526,6 @@ class Player
             {
                 Program.WrongInput();
             }
-
-            switch (selectedItem.type)
-            {
-                case Item.ItemType.Weapon:
-                    WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : WeaponSlot) : selectedItem;
-                    break;
-                case Item.ItemType.Armor:
-                    ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : ArmorSlot) : selectedItem;
-                    break;
-            }
-
-        }
-        else if (userInput == "0")
-        {
-            return;
-        }
-        else
-        {
-            Program.ShowHighlightedText_R("잘못된 입력입니다. 다시 입력해주세요.");
-
-        }
     }
 }
 
@@ -625,83 +604,41 @@ class Monster
     }
 }
 
-class Battle
-{
-    Player p;
-    Monster m;
-    float playerHp;
-    public Battle(Player p)
+    class Battle
     {
-        this.p = p;
-    }
-    public void BattleDisplay()
-    {
-        while (true)
+        Player p;
+        Monster m;
+        float playerHp;
+        public Battle(Player p)
         {
-            Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!");
-            Console.WriteLine();
-            Monster.DisplayMonster();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
-            Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
-            Console.WriteLine();
-            Console.WriteLine("1. 공격");
-            Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">>");
-            string? input = Console.ReadLine();
-            if (Int32.TryParse(input, out int temp))
-            {
-                if (temp == 1)
-                {
-                    playerHp = p.Hp;
-                    BattleAttack();
-                }
-            }
-            else
-            {
-                Program.WrongInput(); continue;
-            }
+            this.p = p;
         }
-    }
-    public void BattleAttack()
-    {
-        while (true)
+        public void BattleDisplay()
         {
-            bool IsClear = true;
-            for (int i = 0; i < Monster.monsters.Count; i++)
+            while (true)
             {
-                IsClear = Monster.monsters[i].IsDead && IsClear;
-            }
-            Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!_공격대상 선택");
-            Console.WriteLine();
-            Monster.DisplayMonster();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
-            Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
-            Console.WriteLine();
-            Console.WriteLine("0. 취소");
-            Console.WriteLine("");
-            Console.WriteLine("공격할 적을 선택해주세요.");
-            Console.Write(">>");
-
-            if (IsClear)
-            {
-                BattleResult(p.IsDead);
-            }
-            else
-            {
+                Console.Clear();
+                Program.ShowHighlightedText_M("Battle!!");
+                Console.WriteLine();
+                Monster.DisplayMonster();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("내정보");
+                Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+                Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
+                Console.WriteLine();
+                Console.WriteLine("1. 공격");
+                Console.WriteLine("");
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">>");
                 string? input = Console.ReadLine();
-                if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
+                if (Int32.TryParse(input, out int temp))
                 {
-                    temp -= 1;
-                    BattleTurn(temp);
+                    if (temp == 1)
+                    {
+                        playerHp = p.Hp;
+                        BattleAttack();
+                    }
                 }
                 else
                 {
@@ -709,63 +646,106 @@ class Battle
                 }
             }
         }
-    }
-    public void BattleResult(bool isdead)
-    {
-        Console.Clear();
-        Program.ShowHighlightedText_M("Battle!! - Result");
-        Console.WriteLine();
-        Program.ShowHighlightedText_M(p.IsDead ? "You Lose" : "Victory");
-        Console.WriteLine();
-        Console.WriteLine(p.IsDead ? "" : $"던전에서 몬스터{Monster.monsters.Count}마리를 잡았습니다.");
-        Console.WriteLine();
-        Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
-        Console.WriteLine($"HP  {playerHp} -> {p.Hp}");
-        Console.WriteLine();
-        Console.WriteLine("0. 다음");
-        Console.WriteLine("");
-        Console.ReadKey();
-        BattleDisplay(); //메인메뉴 생성시 메인메뉴로 이동
+        public void BattleAttack()
+        {
+            while (true)
+            {
+                bool IsClear = true;
+                for (int i = 0; i < Monster.monsters.Count; i++)
+                {
+                    IsClear = Monster.monsters[i].IsDead && IsClear;
+                }
+                Console.Clear();
+                Program.ShowHighlightedText_M("Battle!!_공격대상 선택");
+                Console.WriteLine();
+                Monster.DisplayMonster();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("내정보");
+                Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+                Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
+                Console.WriteLine();
+                Console.WriteLine("0. 취소");
+                Console.WriteLine("");
+                Console.WriteLine("공격할 적을 선택해주세요.");
+                Console.Write(">>");
 
-    }
-    public void BattleTurn(int temp)
-    {
-        if (!p.IsDead && !Monster.monsters[temp].IsDead)
+                if (IsClear)
+                {
+                    BattleResult(p.IsDead);
+                }
+                else
+                {
+                    string? input = Console.ReadLine();
+                    if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
+                    {
+                        temp -= 1;
+                        BattleTurn(temp);
+                    }
+                    else
+                    {
+                        Program.WrongInput(); continue;
+                    }
+                }
+            }
+        }
+        public void BattleResult(bool isdead)
         {
             Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!");
+            Program.ShowHighlightedText_M("Battle!! - Result");
             Console.WriteLine();
-            Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.totalAtk}]"); //Damage 계산이 아직 안되서 player.Atk사용
-            Monster.monsters[temp].Hp -= (int)p.totalAtk; //p.Atk가 float형식이라 int로 명시적 형변환
+            Program.ShowHighlightedText_M(p.IsDead ? "You Lose" : "Victory");
             Console.WriteLine();
-            Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.totalAtk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine(p.IsDead ? "" : $"던전에서 몬스터{Monster.monsters.Count}마리를 잡았습니다.");
+            Console.WriteLine();
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+            Console.WriteLine($"HP  {playerHp} -> {p.Hp}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine("");
             Console.ReadKey();
-            for (int i = 0; i < Monster.monsters.Count; i++)
+            BattleDisplay(); //메인메뉴 생성시 메인메뉴로 이동
+
+        }
+        public void BattleTurn(int temp)
+        {
+            if (!p.IsDead && !Monster.monsters[temp].IsDead)
             {
-                if (Monster.monsters[i].IsDead == false)
+                Console.Clear();
+                Program.ShowHighlightedText_M("Battle!!");
+                Console.WriteLine();
+                Console.WriteLine($"{p.Name} 의 공격!");
+                Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.totalAtk}]"); //Damage 계산이 아직 안되서 player.Atk사용
+                Monster.monsters[temp].Hp -= (int)p.totalAtk; //p.Atk가 float형식이라 int로 명시적 형변환
+                Console.WriteLine();
+                Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
+                Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.totalAtk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                Console.WriteLine("");
+                Console.ReadKey();
+                for (int i = 0; i < Monster.monsters.Count; i++)
                 {
-                    Console.Clear();
-                    Program.ShowHighlightedText_M("Battle!!");
-                    Console.WriteLine();
-                    Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
-                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {Monster.monsters[i].Atk}]");
-                    p.Hp -= Monster.monsters[i].Atk;
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv. {p.Lv} {p.Name}");
-                    Console.WriteLine($"HP  {p.Hp + Monster.monsters[i].Atk} - > {(p.IsDead ? "Dead" : p.Hp)}");
-                    Console.WriteLine();
-                    Console.WriteLine("0. 다음");
-                    Console.WriteLine("");
-                    if (p.IsDead == true) { BattleResult(p.IsDead); }
-                    Console.ReadKey(); continue;
+                    if (Monster.monsters[i].IsDead == false)
+                    {
+                        Console.Clear();
+                        Program.ShowHighlightedText_M("Battle!!");
+                        Console.WriteLine();
+                        Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
+                        Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {Monster.monsters[i].Atk}]");
+                        p.Hp -= Monster.monsters[i].Atk;
+                        Console.WriteLine();
+                        Console.WriteLine($"Lv. {p.Lv} {p.Name}");
+                        Console.WriteLine($"HP  {p.Hp + Monster.monsters[i].Atk} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                        Console.WriteLine();
+                        Console.WriteLine("0. 다음");
+                        Console.WriteLine("");
+                        if (p.IsDead == true) { BattleResult(p.IsDead); }
+                        Console.ReadKey(); continue;
+                    }
                 }
             }
-        }
 
+        }
     }
 }

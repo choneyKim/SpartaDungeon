@@ -145,7 +145,10 @@ internal class Program
     static void Main(string[] args)
     {
         printStartLogo();
+<<<<<<< Updated upstream
         //nP == 플레이어 객체, sh == 샵 객체
+=======
+>>>>>>> Stashed changes
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
         Potion HP_po = new Potion("힐포션",15,"체력을 15 회복.");

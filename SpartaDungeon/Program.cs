@@ -128,7 +128,6 @@ internal class Program
                     WrongInput();
                     break;
             }
-
         }
     }
 }
@@ -167,25 +166,31 @@ class Shop
     private void InitializeItems()
     {
         //무기
-        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
-        shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
-        shopInven.AddItem(new Item("청동검", 500, "사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
-        shopInven.AddItem(new Item("철창", 1000, "철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
-        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
-        shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
-        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
-        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
+        shopInven.AddItem(new Item("버터 나이프", 100, "공격력 +2 | 빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
+        shopInven.AddItem(new Item("소형 검", 200, "공격력 +5 | 사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
+        shopInven.AddItem(new Item("청동검", 500, "공격력 +7 | 사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
+        shopInven.AddItem(new Item("철창", 1000, "공격력 +10 | 철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
+        shopInven.AddItem(new Item("철검", 2000, "공격력 +22 | 창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
+        shopInven.AddItem(new Item("강철창", 4000, "공격력 + 50 | 강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
+        shopInven.AddItem(new Item("백금검", 17000, "공격력 +150 | 백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
+        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "공격력 +200 | 휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
         //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
 
         //갑옷
-        shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
-        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
-        shopInven.AddItem(new Item("무쇠 갑옷", 1700, "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
-        shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
-        shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
-        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
+        shopInven.AddItem(new Item("천 옷", 100, "방어력 +2 | 침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
+        shopInven.AddItem(new Item("가죽 옷", 800, "방어력 +7 | 동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
+        shopInven.AddItem(new Item("무쇠 갑옷", 1700, "방어력 +9 | 무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
+        shopInven.AddItem(new Item("강철 갑옷", 3300, "방어력 +15 | 강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
+        shopInven.AddItem(new Item("수정 갑옷", 4500, "방어력 +20 | 신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
+        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "방어력 +55 | 성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "방어력 + 130 | 금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
+    }
+    private void AddShopItem(string name, int price, string description, Item.ItemType type, int stat)
+    {
+        string formattedItem = $"{name,-20} Price: {price,-8} Description: {description,-60} Type: {type,-10} Stat: {stat,-5}";
+        shopInven.AddItem(new Item(name, price, description, type, stat));
+        Console.WriteLine(formattedItem);
     }
     public void ShopPrint()
     {
@@ -197,9 +202,19 @@ class Shop
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("");
+
             Program.PrintTextWithHighlights("[ ","보유 골드","]");
             Console.WriteLine( p.Gold + "G" );
             shopInven.DisplayInventory();
+
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine(p.Gold + "G");
+            for (int i = 0; i < shopInven.Count(); i++)
+            {
+                Item item = shopInven.ItemAccess(i);
+                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
+            }
+
             Console.WriteLine("");
             Program.Firstlettercolor("1."," 아이템 구매");
             Program.Firstlettercolor("2."," 아이템 판매");
@@ -225,7 +240,12 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
-            shopInven.DisplayInventory();
+            for (int i = 0; i < shopInven.Count(); i++)
+            {
+                Console.Write(i + 1);
+                Item item = shopInven.ItemAccess(i);
+                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
+            }
             Console.WriteLine("");
             Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
@@ -294,7 +314,6 @@ class Shop
                     p.ArmorSlot = null;
                 }
                 p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);
-                shopInven.AddItem(p.inven.ItemAccess(temp));
                 p.inven.RemoveItem(p.inven.ItemAccess(temp));
             }
             else
@@ -309,9 +328,9 @@ class Player
     public InventoryManager inven = new InventoryManager();
     public string Name { get; set; }
     public JOB job;
-    public float Atk;
+    float Atk;
     public float totalAtk { get { return WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk; } }
-    public float Def;
+    float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
     public float Hp;
@@ -415,8 +434,8 @@ class Player
             Console.WriteLine($"이름. {Name}");
             Console.WriteLine($"Lv. {Lv.ToString("00")}");
             Console.WriteLine($"Chad({job.jobName})");
-            Console.WriteLine($"공격력:{Atk}");
-            Console.WriteLine($"방어력:{Def}");
+            Console.WriteLine($"공격력:{Atk}  {(WeaponSlot == null ? "" : $"(+{WeaponSlot.Atk})")}");
+            Console.WriteLine($"방어력:{Def}  {(ArmorSlot == null ? "":$"+({ArmorSlot.Def})")}");
             Console.WriteLine($"체력:{Hp} / {M_Hp}");
             Console.WriteLine($"Gold:{Gold}");
             Console.WriteLine("");
@@ -438,26 +457,76 @@ class Player
     public Item? ArmorSlot { get; set; }
     public void ManageEquippedItems()
     {
-        Console.Clear();
-        Console.WriteLine("\n장착 관리");
-        inven.DisplayInventory();
-
-        Console.Write("장착 또는 해제할 아이템 번호를 입력하세요 (0. 나가기): ");
-        string? userInput = Console.ReadLine();
-
-        if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
+        while (true)
         {
-            Item selectedItem = inven.ItemAccess(itemIndex - 1);
-            selectedItem.Equipped = !selectedItem.Equipped;
-            if (selectedItem.Equipped)
-            {
-                Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
+            Console.Clear();
+            Console.WriteLine("\n장착 관리");
+            inven.DisplayInventory();
 
+            Console.Write("장착 또는 해제할 아이템 번호를 입력하세요 (0. 나가기): ");
+            string? userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
+            {
+                Item selectedItem = inven.ItemAccess(itemIndex - 1);
+                //selectedItem.Equipped = !selectedItem.Equipped;
+                //if (selectedItem.Equipped)
+                //{
+                //    Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
+                //}
+                //else
+                //{
+                //    Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
+                //}
+                switch (selectedItem.type)
+                {
+                    case Item.ItemType.Weapon:
+                        if (WeaponSlot == null)
+                        {
+                            WeaponSlot = selectedItem;
+                            selectedItem.Equipped = true;
+                        }
+                        else if (WeaponSlot.Name == selectedItem.Name)
+                        {
+                            WeaponSlot = null;
+                            selectedItem.Equipped = false;
+                        }
+                        else
+                        {
+                            selectedItem.Equipped = true;
+                            WeaponSlot.Equipped = false;
+                            WeaponSlot = selectedItem;
+                        }
+                        break;
+                    case Item.ItemType.Armor:
+                        if (ArmorSlot == null)
+                        {
+                            ArmorSlot = selectedItem;
+                            selectedItem.Equipped = true;
+                        }
+                        else if (ArmorSlot.Name == selectedItem.Name)
+                        {
+                            ArmorSlot = null;
+                            selectedItem.Equipped = false;
+                        }
+                        else
+                        {
+                            selectedItem.Equipped = true;
+                            ArmorSlot.Equipped = false;
+                            ArmorSlot = selectedItem;
+                        }
+                        break;
+                }
+            }
+            else if (userInput == "0")
+            {
+                return;
             }
             else
             {
-                Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
+                Program.WrongInput();
             }
+
             switch (selectedItem.type)
             {
                 case Item.ItemType.Weapon:
@@ -476,6 +545,7 @@ class Player
         else
         {
             Program.ShowHighlightedText_R("잘못된 입력입니다. 다시 입력해주세요.");
+
         }
     }
 }
@@ -666,11 +736,11 @@ class Battle
             Program.ShowHighlightedText_M("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.Atk}]"); //Damage 계산이 아직 안되서 player.Atk사용
-            Monster.monsters[temp].Hp -= (int)p.Atk; //p.Atk가 float형식이라 int로 명시적 형변환
+            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.totalAtk}]"); //Damage 계산이 아직 안되서 player.Atk사용
+            Monster.monsters[temp].Hp -= (int)p.totalAtk; //p.Atk가 float형식이라 int로 명시적 형변환
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.Atk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.totalAtk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine("");

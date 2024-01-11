@@ -470,7 +470,7 @@ class Player
                     case Item.ItemType.Armor:
                         if (ArmorSlot == null)
                         {
-                            WeaponSlot = selectedItem;
+                            ArmorSlot = selectedItem;
                             selectedItem.Equipped = true;
                         }
                         else if (ArmorSlot.Name == selectedItem.Name)

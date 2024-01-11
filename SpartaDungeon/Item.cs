@@ -10,6 +10,7 @@
         public int Price { get; set; }
         public string Description { get; set; }
         public bool Equipped { get; set; }
+        public bool HaveItem { get; set; }
         public int Atk { get; private set; }
         public int Def { get; private set; }
         public int Stack { get; set; }
@@ -25,6 +26,7 @@
             this.Atk = Atk;
             this.Def = Def;
             Equipped = false;
+            HaveItem = false;
 
         }
         //public void DisplayInventory()

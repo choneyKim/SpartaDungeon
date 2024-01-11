@@ -58,5 +58,23 @@ namespace Txt_Game
                 Console.WriteLine($"{i + 1} {equippedStatus}{item.Name} | 가격: {item.Price} G | {item.Description} | 갯수: {item.Stack}");
             }
         }
+        public void DisplayShopInventory()
+        {
+            Console.WriteLine("\n[아이템 목록]");
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].HaveItem == false)
+                {
+                    Console.WriteLine($"{i + 1} {Items[i].Name} | 가격: {Items[i].Price} G | {Items[i].Description}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{i + 1} {Items[i].Name} | 가격: {Items[i].Price} G | {Items[i].Description}");
+                    Console.ResetColor();
+                }
+
+            }
+        }
     }
 }

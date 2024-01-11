@@ -13,9 +13,9 @@ internal class Program
         //nP == 플레이어 객체, sh == 샵 객체
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
-        Battle battle = new Battle(nP,sh);
-        MainManu(nP,sh,battle);
-        
+        Battle battle = new Battle(nP, sh);
+        MainManu(nP, sh, battle);
+
     }
     public static void MainManu(Player nP, Shop sh, Battle battle)
     {
@@ -197,6 +197,30 @@ class Shop
         shopInven.AddItem(new Item("백금 갑옷", 20000, "방어력 + 130 | 금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
     }
+    public static int GetPrintableLength(string str)
+    {
+        int length = 0;
+        foreach (char c in str)
+        {
+            if (char.GetUnicodeCategory(c) == System.Globalization.Unicodecategory.OtherLetter)
+                    {
+                length += 2; // 한글같이 길이가 긴 문자에 대해 길이를 2로 취급 
+            }
+        else
+            {
+                length += 1; //나머지 문자에 대해서 길이를 1로 취급
+            }
+        }
+        return length;
+    }
+
+    public static string PadRightForMixedText(string str, int totlalLength)
+    {
+        int currentLenghth = GetPrintableLength(str);
+        int paddingg = totlalLength - currentLenghth;
+        return str.PadRight(str.Length + paddingg);
+    }
+
     private void AddShopItem(string name, int price, string description, Item.ItemType type, int stat)
     {
         string formattedItem = $"{name,-20} Price: {price,-8} Description: {description,-60} Type: {type,-10} Stat: {stat,-5}";
@@ -345,7 +369,10 @@ class Shop
             }
         }
     }
+
 }
+
+
 class Player
 {
     public InventoryManager inven = new InventoryManager();
@@ -544,7 +571,7 @@ class Player
         }
     }
 
-    
+
 }
 class Monster
 {
@@ -724,7 +751,7 @@ class Battle
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
         Console.ReadKey();
-        Program.MainManu(p,s,this); 
+        Program.MainManu(p, s, this);
 
     }
     public void BattleTurn(int temp)

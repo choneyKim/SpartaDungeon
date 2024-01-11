@@ -257,7 +257,7 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (temp > -1 && temp <= shopInven.Count() && p.Gold > shopInven.ItemAccess(temp).Price)
+                if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
                 {
                     if (!shopInven.ItemAccess(temp).HaveItem)
                     {
@@ -316,6 +316,14 @@ class Shop
                 {
                     p.inven.ItemAccess(temp).Equipped = false;
                     p.ArmorSlot = null;
+                }
+                for (int i = 0; i < p.inven.Count(); i++)
+                {
+                    if (p.inven.ItemAccess(temp).Name == shopInven.ItemAccess(i).Name)
+                    {
+                        shopInven.ItemAccess(i).HaveItem = false;
+                        break;
+                    }
                 }
                 p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);
                 p.inven.RemoveItem(p.inven.ItemAccess(temp));
@@ -460,7 +468,7 @@ class Player
     }
     public Item? WeaponSlot { get; set; }
     public Item? ArmorSlot { get; set; }
-    public void ManageEquippedItems()
+    public void ManageEquippedItems()  //아이템이 여러개 있고 판매를 할때 아이템 갯수가 1>0으로 갈때만 장비가 벗겨지게 개선할 필요가 있음
     {
         while (true)
         {
@@ -474,15 +482,6 @@ class Player
             if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
             {
                 Item selectedItem = inven.ItemAccess(itemIndex - 1);
-                //selectedItem.Equipped = !selectedItem.Equipped;
-                //if (selectedItem.Equipped)
-                //{
-                //    Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
-                //}
-                //else
-                //{
-                //    Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
-                //}
                 switch (selectedItem.type)
                 {
                     case Item.ItemType.Weapon:

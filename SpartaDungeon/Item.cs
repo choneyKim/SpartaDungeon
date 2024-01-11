@@ -12,10 +12,12 @@
         public bool Equipped { get; set; }
         public int Atk { get; private set; }
         public int Def { get; private set; }
+        public int Stack { get; set; }
 
         public ItemType type;
         public Item(string name, int price,string description ,ItemType type,int Atk = 0,int Def = 0)
         {
+            Stack = 1;
             this.type = type;
             Name = name;
             Price = price;

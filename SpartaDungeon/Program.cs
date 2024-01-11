@@ -282,7 +282,6 @@ class Shop
                     p.ArmorSlot = null;
                 }
                 p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);
-                shopInven.AddItem(p.inven.ItemAccess(temp));
                 p.inven.RemoveItem(p.inven.ItemAccess(temp));
             }
             else

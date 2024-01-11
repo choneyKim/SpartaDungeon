@@ -450,10 +450,40 @@ class Player
                 switch (selectedItem.type)
                 {
                     case Item.ItemType.Weapon:
-                        WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : selectedItem) : selectedItem;
+                        if (WeaponSlot == null)
+                        {
+                            WeaponSlot = selectedItem;
+                            selectedItem.Equipped = true;
+                        }
+                        else if (WeaponSlot.Name == selectedItem.Name)
+                        {
+                            WeaponSlot = null;
+                            selectedItem.Equipped = false;
+                        }
+                        else
+                        {
+                            selectedItem.Equipped = true;
+                            WeaponSlot.Equipped = false;
+                            WeaponSlot = selectedItem;
+                        }
                         break;
                     case Item.ItemType.Armor:
-                        ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : selectedItem) : selectedItem;
+                        if (ArmorSlot == null)
+                        {
+                            WeaponSlot = selectedItem;
+                            selectedItem.Equipped = true;
+                        }
+                        else if (ArmorSlot.Name == selectedItem.Name)
+                        {
+                            ArmorSlot = null;
+                            selectedItem.Equipped = false;
+                        }
+                        else
+                        {
+                            selectedItem.Equipped = true;
+                            ArmorSlot.Equipped = false;
+                            ArmorSlot = selectedItem;
+                        }
                         break;
                 }
             }

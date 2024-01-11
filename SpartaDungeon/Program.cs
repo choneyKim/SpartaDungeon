@@ -207,17 +207,17 @@ class Shop
             Console.WriteLine( p.Gold + "G" );
             shopInven.DisplayInventory();
 
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine(p.Gold + "G");
+            //Console.WriteLine("[보유 골드]");
+            //Console.WriteLine(p.Gold + "G");
 
-            for (int i = 0; i < shopInven.Count(); i++)
-            {
-                Item item = shopInven.ItemAccess(i);
-                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
-            }
+            //for (int i = 0; i < shopInven.Count(); i++)
+            //{
+            //    Item item = shopInven.ItemAccess(i);
+            //    Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
+            //}
 
 
-            shopInven.DisplayShopInventory();
+            //shopInven.DisplayShopInventory();
 
             Console.WriteLine("");
             Program.Firstlettercolor("1."," 아이템 구매");

@@ -6,6 +6,54 @@ using Txt_Game;
 internal class Program
 {
     public static Random ran = new Random();
+
+    static void Main(string[] args)
+    {
+        printStartLogo();
+        //nP == 플레이어 객체, sh == 샵 객체
+        Player nP = Player.AddPlayer();
+        Shop sh = new Shop(nP);
+        Battle battle = new Battle(nP,sh);
+        MainManu(nP,sh,battle);
+        
+    }
+    public static void MainManu(Player nP, Shop sh, Battle battle)
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("");
+            Program.Firstlettercolor("1.", " 상태 보기");
+            Program.Firstlettercolor("2.", " 인벤토리");
+            Program.Firstlettercolor("3.", " 상점");
+            Program.Firstlettercolor("4.", " 전투 시작");
+            Console.WriteLine("");
+            Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    nP.Status();
+                    break;
+                case "2":
+                    nP.ManageEquippedItems();
+                    break;
+                case "3":
+                    sh.ShopPrint();
+                    break;
+                case "4":
+                    battle.BattleDisplay();
+                    break;
+                default:
+                    WrongInput();
+                    break;
+            }
+        }
+    }
     public static void WrongInput()
     {
         Console.Write("잘못 된 입력 입니다");
@@ -93,6 +141,7 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
+
     static void Main(string[] args)
     {
         printStartLogo();
@@ -259,7 +308,7 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (temp > -1 && temp <= shopInven.Count() && p.Gold > shopInven.ItemAccess(temp).Price)
+                if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
                 {
                     if (!shopInven.ItemAccess(temp).HaveItem)
                     {
@@ -318,6 +367,14 @@ class Shop
                 {
                     p.inven.ItemAccess(temp).Equipped = false;
                     p.ArmorSlot = null;
+                }
+                for (int i = 0; i < p.inven.Count(); i++)
+                {
+                    if (p.inven.ItemAccess(temp).Name == shopInven.ItemAccess(i).Name)
+                    {
+                        shopInven.ItemAccess(i).HaveItem = false;
+                        break;
+                    }
                 }
                 p.Gold += (int)(p.inven.ItemAccess(temp).Price * 0.85f);
                 p.inven.RemoveItem(p.inven.ItemAccess(temp));
@@ -462,7 +519,7 @@ class Player
     }
     public Item? WeaponSlot { get; set; }
     public Item? ArmorSlot { get; set; }
-    public void ManageEquippedItems()
+    public void ManageEquippedItems()  //아이템이 여러개 있고 판매를 할때 아이템 갯수가 1>0으로 갈때만 장비가 벗겨지게 개선할 필요가 있음
     {
         while (true)
         {
@@ -476,15 +533,6 @@ class Player
             if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
             {
                 Item selectedItem = inven.ItemAccess(itemIndex - 1);
-                //selectedItem.Equipped = !selectedItem.Equipped;
-                //if (selectedItem.Equipped)
-                //{
-                //    Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
-                //}
-                //else
-                //{
-                //    Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
-                //}
                 switch (selectedItem.type)
                 {
                     case Item.ItemType.Weapon:
@@ -612,15 +660,17 @@ class Monster
         return monsterAtkResult;
     }
 }
-
 class Battle
 {
     Player p;
-    Monster m;
+    //Monster m;
+    //Battle b;
+    Shop s;
     float playerHp;
-    public Battle(Player p)
+    public Battle(Player p, Shop s)
     {
         this.p = p;
+        this.s = s;
     }
     public void BattleDisplay()
     {
@@ -633,7 +683,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
@@ -657,6 +707,7 @@ class Battle
     }
     public void BattleAttack()
     {
+        Monster.AddMonster();
         while (true)
         {
             bool IsClear = true;
@@ -671,7 +722,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("내정보");
-            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
@@ -713,7 +764,7 @@ class Battle
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
         Console.ReadKey();
-        BattleDisplay(); //메인메뉴 생성시 메인메뉴로 이동
+        Program.MainManu(p,s,this); 
 
     }
     public void BattleTurn(int temp)

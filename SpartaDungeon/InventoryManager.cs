@@ -17,13 +17,13 @@ namespace Txt_Game
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i] == item)
+                if (Items[i].Name == item.Name)
                 {
                     Items[i].Stack++;
                     return;
                 }
             }
-            Items.Add(item);
+            Items.Add(new Item(item.Name,item.Price,item.Description,item.type,item.Atk,item.Def));
         }
         public void RemoveItem(Item item)
         {

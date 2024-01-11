@@ -99,6 +99,8 @@ internal class Program
         //nP == 플레이어 객체, sh == 샵 객체
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
+        Potion HP_po = new Potion("힐포션",15,"체력을 15 회복.");
+
         while (true)
         {
             Console.Clear();
@@ -198,9 +200,9 @@ class Shop
         {
             Console.Clear();
             Program.PrintTextWithHighlights("|", " 상점 ", "|");
-            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++++");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
-            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++++");
             Console.WriteLine("");
             Program.PrintTextWithHighlights("[ ", "보유 골드", "]");
             Console.WriteLine(p.Gold + " G");

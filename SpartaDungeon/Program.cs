@@ -209,11 +209,15 @@ class Shop
 
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
+
             for (int i = 0; i < shopInven.Count(); i++)
             {
                 Item item = shopInven.ItemAccess(i);
                 Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
             }
+
+
+            shopInven.DisplayShopInventory();
 
             Console.WriteLine("");
             Program.Firstlettercolor("1."," 아이템 구매");
@@ -240,12 +244,7 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
-            for (int i = 0; i < shopInven.Count(); i++)
-            {
-                Console.Write(i + 1);
-                Item item = shopInven.ItemAccess(i);
-                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
-            }
+            shopInven.DisplayShopInventory();
             Console.WriteLine("");
             Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
@@ -258,10 +257,11 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
+                if (!shopInven.ItemAccess(temp).HaveItem)
                 {
                     p.Gold -= shopInven.ItemAccess(temp).Price;
                     p.inven.AddItem(shopInven.ItemAccess(temp));
+                    shopInven.ItemAccess(temp).HaveItem = true;
                     //shopInven.RemoveItem(shopInven.ItemAccess(temp));
                     continue;
                 }

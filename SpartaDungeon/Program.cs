@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using Txt_Game;
 
@@ -446,8 +447,111 @@ class Player
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 100;
-        M_mp = 100 + job.mp;
+        M_mp = 50 + job.mp;
         mp = M_mp;
+    }
+    public float FirstSkill()
+    {
+        switch (job.joben)
+        {
+            case JOB.Job.Warrior://mp소모 10 심플하게 15의 데미지를 준다
+                if (mp < 10)
+                {
+                    return -1;
+                }
+                mp -= 10;
+                return 15;
+            case JOB.Job.Wizrd: //mp소모 10
+                if (mp < 10)
+                {
+                    return -1;
+                }
+                mp -= 10;
+                return 0;
+            case JOB.Job.Chef: //mp소모 10
+                if (mp < 10)
+                {
+                    return -1;
+                }
+                mp -= 10;
+                return 0;
+            default:
+                return -2;
+        }
+    }
+    public float SecondSkill()
+    {
+        switch (job.joben)
+        {
+            case JOB.Job.Warrior://mp소모 30 10부터 35의 랜덤한 데미지
+                if (mp < 30)
+                {
+                    return -1;
+                }
+                mp -= 30;
+                return Program.ran.Next(10,36);
+            case JOB.Job.Wizrd://mp소모 30 35의 데미지를 주지만 장비가 벗겨진다
+                if (mp < 30)
+                {
+                    return -1;
+                }
+                mp -= 30;
+                WeaponSlot = null;
+                ArmorSlot = null;
+                return 35;
+            case JOB.Job.Chef: //mp소모 15 방어력이 더 해져 공격한다
+                if (mp<10)
+                {
+                    return -1;
+                }
+                mp -= 10;
+                return totalAtk + Def;
+            default:
+                return -2;
+        }
+    }
+    public float ThirdSkill()
+    {
+        switch (job.joben)
+        {
+            case JOB.Job.Warrior://mp소모 30 장비한 무기의 공격력 4배 데미지를 준다 장비한 아이템이 없을시엔 10 고정.
+                if (mp < 30)
+                {
+                    return -1;
+                }
+                mp -= 30;
+                if (WeaponSlot == null)
+                {
+                    return 10;
+                }
+                else
+                {
+                    return WeaponSlot.Atk * 4;
+                }
+            case JOB.Job.Wizrd:// mp 최대치의 절반을 소모 공격력 60의 피해
+                if (mp < M_mp / 2)
+                {
+                    return -1;
+                }
+                mp -= M_mp / 2;
+                return 60;
+            case JOB.Job.Chef://mp소모 30 장비한 방어구의 방어력 4배의 데미즈를 준다 장비한 아이템이 없을시엔 10 고정
+                if (mp < 30)
+                {
+                    return -1;
+                }
+                mp -= 30;
+                if (ArmorSlot == null)
+                {
+                    return 10;
+                }
+                else
+                {
+                    return ArmorSlot.Def * 4;
+                }
+            default:
+                return -2;
+        }
     }
     public class JOB
     {
@@ -460,6 +564,7 @@ class Player
         public int def;
         public int hp;
         public int mp;
+        public Job joben;
         public JOB(Job job)
         {
             switch (job)
@@ -481,6 +586,7 @@ class Player
                     hp = 10;
                     break;
             }
+            joben = job;
         }
     }
     public static Player AddPlayer()

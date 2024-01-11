@@ -13,7 +13,7 @@ internal class Program
     }
     private static void printStartLogo()
     {
-        Console.WriteLine("=====================================================================================================================");
+        ShowHighlightedText_D("=====================================================================================================================");
         Console.WriteLine("");
 
         Console.WriteLine("      ooooo   ooooo   .oooooo.   ooooo        oooooo   oooo                          ");
@@ -34,10 +34,10 @@ internal class Program
         Console.WriteLine("                o888bood8P'      `YbodP'    o8o        `8   `Y8bood8P'   o888ooooood8  `Y8bood8P'  o8o        `8   ");
 
         Console.WriteLine("");
-        Console.WriteLine("=======================================================================================================================");
+        ShowHighlightedText_D("=======================================================================================================================");
         ShowHighlightedText_M("                                                  PRESS ANYKEY TO START                                                ");
         //이렇게 사용 \*^^*/
-        Console.WriteLine("=======================================================================================================================");
+        ShowHighlightedText_D("=======================================================================================================================");
         Console.ReadKey();
     }
     public static void ShowHighlightedText_M(string text)
@@ -53,7 +53,14 @@ internal class Program
         Console.WriteLine(text);
         Console.ResetColor();
     }
-    //노란
+    //노란색
+    public static void ShowHighlightedText_D(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+    //어두운회색
     public static void ShowHighlightedText_G(string text)
     {
         Console.ForegroundColor = ConsoleColor.Gray;
@@ -61,6 +68,13 @@ internal class Program
         Console.ResetColor();
     }
     //회색
+    public static void ShowHighlightedText_R(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+    //빨간색
     public static void PrintTextWithHighlights(string s1, string s2, string s3 = "")
     {
         Console.Write(s1);
@@ -69,7 +83,16 @@ internal class Program
         Console.ResetColor();
         Console.WriteLine(s3);
     }
-    //중간 글자색바뀌게
+    //중간 글자색바뀌게(노란색)
+    public static void Firstlettercolor(string s1,string s2 = "")
+    {
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.Write(s1);
+        Console.ResetColor();
+        Console.WriteLine(s2);
+    }
+    //첫글자 색상변경(마젠타)
+
     static void Main(string[] args)
     {
         printStartLogo();
@@ -80,12 +103,15 @@ internal class Program
         {
             Console.Clear();
 
-            Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 상점");
-            Console.Write("원하시는 행동을 선택하세요 ");
-
-            string? input = Console.ReadLine();
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("마을에 오신 "+nP.Name+"님 환영합니다.");
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("");
+            Program.Firstlettercolor("1."," 상태 보기");
+            Program.Firstlettercolor("2."," 인벤토리");
+            Program.Firstlettercolor("3."," 상점");
+            Console.WriteLine("");
+            Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
 
             switch (input)
             {
@@ -167,18 +193,19 @@ class Shop
         {
             Console.Clear();
             Console.WriteLine("| 상점 |");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Program.ShowHighlightedText_D("+++++++++++++++++++++++++++++++");
             Console.WriteLine("");
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine(p.Gold + "G");
+            Program.PrintTextWithHighlights("[ ","보유 골드","]");
+            Console.WriteLine( p.Gold + "G" );
             shopInven.DisplayInventory();
             Console.WriteLine("");
-            Console.WriteLine("1. 아이템 구매");
-            Console.WriteLine("2. 아이템 판매");
-            Console.WriteLine("0. 나가기");
+            Program.Firstlettercolor("1."," 아이템 구매");
+            Program.Firstlettercolor("2."," 아이템 판매");
+            Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">>"); string? input = Console.ReadLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>"); string? input = Console.ReadLine();
             switch (input)
             {
                 case "1": ShopBuy(); break;
@@ -200,11 +227,10 @@ class Shop
             Console.WriteLine(p.Gold + "G");
             shopInven.DisplayInventory();
             Console.WriteLine("");
-            Console.WriteLine("0. 나가기");
+            Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">>");
-            string? input = Console.ReadLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>"); string? input = Console.ReadLine();
+
             if (Int32.TryParse(input, out int temp))
             {
                 if (temp == 0)
@@ -221,7 +247,7 @@ class Shop
                 }
                 else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
                 {
-                    Console.WriteLine("돈이 부족합니다.");
+                    Program.ShowHighlightedText_R("돈이 부족합니다.");
                     Console.ReadKey(); continue;
                 }
                 else
@@ -246,7 +272,7 @@ class Shop
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
             p.inven.DisplayInventory();
-            Console.WriteLine("0. 나가기");
+            Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>"); string? input = Console.ReadLine();
@@ -394,10 +420,9 @@ class Player
             Console.WriteLine($"체력:{Hp} / {M_Hp}");
             Console.WriteLine($"Gold:{Gold}");
             Console.WriteLine("");
-            Console.WriteLine("0. 나가기");
+            Program.Firstlettercolor("0."," 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해 주세요.");
-            Console.Write(">>");
+            Console.WriteLine("원하시는 행동을 입력해 주세요.\n>>");
             switch (Console.ReadLine())
             {
                 case "0":
@@ -450,7 +475,7 @@ class Player
         }
         else
         {
-            Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
+            Program.ShowHighlightedText_R("잘못된 입력입니다. 다시 입력해주세요.");
         }
     }
 }

@@ -102,7 +102,6 @@ internal class Program
                     WrongInput();
                     break;
             }
-
         }
     }
 }
@@ -171,7 +170,11 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
-            shopInven.DisplayInventory();
+            for (int i = 0; i < shopInven.Count(); i++)
+            {
+                Item item = shopInven.ItemAccess(i);
+                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
+            }
             Console.WriteLine("");
             Console.WriteLine("1. 아이템 구매");
             Console.WriteLine("2. 아이템 판매");
@@ -198,7 +201,12 @@ class Shop
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             Console.WriteLine(p.Gold + "G");
-            shopInven.DisplayInventory();
+            for (int i = 0; i < shopInven.Count(); i++)
+            {
+                Console.Write(i + 1);
+                Item item = shopInven.ItemAccess(i);
+                Console.WriteLine($" {item.Name} | 가격: {item.Price} G | {item.Description}");
+            }
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
@@ -283,9 +291,9 @@ class Player
     public InventoryManager inven = new InventoryManager();
     public string Name { get; set; }
     public JOB job;
-    public float Atk;
+    float Atk;
     public float totalAtk { get { return WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk; } }
-    public float Def;
+    float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
     public float Hp;
@@ -389,8 +397,8 @@ class Player
             Console.WriteLine($"이름. {Name}");
             Console.WriteLine($"Lv. {Lv.ToString("00")}");
             Console.WriteLine($"Chad({job.jobName})");
-            Console.WriteLine($"공격력:{Atk}");
-            Console.WriteLine($"방어력:{Def}");
+            Console.WriteLine($"공격력:{Atk}  {(WeaponSlot == null ? "" : $"(+{WeaponSlot.Atk})")}");
+            Console.WriteLine($"방어력:{Def}  {(ArmorSlot == null ? "":$"+({ArmorSlot.Def})")}");
             Console.WriteLine($"체력:{Hp} / {M_Hp}");
             Console.WriteLine($"Gold:{Gold}");
             Console.WriteLine("");
@@ -413,44 +421,45 @@ class Player
     public Item? ArmorSlot { get; set; }
     public void ManageEquippedItems()
     {
-        Console.Clear();
-        Console.WriteLine("\n장착 관리");
-        inven.DisplayInventory();
-
-        Console.Write("장착 또는 해제할 아이템 번호를 입력하세요 (0. 나가기): ");
-        string? userInput = Console.ReadLine();
-
-        if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
+        while (true)
         {
-            Item selectedItem = inven.ItemAccess(itemIndex - 1);
-            selectedItem.Equipped = !selectedItem.Equipped;
-            if (selectedItem.Equipped)
-            {
-                Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
+            Console.Clear();
+            Console.WriteLine("\n장착 관리");
+            inven.DisplayInventory();
 
+            Console.Write("장착 또는 해제할 아이템 번호를 입력하세요 (0. 나가기): ");
+            string? userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput, out int itemIndex) && itemIndex >= 1 && itemIndex <= inven.Count())
+            {
+                Item selectedItem = inven.ItemAccess(itemIndex - 1);
+                //selectedItem.Equipped = !selectedItem.Equipped;
+                //if (selectedItem.Equipped)
+                //{
+                //    Console.WriteLine($"{selectedItem.Name}을(를) 장착했습니다.");
+                //}
+                //else
+                //{
+                //    Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
+                //}
+                switch (selectedItem.type)
+                {
+                    case Item.ItemType.Weapon:
+                        WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : selectedItem) : selectedItem;
+                        break;
+                    case Item.ItemType.Armor:
+                        ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : selectedItem) : selectedItem;
+                        break;
+                }
+            }
+            else if (userInput == "0")
+            {
+                return;
             }
             else
             {
-                Console.WriteLine($"{selectedItem.Name}을(를) 해제했습니다.");
+                Program.WrongInput();
             }
-            switch (selectedItem.type)
-            {
-                case Item.ItemType.Weapon:
-                    WeaponSlot = WeaponSlot != null ? (WeaponSlot.Name == selectedItem.Name ? WeaponSlot = null : WeaponSlot) : selectedItem;
-                    break;
-                case Item.ItemType.Armor:
-                    ArmorSlot = ArmorSlot != null ? (ArmorSlot.Name == selectedItem.Name ? ArmorSlot = null : ArmorSlot) : selectedItem;
-                    break;
-            }
-
-        }
-        else if (userInput == "0")
-        {
-            return;
-        }
-        else
-        {
-            Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
         }
     }
 }
@@ -641,11 +650,11 @@ class Battle
             Program.ShowHighlightedText_M("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.Atk}]"); //Damage 계산이 아직 안되서 player.Atk사용
-            Monster.monsters[temp].Hp -= (int)p.Atk; //p.Atk가 float형식이라 int로 명시적 형변환
+            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.totalAtk}]"); //Damage 계산이 아직 안되서 player.Atk사용
+            Monster.monsters[temp].Hp -= (int)p.totalAtk; //p.Atk가 float형식이라 int로 명시적 형변환
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.Atk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.totalAtk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine("");

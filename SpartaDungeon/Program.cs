@@ -208,24 +208,24 @@ class Shop
     private void InitializeItems()
     {
         //무기
-        shopInven.AddItem(new Item("버터 나이프", 100, "공격력 +2 | 빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
-        shopInven.AddItem(new Item("소형 검", 200, "공격력 +5 | 사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
-        shopInven.AddItem(new Item("청동검", 500, "공격력 +7 | 사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
-        shopInven.AddItem(new Item("철창", 1000, "공격력 +10 | 철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
-        shopInven.AddItem(new Item("철검", 2000, "공격력 +22 | 창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
-        shopInven.AddItem(new Item("강철창", 4000, "공격력 + 50 | 강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
-        shopInven.AddItem(new Item("백금검", 17000, "공격력 +150 | 백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
-        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "공격력 +200 | 휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
+        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
+        shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
+        shopInven.AddItem(new Item("청동검", 500, "사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
+        shopInven.AddItem(new Item("철창", 1000, "철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
+        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
+        shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
+        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
+        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
         //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
 
         //갑옷
-        shopInven.AddItem(new Item("천 옷", 100, "방어력 +2 | 침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
-        shopInven.AddItem(new Item("가죽 옷", 800, "방어력 +7 | 동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
-        shopInven.AddItem(new Item("무쇠 갑옷", 1700, "방어력 +9 | 무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
-        shopInven.AddItem(new Item("강철 갑옷", 3300, "방어력 +15 | 강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
-        shopInven.AddItem(new Item("수정 갑옷", 4500, "방어력 +20 | 신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
-        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "방어력 +55 | 성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "방어력 + 130 | 금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
+        shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
+        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
+        shopInven.AddItem(new Item("무쇠 갑옷", 1700, "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
+        shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
+        shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
+        shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어를 누르면 한턴당 HP를 200 회복합니다"));
     }
     public static int GetPrintableLength(string str)
@@ -233,11 +233,11 @@ class Shop
         int length = 0;
         foreach (char c in str)
         {
-            if (char.GetUnicodeCategory(c) == System.Globalization.Unicodecategory.OtherLetter)
-                    {
+            if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter)
+            {
                 length += 2; // 한글같이 길이가 긴 문자에 대해 길이를 2로 취급 
             }
-        else
+            else
             {
                 length += 1; //나머지 문자에 대해서 길이를 1로 취급
             }
@@ -249,7 +249,7 @@ class Shop
     {
         int currentLenghth = GetPrintableLength(str);
         int paddingg = totlalLength - currentLenghth;
-        return str.PadRight(str.Length + paddingg);
+        return str.PadRight(str.Length+paddingg);
     }
 
     private void AddShopItem(string name, int price, string description, Item.ItemType type, int stat)
@@ -275,7 +275,10 @@ class Shop
             for (int i = 0; i < shopInven.Count(); i++)
             {
                 Item items = shopInven.ItemAccess(i);
-                Console.WriteLine($"{items.Name} | 가격: {items.Price} G | {items.Description}");
+                Console.Write(PadRightForMixedText($"{items.Name} ", 15));
+                Console.Write(PadRightForMixedText($"| 가격: {items.Price} G ", 20));
+                Console.Write(PadRightForMixedText($"| {(items.type==0?"공격력":"방어력")} {(items.type == 0 ? $"{items.Atk}" : $"{items.Def}")}", 15));
+                Console.WriteLine(PadRightForMixedText($"| {items.Description}", 30));
             }
             Console.WriteLine("");
             Program.Firstlettercolor("1.", " 아이템 구매");

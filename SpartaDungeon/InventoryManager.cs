@@ -54,8 +54,11 @@ namespace Txt_Game
             for (int i = 0; i < Items.Count; i++)
             {
                 Item item = Items[i];
-                string equippedStatus = item.Equipped ? "[E]" : "";
-                Console.WriteLine($"{i + 1} {equippedStatus}{item.Name} | 가격: {item.Price} G | {item.Description} | 갯수: {item.Stack}");
+                Console.Write(PadRightForMixedText($"{i + 1} {(item.Equipped ? "[E]" : "")}{item.Name} ", 20));
+                Console.Write(PadRightForMixedText($"| 가격: {item.Price} G ", 20));
+                Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
+                Console.Write(PadRightForMixedText($"| {item.Description} ", 45));
+                Console.WriteLine(PadRightForMixedText($"| 갯수: {item.Stack} ", 10));
             }
         }
         public void DisplayShopInventory()
@@ -65,16 +68,47 @@ namespace Txt_Game
             {
                 if (Items[i].HaveItem == false)
                 {
-                    Console.WriteLine($"{i + 1} {Items[i].Name} | 가격: {Items[i].Price} G | {Items[i].Description}");
+                    Console.Write(PadRightForMixedText($"{i+1} {Items[i].Name} ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
+                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
+
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine($"{i + 1} {Items[i].Name} | 가격: {Items[i].Price} G | {Items[i].Description}");
+                    Console.Write(PadRightForMixedText($"{i + 1} {Items[i].Name} ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
+                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
                     Console.ResetColor();
                 }
 
             }
         }
+        public int GetPrintableLength(string str)
+        {
+            int length = 0;
+            foreach (char c in str)
+            {
+                if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter)
+                {
+                    length += 2; // 한글같이 길이가 긴 문자에 대해 길이를 2로 취급 
+                }
+                else
+                {
+                    length += 1; //나머지 문자에 대해서 길이를 1로 취급
+                }
+            }
+            return length;
+        }
+
+        public string PadRightForMixedText(string str, int totlalLength)
+        {
+            int currentLenghth = GetPrintableLength(str);
+            int paddingg = totlalLength - currentLenghth;
+            return str.PadRight(str.Length + paddingg);
+        }
+
     }
 }

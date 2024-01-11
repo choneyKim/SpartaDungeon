@@ -359,6 +359,8 @@ class Player
     public int Gold;
     public float Hp;
     public float M_Hp;
+    public int mp;
+    public int M_mp;
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
     float Exp;
@@ -373,6 +375,7 @@ class Player
             M_Hp += 10;
             Exp = 0;
             M_Exp *= 1.5f;
+            M_mp += 10;
         }
     }
     public Player(string name, JOB job)
@@ -386,6 +389,8 @@ class Player
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 100;
+        M_mp = 100 + job.mp;
+        mp = M_mp;
     }
     public class JOB
     {
@@ -397,6 +402,7 @@ class Player
         public float atk;
         public int def;
         public int hp;
+        public int mp;
         public JOB(Job job)
         {
             switch (job)

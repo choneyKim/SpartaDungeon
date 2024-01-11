@@ -17,6 +17,43 @@ internal class Program
         MainManu(nP,sh,battle);
         
     }
+    public static void MainManu(Player nP, Shop sh, Battle battle)
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
+            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
+            Console.WriteLine("");
+            Program.Firstlettercolor("1.", " 상태 보기");
+            Program.Firstlettercolor("2.", " 인벤토리");
+            Program.Firstlettercolor("3.", " 상점");
+            Program.Firstlettercolor("4.", " 전투 시작");
+            Console.WriteLine("");
+            Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    nP.Status();
+                    break;
+                case "2":
+                    nP.ManageEquippedItems();
+                    break;
+                case "3":
+                    sh.ShopPrint();
+                    break;
+                case "4":
+                    battle.BattleDisplay();
+                    break;
+                default:
+                    WrongInput();
+                    break;
+            }
+        }
+    }
     public static void WrongInput()
     {
         Console.Write("잘못 된 입력 입니다");
@@ -104,43 +141,6 @@ internal class Program
         Console.WriteLine(s2);
     }
     //첫글자 색상변경(마젠타)
-    public static void MainManu(Player nP, Shop sh, Battle battle)
-    {
-        while (true)
-        {
-            Console.Clear();
-
-            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
-            Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
-            ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
-            Console.WriteLine("");
-            Program.Firstlettercolor("1.", " 상태 보기");
-            Program.Firstlettercolor("2.", " 인벤토리");
-            Program.Firstlettercolor("3.", " 상점");
-            Program.Firstlettercolor("4.", " 전투 시작");
-            Console.WriteLine("");
-            Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
-
-            switch (input)
-            {
-                case "1":
-                    nP.Status();
-                    break;
-                case "2":
-                    nP.ManageEquippedItems();
-                    break;
-                case "3":
-                    sh.ShopPrint();
-                    break;
-                case "4":
-                    battle.BattleDisplay();
-                    break;
-                default:
-                    WrongInput();
-                    break;
-            }
-        }
-    }
 }
 
 //    int SelectNum(int min, int max)
@@ -623,8 +623,8 @@ class Monster
 class Battle
 {
     Player p;
-    Monster m;
-    Battle b;
+    //Monster m;
+    //Battle b;
     Shop s;
     float playerHp;
     public Battle(Player p, Shop s)
@@ -724,7 +724,7 @@ class Battle
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
         Console.ReadKey();
-        Program.MainManu(p,s,b); 
+        Program.MainManu(p,s,this); 
 
     }
     public void BattleTurn(int temp)

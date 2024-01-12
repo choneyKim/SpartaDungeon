@@ -883,6 +883,8 @@ class Battle
     Shop s;
     float playerHp;
     int stage = 1;
+    float skillDmg;
+    bool useSkill = false;
     public Battle(Player p, Shop s)
     {
         this.p = p;
@@ -920,7 +922,18 @@ class Battle
                 }
                 else if (temp == 2)
                 {
-                    float skillDmg = SkillChoice();
+                    
+                    if (useSkill == true)
+                    {
+                        Console.WriteLine("이미 스킬이 선택되었습니다.");
+                        Console.ReadKey();
+                    }
+                    else 
+                    {
+                        useSkill = true;
+                        skillDmg = SkillChoice();
+                    }
+                        
                 }
                 else Program.WrongInput(); continue;
             }
@@ -940,7 +953,7 @@ class Battle
                 IsClear = Monster.monsters[i].IsDead && IsClear;
             }
             Console.Clear();
-            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage} _ 공격대상 선택");
+            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage} _ {(useSkill==true?"스킬":"공격")}대상 선택");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -952,7 +965,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
-            Console.WriteLine("공격할 적을 선택해주세요.");
+            Console.WriteLine($"{(useSkill==true?"스킬을 사용할":"공격할")} 적을 선택해주세요.");
             Console.Write(">>");
 
             if (IsClear)
@@ -1018,13 +1031,23 @@ class Battle
     {
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
-            int pDamage = p.PlayerDamage(Monster.monsters[temp].Def);
+            int pDamage = 0;
+            if (useSkill)
+            {
+                pDamage = (int)skillDmg;
+                useSkill = false;
+            }
+            else pDamage = p.PlayerDamage(Monster.monsters[temp].Def);
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
             Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]");
-            Monster.monsters[temp].Hp -= pDamage;
+            if (Monster.monsters[temp].Hp - pDamage < 0)
+            {
+                Monster.monsters[temp].Hp = 0;
+            }
+            else Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
             Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
@@ -1042,7 +1065,11 @@ class Battle
                     Console.WriteLine();
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
                     Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");
-                    p.Hp -= mDamage;
+                    if (p.Hp - mDamage < 0)
+                    {
+                        p.Hp = 0;
+                    }
+                    else p.Hp -= mDamage;
                     Console.WriteLine();
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
                     Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
@@ -1081,7 +1108,7 @@ class Battle
                     Console.WriteLine("  10부터 45의 랜덤한 데미지");
                     Console.WriteLine("");
                     Console.WriteLine("3.웨펀스페셜리스트 - Mp 30");
-                    Console.WriteLine("  장비한 무기의 4배 데미지 (if weapon == null return 10)");
+                    Console.WriteLine("  장비한 무기의 4배 데미지 (장비미착용 데미지:10)");
                     break;
                 case Player.JOB.Job.Wizrd:
                     Console.WriteLine("1.마나순환 -Mp 10");
@@ -1101,7 +1128,7 @@ class Battle
                     Console.WriteLine("  토탈공격력에 방어력만큼 추가한 데미지를 준다");
                     Console.WriteLine("");
                     Console.WriteLine("3.아머 마스터 -Mp 30");
-                    Console.WriteLine("  장비한 방어구의 4배 데미지 (if armor == null return 10)");
+                    Console.WriteLine("  장비한 방어구의 4배 데미지 (장비미착용 데미지:10)");
                     break;
             }
             Console.WriteLine("");

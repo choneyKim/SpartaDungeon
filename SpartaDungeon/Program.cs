@@ -877,6 +877,7 @@ class Monster
     public string Name { get; set; }
     public int Level { get; set; }
     public float Hp { get; set; }
+    public int M_Hp { get; set; }
     public float Atk { get; set; }
     public int Def { get; set; }
     public bool IsDead => Hp <= 0;
@@ -885,11 +886,12 @@ class Monster
 
     public static List<Monster> monsters = new List<Monster>();
 
-    public Monster(string name, int level, int hP, int aTK, int def, int dLv = 0, params Item[] drop)
+    public Monster(string name, int level, int hP,int m_hp, int aTK, int def, int dLv = 0, params Item[] drop)
     {
         Name = name;
         Level = level;
         Hp = hP;
+        M_Hp = m_hp;
         Atk = aTK;
         Def = def;
         dropLv = dLv;
@@ -898,7 +900,7 @@ class Monster
             dropTable.Add(item);
         }
     }
-    public static void AddMonster()
+    public static void AddMonster(Battle stage)
     {
 
         for (int i = 0; i < Program.ran.Next(1, 5); i++)
@@ -908,17 +910,17 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 10, 7, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                        monsters.Add(new Monster("미니언", 2, 15, 15, 10, 7, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                         break;
                     }
                 case 2:
                     {
-                        monsters.Add(new Monster("공허충", 3, 10, 18, 5));
+                        monsters.Add(new Monster("공허충", 3, 10, 10, 18, 5));
                         break;
                     }
                 case 3:
                     {
-                        monsters.Add(new Monster("대포미니언", 5, 25, 16, 13));
+                        monsters.Add(new Monster("대포미니언", 5, 25, 25, 16, 13));
                         break;
                     }
             }
@@ -976,7 +978,7 @@ class Battle
     //Battle b;
     Shop s;
     float playerHp;
-    int stage = 1;
+    public int stage = 1;
     float skillDmg;
     bool useSkill = false;
     int skillSelect = 0;
@@ -988,7 +990,7 @@ class Battle
     public void BattleDisplay()
     {
         Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
-        Monster.AddMonster();
+        Monster.AddMonster(this);
         while (true)
         {
             Console.Clear();
@@ -1148,16 +1150,16 @@ class Battle
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
             int random = Program.ran.Next(1, 101);
-            float damage_sub = 0;
-            if (random <= 15) { damage_sub = 1.6f; }
-            else if (random > 85) { damage_sub = 0f; }
-            else { damage_sub = 1f; }
-            float pDamage = 0f;
+            int damage_sub = 0;
+            if (random <= 15) { damage_sub = 160; }
+            else if (random > 85) { damage_sub = 0; }
+            else { damage_sub = 100; }
+            int pDamage = 0;
             if (useSkill)
             {
-                pDamage = skillDmg*(damage_sub);
+                pDamage = (int)skillDmg*(damage_sub)/100;
             }
-            else pDamage = p.PlayerDamage(Monster.monsters[temp].Def)*(damage_sub);
+            else pDamage = p.PlayerDamage(Monster.monsters[temp].Def)*(damage_sub)/100;
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
@@ -1226,14 +1228,9 @@ class Battle
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
                 $"[데미지 : {(random <= 15 ? pDamage+" (치명타)" : (random > 85 ? pDamage+ " (회피)" : pDamage))}]");
 
-            if (Monster.monsters[temp].Hp - pDamage < 0)
-            {
-                Monster.monsters[temp].Hp = 0;
-            }
-            else Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine($"HP  {Monster.monsters[temp].Hp+pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             useSkill = false;

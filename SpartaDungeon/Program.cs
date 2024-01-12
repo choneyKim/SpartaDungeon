@@ -112,11 +112,9 @@ internal class Program
                     hpFood.RemoveAt(0);
                     break;
                 case "4":
-
                     UsingPotion(P,popo);
                     mpfood.RemoveAt(0);
 
-                    UsingPotion(P, popo);
 
                     break;
                 case "0":
@@ -583,7 +581,7 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 10 + job.atk;
+        Atk = 1000 + job.atk;
         Def = 5 + job.def;
         Gold = 1500;
         M_Hp = 100 + job.hp;
@@ -923,7 +921,7 @@ class Monster
     }
     public static void AddMonster(Battle stage)
     {
-
+        int dif = stage.stage; 
         for (int i = 0; i < Program.ran.Next(1, 5); i++)
         {
 
@@ -931,17 +929,17 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 15, 10, 7, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                        monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 19 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                         break;
                     }
                 case 2:
                     {
-                        monsters.Add(new Monster("공허충", 3, 10, 10, 18, 5));
+                        monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17+ dif, 4 + dif));
                         break;
                     }
                 case 3:
                     {
-                        monsters.Add(new Monster("대포미니언", 5, 25, 25, 16, 13));
+                        monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15+ dif, 12+ dif));
                         break;
                     }
             }
@@ -1248,8 +1246,8 @@ class Battle
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
                 $"[데미지 : {(random <= 15 ? pDamage+" (치명타)" : (random > 85 ? pDamage+ " (회피)" : pDamage))}]");
-
             Console.WriteLine();
+            Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
             Console.WriteLine($"HP  {Monster.monsters[temp].Hp+pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();

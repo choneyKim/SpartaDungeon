@@ -9,7 +9,7 @@ internal class Program
 {
     public static Random ran = new Random();
     public static List<Potion> healPotion = new List<Potion>();
-
+    public static List<Potion> manaPotion = new List<Potion>();
     static void Main(string[] args)
     {
         printStartLogo();
@@ -18,8 +18,9 @@ internal class Program
         Shop sh = new Shop(nP);
         Battle battle = new Battle(nP, sh);
         healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
-        healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
-        healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+        manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
+        healPotion.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
+        manaPotion.Add(new Potion("파워에이드", 20, "MP 20 회복"));
         MainManu(nP, sh, battle);
 
     }
@@ -77,20 +78,32 @@ internal class Program
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-            Console.WriteLine("힐 포션." + "(남은포션: " + healPotion.Count + ")");
-            Console.WriteLine("마나 포션." + "(남은포션: " + ")");
-            Console.WriteLine("ㅋㅋ." + "(남은포션: " + ")");
-            Console.WriteLine("ㅇㅇㄷ." + "(남은포션: " + ")");
+            Console.WriteLine("현재 HP:"+P.Hp);
+            Console.WriteLine("현재 MP:"+P.mp);
             Console.WriteLine("");
-            Firstlettercolor("1.", " 사용하기");
+            Console.WriteLine("[ 사용하기 ]");
+            Console.WriteLine("1. "+"힐 포션:" + "(남은포션: " + healPotion.Count + ")");
+            Console.WriteLine("2. "+"마나 포션:" + "(남은포션: " + manaPotion.Count + ")");
+            Console.WriteLine("3. "+"내가 만든 쿠키:" + "(남은포션: " + healPotion.Count + ")");
+            Console.WriteLine("4. "+"파워에이드:" + "(남은포션: " + manaPotion.Count + ")");
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.\n>>"); string? input = Console.ReadLine();
+            bool isnum = int.TryParse(input, out int popo);
 
             switch (input)
             {
                 case "1":
-                    UsingPotion(P);
+                    
+                   
+                case "2":
+
+
+                case "3":
+
+
+                case "4":
+                    UsingPotion(P,popo);
                     break;
                 case "0":
                     return;
@@ -101,15 +114,83 @@ internal class Program
         }
 
     }
-    private static void UsingPotion(Player player)
+    private static void UsingPotion(Player player ,int num)
     {
-        Potion MP_potion = new Potion("마나 포션", 15, "MP 15 회복");
-        Potion HP_food = new Potion("내가 만든 쿠키", 20, "HP 20 회복");
-        Potion MP_food = new Potion("파워에이드", 20, "MP 20 회복");
-        player.Hp += healPotion[0].Point;
-        if (player.Hp >= player.M_Hp)
+        if (num == 1)
         {
-            player.Hp = player.M_Hp;
+            player.Hp += healPotion[0].Point;
+            if (player.Hp >= player.M_Hp)
+            {
+                player.Hp = player.M_Hp;
+            }
+            else if (player.Hp == player.M_Hp)
+            {
+                Console.WriteLine("HP 회복을 완료했습니다.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
+                Console.ReadKey();
+            }
+        }
+        if ( num == 2)
+        {
+            player.M_mp += manaPotion[0].Point;
+            if (player.mp >= player.M_mp)
+            {
+                player.mp = player.M_mp;
+            }
+            else if (player.mp == player.M_mp)
+            {
+                Console.WriteLine("MP 회복을 완료했습니다.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
+                Console.ReadKey();
+            }
+
+            return;
+        }
+        if (num == 3)
+        {
+            player.Hp += healPotion[0].Point;
+            if (player.Hp >= player.M_Hp)
+            {
+                player.Hp = player.M_Hp;
+            }
+            else if (player.Hp == player.M_Hp)
+            {
+                Console.WriteLine("HP 회복을 완료했습니다.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
+                Console.ReadKey();
+            }
+        }
+        if (num == 4)
+        {
+            player.M_mp += manaPotion[0].Point;
+            if (player.mp >= player.M_mp)
+            {
+                player.mp = player.M_mp;
+            }
+            else if (player.mp == player.M_mp)
+            {
+                Console.WriteLine("MP 회복을 완료했습니다.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
+                Console.ReadKey();
+            }
+
+            return;
         }
     }
 

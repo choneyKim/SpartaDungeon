@@ -8,6 +8,7 @@ using Txt_Game;
 internal class Program
 {
     public static Random ran = new Random();
+    public static List<Potion> healPotion = new List<Potion>();
 
     static void Main(string[] args)
     {
@@ -16,6 +17,9 @@ internal class Program
         Player nP = Player.AddPlayer();
         Shop sh = new Shop(nP);
         Battle battle = new Battle(nP, sh);
+        healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+        healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+        healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
         MainManu(nP, sh, battle);
 
     }
@@ -73,7 +77,10 @@ internal class Program
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-            Console.WriteLine("포션을 사용하면 체력을 회복 할 수 있습니다."+"(남은포션: "+")");
+            Console.WriteLine("힐 포션." + "(남은포션: " + healPotion.Count + ")");
+            Console.WriteLine("마나 포션." + "(남은포션: " + ")");
+            Console.WriteLine("ㅋㅋ." + "(남은포션: " + ")");
+            Console.WriteLine("ㅇㅇㄷ." + "(남은포션: " + ")");
             Console.WriteLine("");
             Firstlettercolor("1.", " 사용하기");
             Firstlettercolor("0.", " 나가기");
@@ -94,14 +101,12 @@ internal class Program
         }
 
     }
-
     private static void UsingPotion(Player player)
     {
-        Potion HP_potion = new Potion("힐 포션", 15, "HP 15 회복");
-        //Potion MP_potion = new Potion("마나 포션", 15, "MP 15 회복");
-        //Potion HP_food = new Potion("내가 만든 쿠키",20,"HP 20 회복");
-        //Potion MP_food = new Potion("파워에이드", 20, "MP 20 회복");
-        player.Hp += HP_potion.Point;
+        Potion MP_potion = new Potion("마나 포션", 15, "MP 15 회복");
+        Potion HP_food = new Potion("내가 만든 쿠키", 20, "HP 20 회복");
+        Potion MP_food = new Potion("파워에이드", 20, "MP 20 회복");
+        player.Hp += healPotion[0].Point;
         if (player.Hp >= player.M_Hp)
         {
             player.Hp = player.M_Hp;
@@ -786,7 +791,7 @@ class Monster
 
     public static List<Monster> monsters = new List<Monster>();
 
-    public Monster(string name, int level, int hP, int aTK, int def,int dLv = 0 ,params Item[] drop)
+    public Monster(string name, int level, int hP, int aTK, int def, int dLv = 0, params Item[] drop)
     {
         Name = name;
         Level = level;
@@ -825,7 +830,7 @@ class Monster
             }
         }
     }
-    public void GetReward(Player p,ref int gold, ref int exp)
+    public void GetReward(Player p, ref int gold, ref int exp)
     {
         p.CheckLvUp(Level);
         exp += Level;
@@ -995,7 +1000,7 @@ class Battle
             Console.WriteLine("획득 보상");
             for (int i = 0; i < Monster.monsters.Count; i++)
             {
-                Monster.monsters[i].GetReward(p,ref getGold,ref getExp);
+                Monster.monsters[i].GetReward(p, ref getGold, ref getExp);
             }
             Console.WriteLine("Gold: " + getGold);
             Console.WriteLine("Exp " + getExp);

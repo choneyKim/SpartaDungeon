@@ -656,6 +656,7 @@ class Player
             Console.WriteLine($"공격력:{Atk}  {(WeaponSlot == null ? "" : $"(+{WeaponSlot.Atk})")}");
             Console.WriteLine($"방어력:{Def}  {(ArmorSlot == null ? "" : $"+({ArmorSlot.Def})")}");
             Console.WriteLine($"체력:{Hp} / {M_Hp}");
+            Console.WriteLine($"마나:{mp} / {M_mp}");
             Console.WriteLine($"Gold:{Gold}");
             Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");

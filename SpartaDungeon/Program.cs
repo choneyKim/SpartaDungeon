@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -80,15 +81,15 @@ internal class Program
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-
-            Console.WriteLine("현재 HP:"+P.Hp+"/"+P.M_Hp);
-            Console.WriteLine("현재 MP:"+P.mp+"/"+P.M_mp);
             Console.WriteLine("");
-            Console.WriteLine("[ 사용하기 ]");
-            Console.WriteLine("1. "+"힐 포션:" + "(남은포션: " + healPotion.Count + ")");
-            Console.WriteLine("2. "+"마나 포션:" + "(남은포션: " + manaPotion.Count + ")");
-            Console.WriteLine("3. "+"내가 만든 쿠키:" + "(남은포션: " + hpFood.Count + ")");
-            Console.WriteLine("4. "+"파워에이드:" + "(남은포션: " + mpfood.Count + ")");
+            Console.WriteLine("현재 HP: "+P.Hp+"/"+P.M_Hp);
+            Console.WriteLine("현재 MP: "+P.mp+"/"+P.M_mp);
+            Console.WriteLine("");
+            PrintTextWithHighlights("["," 사용하기","]");
+            Firstlettercolor("1. ","힐 포션: " +"HP를 15 회복시켜줍니다.(남은포션: " + healPotion.Count + ")");
+            Firstlettercolor("2. ","마나 포션: " +"MP를 15 회복시켜줍니다.(남은포션: " + manaPotion.Count + ")");
+            Firstlettercolor("3. ","내가 만든 쿠키: " + "HP를 20 회복시켜줍니다.(남은포션: " + hpFood.Count + ")");
+            Firstlettercolor("4. ","파워에이드: " + "MP를 20 회복시켜줍니다.(남은포션: " + mpfood.Count + ")");
 
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -98,26 +99,40 @@ internal class Program
             switch (input)
             {
                 case "1":
-
+                    if (healPotion.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    healPotion.RemoveAt(0);
                     break;
-
                 case "2":
+                    if (manaPotion.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    manaPotion.RemoveAt(0);
                     break;
                 case "3":
+                    if (hpFood.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    hpFood.RemoveAt(0);
                     break;
                 case "4":
-
+                    if (mpfood.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P,popo);
-                    mpfood.RemoveAt(0);
-
-                    UsingPotion(P, popo);
-
                     break;
                 case "0":
                     return;
@@ -128,6 +143,7 @@ internal class Program
         }
 
     }
+    
     private static void UsingPotion(Player player, int num)
     {
         if (num == 1)
@@ -148,6 +164,7 @@ internal class Program
                 }
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
+                healPotion.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -170,6 +187,7 @@ internal class Program
                 }
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
+                manaPotion.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -192,6 +210,7 @@ internal class Program
                 }
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + hpFood[0].Point + "만큼 회복되었습니다.");
+                hpFood.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -214,6 +233,7 @@ internal class Program
                 }
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + mpfood[0].Point + "만큼 회복되었습니다.");
+                mpfood.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -583,7 +603,7 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 10 + job.atk;
+        Atk = 1000 + job.atk;
         Def = 5 + job.def;
         Gold = 1500;
         M_Hp = 100 + job.hp;
@@ -925,7 +945,7 @@ class Monster
     }
     public static void AddMonster(Battle stage)
     {
-
+        int dif = stage.stage; 
         for (int i = 0; i < Program.ran.Next(1, 5); i++)
         {
 
@@ -933,17 +953,17 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 15, 10, 7, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                        monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 19 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                         break;
                     }
                 case 2:
                     {
-                        monsters.Add(new Monster("공허충", 3, 10, 10, 18, 5));
+                        monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17+ dif, 4 + dif));
                         break;
                     }
                 case 3:
                     {
-                        monsters.Add(new Monster("대포미니언", 5, 25, 25, 16, 13));
+                        monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15+ dif, 12+ dif));
                         break;
                     }
             }
@@ -1257,8 +1277,8 @@ class Battle
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
                 $"[데미지 : {(random <= 15 ? pDamage+" (치명타)" : (random > 85 ? pDamage+ " (회피)" : pDamage))}]");
-
             Console.WriteLine();
+            Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
             Console.WriteLine($"HP  {Monster.monsters[temp].Hp+pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();

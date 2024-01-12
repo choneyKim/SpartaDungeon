@@ -1113,6 +1113,11 @@ class Battle
             Console.WriteLine("Gold: " + getGold);
             Console.WriteLine("Exp " + getExp);
             Console.WriteLine("");
+            p.mp += 10;
+            if (p.mp > p.M_mp)
+            {
+                p.mp = p.M_mp;
+            }
         }
         Console.WriteLine();
         Console.WriteLine("0. 다음");

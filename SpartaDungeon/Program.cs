@@ -932,6 +932,7 @@ class Battle
                     {
                         useSkill = true;
                         skillDmg = SkillChoice();
+                        if(useSkill==true)BattleAttack();
                     }
                         
                 }
@@ -1149,6 +1150,7 @@ class Battle
                     temp = p.ThirdSkill();
                     break;
                 case "0":
+                    useSkill = false;
                     return -5;
                 default:
                     Program.WrongInput();

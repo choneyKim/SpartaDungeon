@@ -615,6 +615,7 @@ class Player
     }
 
    // 스킬 계수 정리
+   //return 뒤의 양수는 모두 데미지 관련
     public float FirstSkill()
     {
         switch (job.joben)
@@ -622,14 +623,14 @@ class Player
             case JOB.Job.Warrior:
                 if (mp < 10)
                 {
-                    return -1;
+                    return -1; // -1 은 마나가 부족시 
                 }
                 mp -= 10;
                 return 15;
             case JOB.Job.Wizrd:
                 if (mp < 10)
                 {
-                    return -1;
+                    return -1;// -1은 마나가 부족시 
                 }
                 Program.ran.Next(1, 5);
                 if (Program.ran.Next(1, 5) < 3)
@@ -650,7 +651,7 @@ class Player
                 }
                 return Def;
             default:
-                return -2;
+                return -2; // -2는 직업을 못불러 왔을때 
         }
     }
     public float SecondSkill()
@@ -703,7 +704,7 @@ class Player
                 mp -= 30;
                 if (WeaponSlot == null)
                 {
-                    return 10;
+                    return 10;//데미지 무기공격력 4배|| 방어구 장착 안할시 기본데미지 10
                 }
                 else
                 {
@@ -725,7 +726,7 @@ class Player
                 mp -= 30;
                 if (ArmorSlot == null)
                 {
-                    return 10;
+                    return 10; //데미지 방어력 *4 || 방어구 장착 안할시 기본데미지 10
                 }
                 else
                 {
@@ -1384,12 +1385,12 @@ class Battle
                     break;
                 case "0":
                     useSkill = false;
-                    return -5;
+                    return -5; // 임의 -5 값 -> 이전 화면 돌아가기
                 default:
                     Program.WrongInput();
                     continue;
             }
-            if (temp == -1)
+            if (temp == -1) // -1 마나가 부족할 때 
             {
                 Console.WriteLine("마나가 부족합니다.");
                 Console.ReadKey();

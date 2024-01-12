@@ -541,7 +541,14 @@ class Player
                 {
                     return -1;
                 }
-                mp -= 30;
+                if (WeaponSlot != null)
+                {
+                    WeaponSlot.Equipped = false;
+                }
+                if (ArmorSlot != null)
+                {
+                    ArmorSlot.Equipped = false;
+                }
                 WeaponSlot = null;
                 ArmorSlot = null;
                 return 40;

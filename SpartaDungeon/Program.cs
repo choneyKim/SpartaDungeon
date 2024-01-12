@@ -736,6 +736,7 @@ class Player
             Console.Clear();
             Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
             string name = Console.ReadLine() ?? "철수";
+            w:
             Console.WriteLine("직업을 입력하여 주십시오.");
             Console.WriteLine("1.워리어 2.위자드 3.쉐프");
             JOB job;
@@ -752,7 +753,8 @@ class Player
                     break;
                 default:
                     Program.WrongInput();
-                    continue;
+                    Console.Clear();
+                    goto w;
             }
             return new Player(name, job);
         }

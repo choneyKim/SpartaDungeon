@@ -1273,7 +1273,7 @@ class Battle
                     Console.WriteLine("2.발버둥 -Mp 30");
                     Console.WriteLine("  데미지 40을 주지만 장비가 벗겨진다");
                     Console.WriteLine("");
-                    Console.WriteLine($"3.마나공격 -{p.M_mp / 2}");
+                    Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
                     break;
                 case Player.JOB.Job.Chef:

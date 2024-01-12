@@ -593,6 +593,8 @@ class Player
         M_mp = 50 + job.mp;
         mp = M_mp;
     }
+
+   // 스킬 계수 정리
     public float FirstSkill()
     {
         switch (job.joben)
@@ -1130,6 +1132,9 @@ class Battle
         Console.WriteLine();
         Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
         Console.WriteLine($"HP  {playerHp} -> {p.Hp}");
+
+        //사망과 부활 공식
+
         if (isdead)
         {
             Console.WriteLine("몬스터에게 잡아먹혔습니다.");
@@ -1185,6 +1190,10 @@ class Battle
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
+
+            
+            //스킬 사용시
+
             if (useSkill)
             {
                 switch (p.job.joben)
@@ -1284,6 +1293,8 @@ class Battle
             }
         }
     }
+    
+   //skill 선택
     public float SkillChoice()
     {
         float temp = 0;

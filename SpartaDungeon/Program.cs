@@ -892,6 +892,7 @@ class Battle
     int stage = 1;
     float skillDmg;
     bool useSkill = false;
+    int skillSelect = 0;
     public Battle(Player p, Shop s)
     {
         this.p = p;
@@ -1043,14 +1044,66 @@ class Battle
             if (useSkill)
             {
                 pDamage = (int)skillDmg;
-                useSkill = false;
             }
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def);
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]");
+            if (useSkill) 
+            {
+                switch (p.job.joben)
+                {
+                    case Player.JOB.Job.Warrior:
+                        switch (skillSelect)
+                        {
+                            case 1:
+                                Program.PrintTextWithHighlights("플레이어가", "머리치기",$"를 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 2:
+                                Program.PrintTextWithHighlights("플레이어가", "운칠기삼", $"을 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 3:
+                                Program.PrintTextWithHighlights("플레이어가", "웨폰스페셜리스트", $"를 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+
+                        }
+                        break;
+                    case Player.JOB.Job.Wizrd:
+                        switch (skillSelect)
+                        {
+                            case 1:
+                                Program.PrintTextWithHighlights("플레이어가", "마나순환", $"을 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 2:
+                                Program.PrintTextWithHighlights("플레이어가", "발버둥", $"을 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 3:
+                                Program.PrintTextWithHighlights("플레이어가", "마나공격", $"을 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+
+                        }
+                        break;
+
+                    case Player.JOB.Job.Chef:
+                        switch (skillSelect)
+                        {
+                            case 1:
+                                Program.PrintTextWithHighlights("플레이어가", "체력보충제", $"를 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 2:
+                                Program.PrintTextWithHighlights("플레이어가", "공방일체", $"를 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+                            case 3:
+                                Program.PrintTextWithHighlights("플레이어가", "아머 마스터", $"를 시전합니다.  [데미지 : {pDamage}]");
+                                break;
+
+                        }
+                        break;
+                }
+            }
+            else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]");
+            
             if (Monster.monsters[temp].Hp - pDamage < 0)
             {
                 Monster.monsters[temp].Hp = 0;
@@ -1061,6 +1114,7 @@ class Battle
             Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
+            useSkill = false;
             Console.WriteLine("");
             Console.ReadKey();
             for (int i = 0; i < Monster.monsters.Count; i++)
@@ -1088,6 +1142,7 @@ class Battle
                     Console.ReadKey(); continue;
                 }
             }
+            BattleDisplay();
         }
     }
     public float SkillChoice()
@@ -1145,6 +1200,7 @@ class Battle
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
             string? input = Console.ReadLine();
+            bool isNum = int.TryParse(input, out skillSelect);
             switch (input)
             {
                 case "1":

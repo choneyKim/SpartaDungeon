@@ -1079,6 +1079,7 @@ class Battle
                     {
                         temp -= 1;
                         BattleTurn(temp);
+                        return;
                     }
                 }
                 else
@@ -1227,7 +1228,6 @@ class Battle
                     Console.ReadKey(); continue;
                 }
             }
-            BattleDisplay();
         }
     }
     public float SkillChoice()

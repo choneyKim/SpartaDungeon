@@ -49,7 +49,12 @@ internal class Program
                     sh.ShopPrint();
                     break;
                 case "4":
-                    battle.BattleDisplay();
+                    if (nP.IsDead == true) 
+                    { 
+                        Console.WriteLine("체력을 회복하여 주십시오");
+                        Console.ReadKey();
+                    }
+                    else battle.BattleDisplay();
                     break;
                 case "5":
                     Recovery();
@@ -90,7 +95,6 @@ internal class Program
     {
         Console.Write("잘못 된 입력 입니다");
         Console.ReadKey();
-        Console.SetCursorPosition(0, 0);
     }
     private static void printStartLogo()
     {
@@ -778,17 +782,17 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 5, 7));
+                        monsters.Add(new Monster("미니언", 2, 15, 10, 7));
                         break;
                     }
                 case 2:
                     {
-                        monsters.Add(new Monster("공허충", 3, 10, 9, 5));
+                        monsters.Add(new Monster("공허충", 3, 10, 18, 5));
                         break;
                     }
                 case 3:
                     {
-                        monsters.Add(new Monster("대포미니언", 5, 25, 8, 13));
+                        monsters.Add(new Monster("대포미니언", 5, 25, 16, 13));
                         break;
                     }
             }
@@ -833,6 +837,7 @@ class Battle
     //Battle b;
     Shop s;
     float playerHp;
+    int stage=1;
     public Battle(Player p, Shop s)
     {
         this.p = p;
@@ -845,7 +850,7 @@ class Battle
         while (true)
         {
             Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!");
+            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage}");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -890,7 +895,7 @@ class Battle
                 IsClear = Monster.monsters[i].IsDead && IsClear;
             }
             Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!_공격대상 선택");
+            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage} _ 공격대상 선택");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -934,9 +939,9 @@ class Battle
     public void BattleResult(bool isdead)
     {
         Console.Clear();
-        Program.ShowHighlightedText_M("Battle!! - Result");
+        Program.ShowHighlightedText_Y($"Stage {stage} - Result ");
         Console.WriteLine();
-        Program.ShowHighlightedText_M(p.IsDead ? "You Lose" : "Victory");
+        Program.ShowHighlightedText_Y(p.IsDead ? "You Lose" : "Victory");
         Console.WriteLine();
         Console.WriteLine(p.IsDead ? "" : $"던전에서 몬스터{Monster.monsters.Count}마리를 잡았습니다.");
         Console.WriteLine();
@@ -945,6 +950,7 @@ class Battle
         Console.WriteLine();
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
+        if (p.IsDead == false) stage++;
         Console.ReadKey();
         Program.MainManu(p, s, this);
 
@@ -955,7 +961,7 @@ class Battle
         {
             int pDamage = p.PlayerDamage(Monster.monsters[temp].Def);
             Console.Clear();
-            Program.ShowHighlightedText_M("Battle!!");
+            Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
             Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]"); 
@@ -973,7 +979,7 @@ class Battle
                 {
                     int mDamage = Monster.MonsterDamage(i, (int)p.totalDef);
                     Console.Clear();
-                    Program.ShowHighlightedText_M("Battle!!");
+                    Program.ShowHighlightedText_Y("Battle!!");
                     Console.WriteLine();
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
                     Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");

@@ -78,14 +78,14 @@ internal class Program
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-            Console.WriteLine("현재 HP:"+P.Hp);
-            Console.WriteLine("현재 MP:"+P.mp);
+            Console.WriteLine("현재 HP:" + P.Hp);
+            Console.WriteLine("현재 MP:" + P.mp);
             Console.WriteLine("");
             Console.WriteLine("[ 사용하기 ]");
-            Console.WriteLine("1. "+"힐 포션:" + "(남은포션: " + healPotion.Count + ")");
-            Console.WriteLine("2. "+"마나 포션:" + "(남은포션: " + manaPotion.Count + ")");
-            Console.WriteLine("3. "+"내가 만든 쿠키:" + "(남은포션: " + healPotion.Count + ")");
-            Console.WriteLine("4. "+"파워에이드:" + "(남은포션: " + manaPotion.Count + ")");
+            Console.WriteLine("1. " + "힐 포션:" + "(남은포션: " + healPotion.Count + ")");
+            Console.WriteLine("2. " + "마나 포션:" + "(남은포션: " + manaPotion.Count + ")");
+            Console.WriteLine("3. " + "내가 만든 쿠키:" + "(남은포션: " + healPotion.Count + ")");
+            Console.WriteLine("4. " + "파워에이드:" + "(남은포션: " + manaPotion.Count + ")");
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.\n>>"); string? input = Console.ReadLine();
@@ -94,8 +94,8 @@ internal class Program
             switch (input)
             {
                 case "1":
-                    
-                   
+
+
                 case "2":
 
 
@@ -103,7 +103,7 @@ internal class Program
 
 
                 case "4":
-                    UsingPotion(P,popo);
+                    UsingPotion(P, popo);
                     break;
                 case "0":
                     return;
@@ -114,7 +114,7 @@ internal class Program
         }
 
     }
-    private static void UsingPotion(Player player ,int num)
+    private static void UsingPotion(Player player, int num)
     {
         if (num == 1)
         {
@@ -138,7 +138,7 @@ internal class Program
             }
             return;
         }
-        if ( num == 2)
+        if (num == 2)
         {
             player.M_mp += manaPotion[0].Point;
             if (player.mp >= player.M_mp)
@@ -1005,6 +1005,8 @@ class Battle
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
+
+
             string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp))
             {
@@ -1015,19 +1017,19 @@ class Battle
                 }
                 else if (temp == 2)
                 {
-                    
+
                     if (useSkill == true)
                     {
                         Console.WriteLine("이미 스킬이 선택되었습니다.");
                         Console.ReadKey();
                     }
-                    else 
+                    else
                     {
                         useSkill = true;
                         skillDmg = SkillChoice();
-                        if(useSkill==true)BattleAttack();
+                        if (useSkill == true) BattleAttack();
                     }
-                        
+
                 }
                 else Program.WrongInput(); continue;
             }
@@ -1035,6 +1037,7 @@ class Battle
             {
                 Program.WrongInput(); continue;
             }
+
         }
     }
     public void BattleAttack()
@@ -1042,12 +1045,8 @@ class Battle
         while (true)
         {
             bool IsClear = true;
-            for (int i = 0; i < Monster.monsters.Count; i++)
-            {
-                IsClear = Monster.monsters[i].IsDead && IsClear;
-            }
             Console.Clear();
-            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage} _ {(useSkill==true?"스킬":"공격")}대상 선택");
+            Program.ShowHighlightedText_Y($"Battle!! - Stage {stage} _ {(useSkill == true ? "스킬" : "공격")}대상 선택");
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
@@ -1059,34 +1058,38 @@ class Battle
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
-            Console.WriteLine($"{(useSkill==true?"스킬을 사용할":"공격할")} 적을 선택해주세요.");
+            Console.WriteLine($"{(useSkill == true ? "스킬을 사용할" : "공격할")} 적을 선택해주세요.");
             Console.Write(">>");
 
-            if (IsClear)
+
+            string? input = Console.ReadLine();
+            if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
             {
-                BattleResult(p.IsDead);
-            }
-            else
-            {
-                string? input = Console.ReadLine();
-                if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
+                if (temp == 0)
                 {
-                    if (temp == 0)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        temp -= 1;
-                        BattleTurn(temp);
-                        return;
-                    }
+                    return;
                 }
                 else
                 {
-                    Program.WrongInput(); continue;
+                    temp -= 1;
+                    BattleTurn(temp);
+                    for (int i = 0; i < Monster.monsters.Count; i++)
+                    {
+                        IsClear = Monster.monsters[i].IsDead && IsClear;
+                    }
+                    if (IsClear)
+                    {
+                        BattleResult(p.IsDead);
+                        return;
+                    }
+                    else return;
                 }
             }
+            else
+            {
+                Program.WrongInput(); continue;
+            }
+
         }
     }
     public void BattleResult(bool isdead)
@@ -1141,7 +1144,7 @@ class Battle
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            if (useSkill) 
+            if (useSkill)
             {
                 switch (p.job.joben)
                 {
@@ -1149,7 +1152,7 @@ class Battle
                         switch (skillSelect)
                         {
                             case 1:
-                                Program.PrintTextWithHighlights("플레이어가", "머리치기",$"를 시전합니다.  [데미지 : {pDamage}]");
+                                Program.PrintTextWithHighlights("플레이어가", "머리치기", $"를 시전합니다.  [데미지 : {pDamage}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "운칠기삼", $"을 시전합니다.  [데미지 : {pDamage}]");
@@ -1194,7 +1197,7 @@ class Battle
                 }
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]");
-            
+
             if (Monster.monsters[temp].Hp - pDamage < 0)
             {
                 Monster.monsters[temp].Hp = 0;

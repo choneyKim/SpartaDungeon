@@ -50,7 +50,7 @@ internal class Program
                     battle.BattleDisplay();
                     break;
                 case "5":
-                    Recovery();
+                    Recovery(nP);
                     break;
                 default:
                     WrongInput();
@@ -59,14 +59,14 @@ internal class Program
         }
     }
 
-    private static void Recovery()
+    private static void Recovery(Player P)
     {
         while (true)
         {
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-            Console.WriteLine("포션을 사용하면 체력을 30 회복 할 수 있습니다.");
+            Console.WriteLine("포션을 사용하면 체력을 회복 할 수 있습니다."+"(남은포션: "+")");
             Console.WriteLine("");
             Firstlettercolor("1.", " 사용하기");
             Firstlettercolor("0.", " 나가기");
@@ -75,6 +75,9 @@ internal class Program
 
             switch (input)
             {
+                case "1":
+                    UsingPotion(P);
+                    break;
                 case "0":
                     return;
                 default:
@@ -82,6 +85,17 @@ internal class Program
                     break;
             }
         }
+
+    }
+
+    private static void UsingPotion(Player player)
+    {
+        Potion HP_potion = new Potion("힐 포션", 15, "HP 15 회복");
+        //Potion MP_potion = new Potion("마나 포션", 15, "MP 15 회복");
+        //Potion HP_food = new Potion("내가 만든 쿠키",20,"HP 20 회복");
+        //Potion MP_food = new Potion("파워에이드", 20, "MP 20 회복");
+
+        player.Hp += HP_potion.Point;
     }
 
     public static void WrongInput()

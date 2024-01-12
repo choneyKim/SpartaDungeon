@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -80,15 +81,15 @@ internal class Program
             Console.Clear();
 
             PrintTextWithHighlights("[", "회복", "]");
-
-            Console.WriteLine("현재 HP:"+P.Hp+"/"+P.M_Hp);
-            Console.WriteLine("현재 MP:"+P.mp+"/"+P.M_mp);
             Console.WriteLine("");
-            Console.WriteLine("[ 사용하기 ]");
-            Console.WriteLine("1. "+"힐 포션:" + "(남은포션: " + healPotion.Count + ")");
-            Console.WriteLine("2. "+"마나 포션:" + "(남은포션: " + manaPotion.Count + ")");
-            Console.WriteLine("3. "+"내가 만든 쿠키:" + "(남은포션: " + hpFood.Count + ")");
-            Console.WriteLine("4. "+"파워에이드:" + "(남은포션: " + mpfood.Count + ")");
+            Console.WriteLine("현재 HP: "+P.Hp+"/"+P.M_Hp);
+            Console.WriteLine("현재 MP: "+P.mp+"/"+P.M_mp);
+            Console.WriteLine("");
+            PrintTextWithHighlights("["," 사용하기","]");
+            Firstlettercolor("1. ","힐 포션: " +"HP를 15 회복시켜줍니다.(남은포션: " + healPotion.Count + ")");
+            Firstlettercolor("2. ","마나 포션: " +"MP를 15 회복시켜줍니다.(남은포션: " + manaPotion.Count + ")");
+            Firstlettercolor("3. ","내가 만든 쿠키: " + "HP를 20 회복시켜줍니다.(남은포션: " + hpFood.Count + ")");
+            Firstlettercolor("4. ","파워에이드: " + "MP를 20 회복시켜줍니다.(남은포션: " + mpfood.Count + ")");
 
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -98,26 +99,40 @@ internal class Program
             switch (input)
             {
                 case "1":
-
+                    if (healPotion.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    healPotion.RemoveAt(0);
                     break;
-
                 case "2":
+                    if (manaPotion.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    manaPotion.RemoveAt(0);
                     break;
                 case "3":
+                    if (hpFood.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P, popo);
-                    hpFood.RemoveAt(0);
                     break;
                 case "4":
-
+                    if (mpfood.Count < 0)
+                    {
+                        Console.WriteLine("포션이 부족합니다.");
+                        Console.ReadKey();
+                        continue;
+                    }
                     UsingPotion(P,popo);
-                    mpfood.RemoveAt(0);
-
-                    UsingPotion(P, popo);
-
                     break;
                 case "0":
                     return;
@@ -128,6 +143,7 @@ internal class Program
         }
 
     }
+    
     private static void UsingPotion(Player player, int num)
     {
         if (num == 1)
@@ -148,6 +164,7 @@ internal class Program
                 }
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
+                healPotion.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -170,6 +187,7 @@ internal class Program
                 }
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
+                manaPotion.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -192,6 +210,7 @@ internal class Program
                 }
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + hpFood[0].Point + "만큼 회복되었습니다.");
+                hpFood.RemoveAt(0);
                 Console.ReadKey();
             }
             return;
@@ -214,6 +233,7 @@ internal class Program
                 }
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + mpfood[0].Point + "만큼 회복되었습니다.");
+                mpfood.RemoveAt(0);
                 Console.ReadKey();
             }
             return;

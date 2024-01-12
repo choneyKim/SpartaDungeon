@@ -101,8 +101,11 @@ internal class Program
         //Potion MP_potion = new Potion("마나 포션", 15, "MP 15 회복");
         //Potion HP_food = new Potion("내가 만든 쿠키",20,"HP 20 회복");
         //Potion MP_food = new Potion("파워에이드", 20, "MP 20 회복");
-
         player.Hp += HP_potion.Point;
+        if (player.Hp >= player.M_Hp)
+        {
+            player.Hp = player.M_Hp;
+        }
     }
 
     public static void WrongInput()

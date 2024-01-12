@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Txt_Game;
 
@@ -414,10 +415,6 @@ class Shop
 }
 
 
-
-    
-
-  
 class Player
 {
     public InventoryManager inven = new InventoryManager();
@@ -737,8 +734,20 @@ class Player
             }
         }
     }
+    
 
+    public int PlayerDamage(int monArmor)
+    {
+        int randomAtk;
+        int playerAtkResult;
+        int playerAtk = (int)totalAtk;
+        if (playerAtk % 10 == 0) randomAtk = playerAtk / 10;
+        else randomAtk = (playerAtk / 10) + 1;
+        playerAtkResult = Program.ran.Next(playerAtk - randomAtk, playerAtk + randomAtk + 1);
 
+        int Damage = (playerAtkResult - monArmor > 0 ? playerAtkResult - monArmor : 0);
+        return Damage;
+    }
 }
 class Monster
 {
@@ -746,16 +755,18 @@ class Monster
     public int Level { get; set; }
     public int Hp { get; set; }
     public int Atk { get; set; }
+    public int Def { get; set; }
     public bool IsDead => Hp <= 0;
 
     public static List<Monster> monsters = new List<Monster>();
 
-    public Monster(string name, int level, int hP, int aTK)
+    public Monster(string name, int level, int hP, int aTK, int def)
     {
         Name = name;
         Level = level;
         Hp = hP;
         Atk = aTK;
+        Def = def;
     }
     public static void AddMonster()
     {
@@ -767,17 +778,17 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 5));
+                        monsters.Add(new Monster("미니언", 2, 15, 5, 7));
                         break;
                     }
                 case 2:
                     {
-                        monsters.Add(new Monster("공허충", 3, 10, 9));
+                        monsters.Add(new Monster("공허충", 3, 10, 9, 5));
                         break;
                     }
                 case 3:
                     {
-                        monsters.Add(new Monster("대포미니언", 5, 25, 8));
+                        monsters.Add(new Monster("대포미니언", 5, 25, 8, 13));
                         break;
                     }
             }
@@ -802,16 +813,17 @@ class Monster
             Console.ResetColor();
         }
     }
-    public static int AttackMonster(int selectNum)
+    public static int MonsterDamage(int selectNum,int playerArmor)
     {
         int randomAtk;
         int monsterAtkResult;
-        int monsterAtk = monsters[selectNum - 1].Atk;
+        int monsterAtk = monsters[selectNum].Atk;
         if (monsterAtk % 10 == 0) randomAtk = monsterAtk / 10;
         else randomAtk = (monsterAtk / 10) + 1;
         monsterAtkResult = Program.ran.Next(monsterAtk - randomAtk, monsterAtk + randomAtk + 1);
 
-        return monsterAtkResult;
+        int Damage = (monsterAtkResult - playerArmor > 0 ? monsterAtkResult - playerArmor : 0);
+        return Damage;
     }
 }
 class Battle
@@ -828,7 +840,7 @@ class Battle
     }
     public void BattleDisplay()
     {
-        Monster.monsters.RemoveAll(x => x.IsDead == false);
+        Monster.monsters.RemoveAll(x=>x.IsDead==true||x.IsDead==false);
         Monster.AddMonster();
         while (true)
         {
@@ -895,7 +907,6 @@ class Battle
 
             if (IsClear)
             {
-                Monster.monsters.RemoveAll(x => x.IsDead == true);
                 BattleResult(p.IsDead);
             }
             else
@@ -942,15 +953,16 @@ class Battle
     {
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
+            int pDamage = p.PlayerDamage(Monster.monsters[temp].Def);
             Console.Clear();
             Program.ShowHighlightedText_M("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {p.totalAtk}]"); //Damage 계산이 아직 안되서 player.Atk사용
-            Monster.monsters[temp].Hp -= (int)p.totalAtk; //p.Atk가 float형식이라 int로 명시적 형변환
+            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]"); 
+            Monster.monsters[temp].Hp -= pDamage; 
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + p.totalAtk} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine("");
@@ -959,15 +971,16 @@ class Battle
             {
                 if (Monster.monsters[i].IsDead == false)
                 {
+                    int mDamage = Monster.MonsterDamage(i, (int)p.totalDef);
                     Console.Clear();
                     Program.ShowHighlightedText_M("Battle!!");
                     Console.WriteLine();
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
-                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {Monster.monsters[i].Atk}]");
-                    p.Hp -= Monster.monsters[i].Atk;
+                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");
+                    p.Hp -= mDamage;
                     Console.WriteLine();
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
-                    Console.WriteLine($"HP  {p.Hp + Monster.monsters[i].Atk} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                    Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
                     Console.WriteLine();
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");

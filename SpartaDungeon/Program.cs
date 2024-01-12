@@ -118,21 +118,25 @@ internal class Program
     {
         if (num == 1)
         {
-            player.Hp += healPotion[0].Point;
             if (player.Hp >= player.M_Hp)
             {
-                player.Hp = player.M_Hp;
-            }
-            else if (player.Hp == player.M_Hp)
-            {
-                Console.WriteLine("HP 회복을 완료했습니다.");
+                Console.WriteLine("이미 체력이 최대라 사용할 필요가 없습니다");
                 Console.ReadKey();
+                return;
             }
-            else
+            player.Hp += healPotion[0].Point;
+            if (player.Hp < player.M_Hp)
             {
+                player.Hp += healPotion[0].Point;
+                if (player.Hp >= player.M_Hp)
+                {
+                    player.Hp = player.M_Hp;
+                }
+                Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
                 Console.ReadKey();
             }
+            return;
         }
         if ( num == 2)
         {

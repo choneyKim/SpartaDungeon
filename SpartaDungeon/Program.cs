@@ -542,7 +542,7 @@ class Player
     public int M_mp;
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
-    float Exp;
+    public float Exp;
     float M_Exp;
     public void CheckLvUp(int ex)
     {
@@ -1107,7 +1107,18 @@ class Battle
         Console.WriteLine();
         Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
         Console.WriteLine($"HP  {playerHp} -> {p.Hp}");
-        if (p.IsDead == false)
+        if (isdead)
+        {
+            Console.WriteLine("몬스터에게 잡아먹혔습니다.");
+            Console.WriteLine("경험치가 10% 감소합니다.");
+            getExp = (int)(p.Exp* 0.1f * -1);
+            p.Exp += getExp;
+            Console.WriteLine($"현재 경험치: {p.Exp }") ;
+            Console.WriteLine("완전 회복 상태로 부활합니다.") ;
+            p.Hp = p.M_Hp;  
+        }
+
+        else
         {
             Console.WriteLine("");
             Console.WriteLine("획득 보상");

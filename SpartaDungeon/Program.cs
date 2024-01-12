@@ -603,7 +603,7 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 1000 + job.atk;
+        Atk = 10 + job.atk;
         Def = 5 + job.def;
         Gold = 1500;
         M_Hp = 100 + job.hp;
@@ -945,29 +945,51 @@ class Monster
     }
     public static void AddMonster(Battle stage)
     {
-        int dif = stage.stage; 
-        for (int i = 0; i < Program.ran.Next(1, 5); i++)
+        int dif = stage.stage;
+        if (dif % 5 == 0 && dif / 5 == 1)
         {
-
-            switch (Program.ran.Next(1, 4))
+            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 100, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Atk: 1)));
+        }
+        else if (dif % 5 == 0 && dif / 5 == 2)
+        {
+            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 100, "진한 술냄새를 풍기고있다.", Item.ItemType.Weapon, Atk: 1)));
+        }
+        else if (dif % 5 == 0 && dif / 5 == 3)
+        {
+            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 100, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 1)));
+        }
+        else if (dif % 5 == 0 && dif / 5 == 4)
+        {
+            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어소트락강의", 100, "이것은 치트키다", Item.ItemType.Weapon, Atk: 1)));
+        }
+        else
+        {
+            for (int i = 0; i < Program.ran.Next(1, 5); i++)
             {
-                case 1:
-                    {
-                        monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 19 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
-                        break;
-                    }
-                case 2:
-                    {
-                        monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17+ dif, 4 + dif));
-                        break;
-                    }
-                case 3:
-                    {
-                        monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15+ dif, 12+ dif));
-                        break;
-                    }
+
+
+                switch (Program.ran.Next(1, 4))
+                {
+                    case 1:
+                        {
+                            monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 10 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                            break;
+                        }
+                    case 2:
+                        {
+                            monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17 + dif, 4 + dif));
+                            break;
+                        }
+                    case 3:
+                        {
+                            monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif));
+                            break;
+                        }
+                }
+
             }
         }
+            
     }
     public void GetReward(Player p, ref int gold, ref int exp)
     {
@@ -1039,6 +1061,10 @@ class Battle
             Console.Clear();
             Program.ShowHighlightedText_Y($"Battle!! - Stage {stage}");
             Console.WriteLine();
+            if (stage / 5 == 1) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다.");
+            if (stage / 5 == 2) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다.");
+            if (stage / 5 == 3) Program.ShowHighlightedText_R("어디선가 음악소리가 들리며 용욱몬이 등장하였다.");
+            if (stage / 5 == 4) Program.ShowHighlightedText_R("C#강의와 함께 재영몬 등장!! 48강짜리 강의를 들어야 할 것만 같다.");
             Monster.DisplayMonster();
             Console.WriteLine();
             Console.WriteLine();
@@ -1118,18 +1144,25 @@ class Battle
                 }
                 else
                 {
-                    temp -= 1;
-                    BattleTurn(temp);
-                    for (int i = 0; i < Monster.monsters.Count; i++)
+                    if (temp > 0 && temp <= Monster.monsters.Count) 
                     {
-                        IsClear = Monster.monsters[i].IsDead && IsClear;
+                        temp -= 1;
+                        BattleTurn(temp);
+                        for (int i = 0; i < Monster.monsters.Count; i++)
+                        {
+                            IsClear = Monster.monsters[i].IsDead && IsClear;
+                        }
+                        if (IsClear)
+                        {
+                            BattleResult(p.IsDead);
+                            return;
+                        }
+                        else return;
                     }
-                    if (IsClear)
+                    else
                     {
-                        BattleResult(p.IsDead);
-                        return;
+                        Program.WrongInput(); continue;
                     }
-                    else return;
                 }
             }
             else

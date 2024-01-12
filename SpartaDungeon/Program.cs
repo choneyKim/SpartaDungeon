@@ -870,7 +870,7 @@ class Battle
                 }
                 if (temp == 2)
                 {
-                    SkillChoice();
+                    float skillDmg = SkillChoice();
                 }
                 else Program.WrongInput(); continue;
             }
@@ -990,8 +990,9 @@ class Battle
             }
         }
     }
-    public void SkillChoice()
+    public float SkillChoice()
     {
+        float temp = 0;
         while (true)
         {
             Console.Clear();
@@ -1046,19 +1047,28 @@ class Battle
             switch (input)
             {
                 case "1":
-                    p.FirstSkill();
+                    temp = p.FirstSkill();
                     break;
                 case "2":
-                    p.SecondSkill();
+                    temp = p.SecondSkill();
                     break;
                 case "3":
-                    p.ThirdSkill();
+                    temp = p.ThirdSkill();
                     break;
                 case "0":
-                    return;
+                    return -5;
                 default:
                     Program.WrongInput();
                     continue;
+            }
+            if (temp == -1)
+            {
+                Console.WriteLine("마나가 부족합니다.");
+                Console.ReadKey();
+            }
+            else
+            {
+                return temp;
             }
         }
     }

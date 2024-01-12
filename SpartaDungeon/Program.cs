@@ -49,8 +49,8 @@ internal class Program
                     sh.ShopPrint();
                     break;
                 case "4":
-                    if (nP.IsDead == true) 
-                    { 
+                    if (nP.IsDead == true)
+                    {
                         Console.WriteLine("체력을 회복하여 주십시오");
                         Console.ReadKey();
                     }
@@ -437,8 +437,9 @@ class Player
     public int Lv = 1;
     float Exp;
     float M_Exp;
-    public void CheckLvUp()
+    public void CheckLvUp(int ex)
     {
+        Exp += ex;
         if (Exp >= M_Exp)
         {
             Lv++;
@@ -460,7 +461,7 @@ class Player
         M_Hp = 100 + job.hp;
         Hp = M_Hp;
         Lv = 1;
-        M_Exp = 100;
+        M_Exp = 20;
         M_mp = 50 + job.mp;
         mp = M_mp;
     }
@@ -480,7 +481,7 @@ class Player
                 {
                     return -1;
                 }
-                Program.ran.Next(1,5);
+                Program.ran.Next(1, 5);
                 if (Program.ran.Next(1, 5) < 3)
                 {
                     mp -= 10;
@@ -512,7 +513,7 @@ class Player
                     return -1;
                 }
                 mp -= 30;
-                return Program.ran.Next(10,46);
+                return Program.ran.Next(10, 46);
             case JOB.Job.Wizrd:
                 if (mp < 30)
                 {
@@ -523,7 +524,7 @@ class Player
                 ArmorSlot = null;
                 return 40;
             case JOB.Job.Chef:
-                if (mp<10)
+                if (mp < 10)
                 {
                     return -1;
                 }
@@ -653,11 +654,12 @@ class Player
             Console.WriteLine($"이름. {Name}");
             Console.WriteLine($"Lv. {Lv.ToString("00")}");
             Console.WriteLine($"Chad({job.jobName})");
+            Console.WriteLine($"Exp:{Exp} / {M_Exp}");
             Console.WriteLine($"공격력:{Atk}  {(WeaponSlot == null ? "" : $"(+{WeaponSlot.Atk})")}");
             Console.WriteLine($"방어력:{Def}  {(ArmorSlot == null ? "" : $"+({ArmorSlot.Def})")}");
             Console.WriteLine($"체력:{Hp} / {M_Hp}");
             Console.WriteLine($"마나:{mp} / {M_mp}");
-            Console.WriteLine($"Gold:{Gold}");
+            Console.WriteLine($"Gold:{Gold} G");
             Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -739,7 +741,7 @@ class Player
             }
         }
     }
-    
+
 
     public int PlayerDamage(int monArmor)
     {
@@ -762,16 +764,23 @@ class Monster
     public int Atk { get; set; }
     public int Def { get; set; }
     public bool IsDead => Hp <= 0;
+    public List<Item> dropTable = new List<Item>();
+    int dropLv;// 1 = 10%  10 = 100%
 
     public static List<Monster> monsters = new List<Monster>();
 
-    public Monster(string name, int level, int hP, int aTK, int def)
+    public Monster(string name, int level, int hP, int aTK, int def,int dLv = 0 ,params Item[] drop)
     {
         Name = name;
         Level = level;
         Hp = hP;
         Atk = aTK;
         Def = def;
+        dropLv = dLv;
+        foreach (var item in drop)
+        {
+            dropTable.Add(item);
+        }
     }
     public static void AddMonster()
     {
@@ -783,7 +792,7 @@ class Monster
             {
                 case 1:
                     {
-                        monsters.Add(new Monster("미니언", 2, 15, 10, 7));
+                        monsters.Add(new Monster("미니언", 2, 15, 10, 7, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                         break;
                     }
                 case 2:
@@ -797,6 +806,19 @@ class Monster
                         break;
                     }
             }
+        }
+    }
+    public void GetReward(Player p,ref int gold, ref int exp)
+    {
+        p.CheckLvUp(Level);
+        exp += Level;
+        p.Gold += Level * 10;
+        gold += Level * 10;
+        if (Program.ran.Next(1, 11) <= dropLv)
+        {
+            Item t = dropTable[Program.ran.Next(0, dropTable.Count - 1)];
+            Console.WriteLine(t.Name + " 을 획득했습니다.");
+            p.inven.AddItem(t);
         }
     }
     public static void DisplayMonster()
@@ -818,7 +840,7 @@ class Monster
             Console.ResetColor();
         }
     }
-    public static int MonsterDamage(int selectNum,int playerArmor)
+    public static int MonsterDamage(int selectNum, int playerArmor)
     {
         int randomAtk;
         int monsterAtkResult;
@@ -838,7 +860,7 @@ class Battle
     //Battle b;
     Shop s;
     float playerHp;
-    int stage=1;
+    int stage = 1;
     public Battle(Player p, Shop s)
     {
         this.p = p;
@@ -846,7 +868,7 @@ class Battle
     }
     public void BattleDisplay()
     {
-        Monster.monsters.RemoveAll(x=>x.IsDead==true||x.IsDead==false);
+        Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster();
         while (true)
         {
@@ -939,6 +961,8 @@ class Battle
     }
     public void BattleResult(bool isdead)
     {
+        int getGold = 0;
+        int getExp = 0;
         Console.Clear();
         Program.ShowHighlightedText_Y($"Stage {stage} - Result ");
         Console.WriteLine();
@@ -946,8 +970,20 @@ class Battle
         Console.WriteLine();
         Console.WriteLine(p.IsDead ? "" : $"던전에서 몬스터{Monster.monsters.Count}마리를 잡았습니다.");
         Console.WriteLine();
-        Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job})");
+        Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
         Console.WriteLine($"HP  {playerHp} -> {p.Hp}");
+        if (p.IsDead == false)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("획득 보상");
+            for (int i = 0; i < Monster.monsters.Count; i++)
+            {
+                Monster.monsters[i].GetReward(p,ref getGold,ref getExp);
+            }
+            Console.WriteLine("Gold: " + getGold);
+            Console.WriteLine("Exp " + getExp);
+            Console.WriteLine("");
+        }
         Console.WriteLine();
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
@@ -965,8 +1001,8 @@ class Battle
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
-            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]"); 
-            Monster.monsters[temp].Hp -= pDamage; 
+            Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. [데미지 : {pDamage}]");
+            Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine();
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
             Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
@@ -1032,7 +1068,7 @@ class Battle
                     Console.WriteLine("2.발버둥 -Mp 30");
                     Console.WriteLine("  데미지 40을 주지만 장비가 벗겨진다");
                     Console.WriteLine("");
-                    Console.WriteLine($"3.마나공격 -{p.M_mp/2}");
+                    Console.WriteLine($"3.마나공격 -{p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
                     break;
                 case Player.JOB.Job.Chef:

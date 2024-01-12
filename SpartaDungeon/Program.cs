@@ -1045,6 +1045,7 @@ class Battle
                     Console.WriteLine("  장비한 방어구의 4배 데미지 (if armor == null return 10)");
                     break;
             }
+            Console.WriteLine("");
             Console.WriteLine("0. 뒤로");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");

@@ -873,7 +873,7 @@ class Battle
                     playerHp = p.Hp;
                     BattleAttack();
                 }
-                if (temp == 2)
+                else if (temp == 2)
                 {
                     float skillDmg = SkillChoice();
                 }

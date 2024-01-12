@@ -467,27 +467,36 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior://mp소모 10 심플하게 15의 데미지를 준다
+            case JOB.Job.Warrior:
                 if (mp < 10)
                 {
                     return -1;
                 }
                 mp -= 10;
                 return 15;
-            case JOB.Job.Wizrd: //mp소모 10
+            case JOB.Job.Wizrd:
+                if (mp < 10)
+                {
+                    return -1;
+                }
+                Program.ran.Next(1,5);
+                if (Program.ran.Next(1, 5) < 3)
+                {
+                    mp -= 10;
+                }
+                return totalAtk + totalAtk * 0.2f;
+            case JOB.Job.Chef:
                 if (mp < 10)
                 {
                     return -1;
                 }
                 mp -= 10;
-                return 0;
-            case JOB.Job.Chef: //mp소모 10
-                if (mp < 10)
+                Hp += 5;
+                if (Hp > M_Hp)
                 {
-                    return -1;
+                    Hp = M_Hp;
                 }
-                mp -= 10;
-                return 0;
+                return Def;
             default:
                 return -2;
         }
@@ -496,14 +505,14 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior://mp소모 30 10부터 35의 랜덤한 데미지
+            case JOB.Job.Warrior:
                 if (mp < 30)
                 {
                     return -1;
                 }
                 mp -= 30;
-                return Program.ran.Next(10,36);
-            case JOB.Job.Wizrd://mp소모 30 35의 데미지를 주지만 장비가 벗겨진다
+                return Program.ran.Next(10,46);
+            case JOB.Job.Wizrd:
                 if (mp < 30)
                 {
                     return -1;
@@ -511,8 +520,8 @@ class Player
                 mp -= 30;
                 WeaponSlot = null;
                 ArmorSlot = null;
-                return 35;
-            case JOB.Job.Chef: //mp소모 15 방어력이 더 해져 공격한다
+                return 40;
+            case JOB.Job.Chef:
                 if (mp<10)
                 {
                     return -1;
@@ -527,7 +536,7 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior://mp소모 30 장비한 무기의 공격력 4배 데미지를 준다 장비한 아이템이 없을시엔 10 고정.
+            case JOB.Job.Warrior:
                 if (mp < 30)
                 {
                     return -1;
@@ -541,14 +550,15 @@ class Player
                 {
                     return WeaponSlot.Atk * 4;
                 }
-            case JOB.Job.Wizrd:// mp 최대치의 절반을 소모 공격력 60의 피해
+            case JOB.Job.Wizrd:
                 if (mp < M_mp / 2)
                 {
                     return -1;
                 }
+                int temp = mp;
                 mp -= M_mp / 2;
-                return 60;
-            case JOB.Job.Chef://mp소모 30 장비한 방어구의 방어력 4배의 데미즈를 준다 장비한 아이템이 없을시엔 10 고정
+                return temp * 2;
+            case JOB.Job.Chef:
                 if (mp < 30)
                 {
                     return -1;
@@ -589,9 +599,10 @@ class Player
                     hp = -5;
                     break;
                 case Job.Wizrd:
-                    jobName = "워리어";
+                    jobName = "위자드";
                     atk = -5;
                     def = -2;
+                    mp = 20;
                     break;
                 case Job.Chef:
                     jobName = "쉐프";
@@ -830,8 +841,10 @@ class Battle
             Console.WriteLine("내정보");
             Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
+            Console.WriteLine($"Mp  {p.mp} / {p.M_mp}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
+            Console.WriteLine("2. 스킬");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
@@ -842,6 +855,10 @@ class Battle
                 {
                     playerHp = p.Hp;
                     BattleAttack();
+                }
+                if (temp == 2)
+                {
+                    SkillChoice();
                 }
                 else Program.WrongInput(); continue;
             }
@@ -869,6 +886,7 @@ class Battle
             Console.WriteLine("내정보");
             Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
+            Console.WriteLine($"Mp  {p.mp} / {p.M_mp}");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
@@ -958,6 +976,77 @@ class Battle
                 }
             }
         }
-
+    }
+    public void SkillChoice()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Program.ShowHighlightedText_M("Battle!!");
+            Console.WriteLine();
+            Monster.DisplayMonster();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("내정보");
+            Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
+            Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
+            Console.WriteLine($"Mp  {p.mp} / {p.M_mp}");
+            Console.WriteLine();
+            switch (p.job.joben)
+            {
+                case Player.JOB.Job.Warrior:
+                    Console.WriteLine("1.머리치기 - Mp 10");
+                    Console.WriteLine("  심플하게 15의 데미지를 준다.");
+                    Console.WriteLine("");
+                    Console.WriteLine("2.운칠기삼 - Mp 30");
+                    Console.WriteLine("  10부터 45의 랜덤한 데미지");
+                    Console.WriteLine("");
+                    Console.WriteLine("3.웨펀스페셜리스트 - Mp 30");
+                    Console.WriteLine("  장비한 무기의 4배 데미지 (if weapon == null return 10)");
+                    break;
+                case Player.JOB.Job.Wizrd:
+                    Console.WriteLine("1.마나순환 -Mp 10");
+                    Console.WriteLine("  1.2배의 데미지 운이 좋으면 마나를 사용하지 않는다");
+                    Console.WriteLine("");
+                    Console.WriteLine("2.발버둥 -Mp 30");
+                    Console.WriteLine("  데미지 40을 주지만 장비가 벗겨진다");
+                    Console.WriteLine("");
+                    Console.WriteLine($"3.마나공격 -{p.M_mp/2}");
+                    Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
+                    break;
+                case Player.JOB.Job.Chef:
+                    Console.WriteLine("1.체력보충제 - Mp 10");
+                    Console.WriteLine("  체력을 소량 회복하고 방어력에 비례한 데미지를 준다");
+                    Console.WriteLine("");
+                    Console.WriteLine("2.공방일체 -Mp 15 ");
+                    Console.WriteLine("  토탈공격력에 방어력만큼 추가한 데미지를 준다");
+                    Console.WriteLine("");
+                    Console.WriteLine("3.아머 마스터 -Mp 30");
+                    Console.WriteLine("  장비한 방어구의 4배 데미지 (if armor == null return 10)");
+                    break;
+            }
+            Console.WriteLine("0. 뒤로");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+            string? input = Console.ReadLine();
+            switch (input)
+            {
+                case "1":
+                    p.FirstSkill();
+                    break;
+                case "2":
+                    p.SecondSkill();
+                    break;
+                case "3":
+                    p.ThirdSkill();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Program.WrongInput();
+                    continue;
+            }
+        }
     }
 }

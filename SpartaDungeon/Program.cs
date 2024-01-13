@@ -98,8 +98,8 @@ internal class Program
 
             switch (input)
             {
-                case "1":
-                    if (healPotion.Count < 0)
+                case "1": //0보다 작을때 즉 -1이하만 거짓이 됨
+                    if (healPotion.Count < 0)//0이여도 거짓이 되게 해야함
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -546,7 +546,7 @@ class Shop
                     p.inven.ItemAccess(temp).Equipped = false;
                     p.ArmorSlot = null;
                 }
-                for (int i = 0; i < p.inven.Count(); i++)
+                for (int i = 0; i < shopInven.Count(); i++)
                 {
                     if (p.inven.ItemAccess(temp).Name == shopInven.ItemAccess(i).Name)
                     {
@@ -808,7 +808,7 @@ class Player
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("상태보기"); // 장착 반영 해야함
+            Console.WriteLine("상태보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
             Console.WriteLine($"이름. {Name}");
@@ -996,8 +996,8 @@ class Monster
     {
         p.CheckLvUp(Level);
         exp += Level;
-        p.Gold += Level * 10;
-        gold += Level * 10;
+        p.Gold += Level * 100;
+        gold += Level * 100;
         if (Program.ran.Next(1, 11) <= dropLv)
         {
             Item t = dropTable[Program.ran.Next(0, dropTable.Count - 1)];
@@ -1055,15 +1055,15 @@ class Battle
     }
     public void BattleDisplay()
     {
-        Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
+        Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false); 
         Monster.AddMonster(this);
         while (true)
         {
             Console.Clear();
             Program.ShowHighlightedText_Y($"Battle!! - Stage {stage}");
             Console.WriteLine();
-            if (stage / 5 == 1) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다.");
-            if (stage / 5 == 2) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다.");
+            if (stage / 5 == 1) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다."); //stage 5~9 true
+            if (stage / 5 == 2) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다."); //stage 10 ~ 14 true
             if (stage / 5 == 3) Program.ShowHighlightedText_R("어디선가 음악소리가 들리며 용욱몬이 등장하였다.");
             if (stage / 5 == 4) Program.ShowHighlightedText_R("C#강의와 함께 재영몬 등장!! 48강짜리 강의를 들어야 할 것만 같다.");
             Monster.DisplayMonster();

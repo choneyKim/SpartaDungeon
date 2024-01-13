@@ -682,11 +682,11 @@ class Player
                 ArmorSlot = null;
                 return 40;
             case JOB.Job.Chef:
-                if (mp < 10)
+                if (mp < 15)
                 {
                     return -1;
                 }
-                mp -= 10;
+                mp -= 15;
                 return totalAtk + Def;
             default:
                 return -2;

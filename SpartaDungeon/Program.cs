@@ -598,8 +598,8 @@ class Shop
             Console.WriteLine(p.Gold + " G");
             shopInven.DisplayShopInventory();
             Console.WriteLine("");
-            Program.ShowHighlightedText_Y("Q를 누르시면 HP포션을 구입할수있습니다.(300 G)");
-            Program.ShowHighlightedText_Y("W를 누르시면 MP포션을 구입할수있습니다.(300 G)");
+            Program.ShowHighlightedText_Y("Q를 누르시면 HP포션을 구입할수있습니다.(500 G)");
+            Program.ShowHighlightedText_Y("W를 누르시면 MP포션을 구입할수있습니다.(500 G)");
             Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -609,10 +609,10 @@ class Shop
 
             if (input == "Q" || input == "q")
             {
-                if (300 <= p.Gold)
+                if (500 <= p.Gold)
                 {
                     Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
-                    p.Gold -= 300;
+                    p.Gold -= 500;
                     Console.WriteLine("구매완료");
                     Console.ReadKey();
                 }
@@ -624,10 +624,10 @@ class Shop
             }
             if (input == "W" || input == "w")
             {
-                if (300 <= p.Gold)
+                if (500 <= p.Gold)
                 {
                     Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
-                    p.Gold -= 300;
+                    p.Gold -= 500;
                     Console.WriteLine("구매완료");
                     Console.ReadKey();
                 }

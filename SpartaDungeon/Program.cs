@@ -95,14 +95,17 @@ internal class Program
                     {
                         case "1":
                             saveInput += "1";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "2":
                             saveInput += "2";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "3":
                             saveInput += "3";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "0":

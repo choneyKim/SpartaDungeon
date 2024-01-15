@@ -4,9 +4,8 @@ using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Internal;
+using Newtonsoft.Json;
 using Txt_Game;
-using static System.Net.Mime.MediaTypeNames;
 
 internal class Program
 {
@@ -26,15 +25,18 @@ internal class Program
         manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
         hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
         mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
-        MainManu(nP, sh, battle);
+        SaveData saveData = new SaveData(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood);
+        MainMenu(nP, sh, battle, saveData);
 
     }
-    public static void MainManu(Player nP, Shop sh, Battle battle)
+    public static void MainMenu(Player nP, Shop sh, Battle battle, SaveData saveData)
     {
+        string saveSlot1 = "빈 슬롯 입니다.";
+        string saveSlot2 = "빈 슬롯 입니다.";
+        string saveSlot3 = "빈 슬롯 입니다.";
         while (true)
         {
             Console.Clear();
-
             ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
             Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
             ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
@@ -44,8 +46,12 @@ internal class Program
             Program.Firstlettercolor("3.", " 상점");
             Program.Firstlettercolor("4.", " 전투 시작");
             Program.Firstlettercolor("5.", " 회복아이템");
+            Program.Firstlettercolor("6.", " 저장하기");
+            Program.Firstlettercolor("7.", " 불러오기");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
+            string saveInput = "Save";
+
 
             switch (input)
             {
@@ -68,6 +74,82 @@ internal class Program
                     break;
                 case "5":
                     Recovery(nP);
+                    break;
+                case "6":
+                backcase6:
+                    Console.Clear();
+                    Console.WriteLine("저장할 슬롯을 정해주세요");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 나가기");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            saveInput += "1";
+                            Console.WriteLine("저장할 이름을 적어주세요");
+                            saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "2":
+                            saveInput += "2";
+                            Console.WriteLine("저장할 이름을 적어주세요");
+                            saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "3":
+                            saveInput += "3";
+                            Console.WriteLine("저장할 이름을 적어주세요");
+                            saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "0":
+                            continue;
+                        default:
+                            WrongInput();
+                            goto backcase6;
+                    }
+                    saveData.SaveGameToFile(saveInput);
+                    break;
+                case "7":
+                backcase7:
+                    Console.Clear();
+                    Console.WriteLine("불러올 슬롯을 정해주세요");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 나가기");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            saveInput += "1";
+                            break;
+                        case "2":
+                            saveInput += "2";
+                            break;
+                        case "3":
+                            saveInput += "3";
+                            break;
+                        case "0":
+                            continue;
+                        default:
+                            WrongInput();
+                            goto backcase7;
+                    }
+                    saveData.LoadGameFromFile(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood, saveInput);
                     break;
                 default:
                     WrongInput();
@@ -100,8 +182,8 @@ internal class Program
 
             switch (input)
             {
-                case "1": //0보다 작을때 즉 -1이하만 거짓이 됨
-                    if (healPotion.Count <= 0)//0이여도 거짓이 되게 해야함
+                case "1":
+                    if (healPotion.Count <= 0)
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -110,7 +192,7 @@ internal class Program
                     UsingPotion(P, popo);
                     break;
                 case "2":
-                    if (manaPotion.Count < 0)
+                    if (manaPotion.Count <= 0)
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -119,7 +201,7 @@ internal class Program
                     UsingPotion(P, popo);
                     break;
                 case "3":
-                    if (hpFood.Count < 0)
+                    if (hpFood.Count <= 0)
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -128,7 +210,7 @@ internal class Program
                     UsingPotion(P, popo);
                     break;
                 case "4":
-                    if (mpfood.Count < 0)
+                    if (mpfood.Count <= 0)
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -156,16 +238,16 @@ internal class Program
                 Console.ReadKey();
                 return;
             }
-            player.Hp += healPotion[0].Point; //여기서 한번 더 하고
-            if (player.Hp < player.M_Hp)
+            player.Hp += healPotion[0].Point;
+            if (player.Hp > player.M_Hp)
             {
-                    player.Hp = player.M_Hp;
-
-                Console.WriteLine("HP 회복을 완료했습니다.");
-                Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
-                healPotion.RemoveAt(0);
-                Console.ReadKey();
+                player.Hp = player.M_Hp;
             }
+            Console.WriteLine("HP 회복을 완료했습니다.");
+            Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
+            healPotion.RemoveAt(0);
+            Console.ReadKey();
+
             return;
         }
         if (num == 2)
@@ -177,15 +259,14 @@ internal class Program
                 return;
             }
             player.mp += manaPotion[0].Point;
-            if (player.mp < player.M_mp)
+            if (player.mp > player.M_mp)
             {
-                    player.mp = player.M_mp;
-                
-                Console.WriteLine("MP 회복을 완료했습니다.");
-                Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
-                manaPotion.RemoveAt(0);
-                Console.ReadKey();
+                player.mp = player.M_mp;
             }
+            Console.WriteLine("MP 회복을 완료했습니다.");
+            Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
+            manaPotion.RemoveAt(0);
+            Console.ReadKey();
             return;
         }
         if (num == 3)
@@ -197,15 +278,14 @@ internal class Program
                 return;
             }
             player.Hp += hpFood[0].Point;
-            if (player.Hp < player.M_Hp)
+            if (player.Hp > player.M_Hp)
             {
-                    player.Hp = player.M_Hp;
-                
-                Console.WriteLine("HP 회복을 완료했습니다.");
-                Console.WriteLine("체력이" + hpFood[0].Point + "만큼 회복되었습니다.");
-                hpFood.RemoveAt(0);
-                Console.ReadKey();
+                player.Hp = player.M_Hp;
             }
+            Console.WriteLine("HP 회복을 완료했습니다.");
+            Console.WriteLine("체력이" + hpFood[0].Point + "만큼 회복되었습니다.");
+            hpFood.RemoveAt(0);
+            Console.ReadKey();
             return;
         }
         if (num == 4)
@@ -217,15 +297,14 @@ internal class Program
                 return;
             }
             player.mp += mpfood[0].Point;
-            if (player.mp < player.M_mp)
+            if (player.mp > player.M_mp)
             {
-                    player.mp = player.M_mp;
-               
-                Console.WriteLine("MP 회복을 완료했습니다.");
-                Console.WriteLine("마나가" + mpfood[0].Point + "만큼 회복되었습니다.");
-                mpfood.RemoveAt(0);
-                Console.ReadKey();
+                player.mp = player.M_mp;
             }
+            Console.WriteLine("MP 회복을 완료했습니다.");
+            Console.WriteLine("마나가" + mpfood[0].Point + "만큼 회복되었습니다.");
+            mpfood.RemoveAt(0);
+            Console.ReadKey();
             return;
         }
     }
@@ -339,10 +418,70 @@ internal class Program
     //}
 
 }
+class SaveData
+{
+    public Player PlayerData { get; set; }
+    public Shop ShopData { get; set; }
+    public Battle BattleData { get; set; }
+    public List<Potion> Potions1 { get; set; }
+    public List<Potion> Potions2 { get; set; }
+    public List<Potion> Potions3 { get; set; }
+    public List<Potion> Potions4 { get; set; }
+
+    public SaveData(Player player, Shop shop, Battle battle, List<Potion> potions1, List<Potion> potions2, List<Potion> potions3, List<Potion> potions4)
+    {
+        PlayerData = player;
+        ShopData = shop;
+        BattleData = battle;
+        Potions1 = potions1;
+        Potions2 = potions2;
+        Potions3 = potions3;
+        Potions4 = potions4;
+    }
+
+    public void SaveGameToFile(string fileName)
+    {
+        string serializedData = JsonConvert.SerializeObject(this);
+        File.WriteAllText(fileName, serializedData);
+    }
+    public void LoadGameFromFile(Player p, Shop s, Battle b, List<Potion> p1, List<Potion> p2, List<Potion> p3, List<Potion> p4, string fileName)
+    {
+        if (!File.Exists(fileName))
+        {
+            Console.WriteLine("저장된 데이터가 없습니다.");
+            Console.ReadKey();
+            return;
+        }
+        string savedData = File.ReadAllText(fileName);
+        SaveData? loadedGame = JsonConvert.DeserializeObject<SaveData>(savedData);
+        p.Name = loadedGame.PlayerData.Name;
+        p.job = loadedGame.PlayerData.job;
+        p.Atk = loadedGame.PlayerData.Atk;
+        p.Def = loadedGame.PlayerData.Def;
+        p.Gold = loadedGame.PlayerData.Gold;
+        p.Hp = loadedGame.PlayerData.Hp;
+        p.M_Hp = loadedGame.PlayerData.M_Hp;
+        p.mp = loadedGame.PlayerData.mp;
+        p.M_mp = loadedGame.PlayerData.M_mp;
+        p.Lv = loadedGame.PlayerData.Lv;
+        p.Exp = loadedGame.PlayerData.Exp;
+        p.M_Exp = loadedGame.PlayerData.M_Exp;
+        p.WeaponSlot = loadedGame.PlayerData.WeaponSlot;
+        p.ArmorSlot = loadedGame.PlayerData.ArmorSlot;
+        p.inven = loadedGame.PlayerData.inven;
+        s.shopInven = loadedGame.ShopData.shopInven;
+        b.stage = loadedGame.BattleData.stage;
+        p1 = loadedGame.Potions1;
+        p2 = loadedGame.Potions2;
+        p3 = loadedGame.Potions3;
+        p4 = loadedGame.Potions4;
+
+    }
+}
 class Shop
 {
     Player p;
-    InventoryManager shopInven = new InventoryManager();
+    public InventoryManager shopInven = new InventoryManager();
 
     public object name { get; private set; }
 
@@ -562,9 +701,9 @@ class Player
     public InventoryManager inven = new InventoryManager();
     public string Name { get; set; }
     public JOB job;
-    float Atk;
+    public float Atk;
     public float totalAtk { get { return WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk; } }
-    float Def;
+    public float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
     public float Hp;
@@ -574,7 +713,7 @@ class Player
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
     public float Exp;
-    float M_Exp;
+    public float M_Exp;
     public void CheckLvUp(int ex)
     {
         Exp += ex;
@@ -1257,7 +1396,7 @@ class Battle
         Console.WriteLine("");
         if (p.IsDead == false) stage++;
         Console.ReadKey();
-        Program.MainManu(p, s, this);
+        Program.MainMenu(p, s, this);
 
     }
     public void BattleTurn(int temp)

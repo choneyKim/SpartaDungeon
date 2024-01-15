@@ -1207,12 +1207,16 @@ class Battle
             switch (Program.ran.Next(1, 7))
             {
                 case 1:Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+                    Console.WriteLine("힐 포션 획득");
                     break;
                 case 2:Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
+                    Console.WriteLine("마나 포션 획득");
                     break;
                 case 3:Program.hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
+                    Console.WriteLine("쿠키 획득");
                     break;
                 case 4:Program.mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
+                    Console.WriteLine("파워에이드 획득");
                     break;
                 default:
                     break;

@@ -31,10 +31,12 @@ internal class Program
     }
     public static void MainMenu(Player nP, Shop sh, Battle battle, SaveData saveData)
     {
+        string saveSlot1 = "빈 슬롯 입니다.";
+        string saveSlot2 = "빈 슬롯 입니다.";
+        string saveSlot3 = "빈 슬롯 입니다.";
         while (true)
         {
             Console.Clear();
-
             ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
             Console.WriteLine("마을에 오신 " + nP.Name + "님 환영합니다.");
             ShowHighlightedText_D("++++++++++++++++++++++++++++++++");
@@ -48,6 +50,8 @@ internal class Program
             Program.Firstlettercolor("7.", " 불러오기");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
+            string saveInput = "Save";
+
 
             switch (input)
             {
@@ -72,14 +76,77 @@ internal class Program
                     Recovery(nP);
                     break;
                 case "6":
-                    Console.WriteLine("저장할 파일명을 입력하여 주십시오");
-                    string save = Console.ReadLine() ?? "Default";
-                    saveData.SaveGameToFile(save);
+                backcase6:
+                    Console.Clear();
+                    Console.WriteLine("저장할 슬롯을 정해주세요");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 나가기");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            saveInput += "1";
+                            saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "2":
+                            saveInput += "2";
+                            saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "3":
+                            saveInput += "3";
+                            saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            break;
+                        case "0":
+                            continue;
+                        default:
+                            WrongInput();
+                            goto backcase6;
+                    }
+                    saveData.SaveGameToFile(saveInput);
                     break;
                 case "7":
-                    Console.WriteLine("불러올 파일명을 입력하여 주십시오");
-                    string load = Console.ReadLine() ?? "Default";
-                    saveData.LoadGameFromFile(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood, load);
+                backcase7:
+                    Console.Clear();
+                    Console.WriteLine("불러올 슬롯을 정해주세요");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 나가기");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            saveInput += "1";
+                            break;
+                        case "2":
+                            saveInput += "2";
+                            break;
+                        case "3":
+                            saveInput += "3";
+                            break;
+                        case "0":
+                            continue;
+                        default:
+                            WrongInput();
+                            goto backcase7;
+                    }
+                    saveData.LoadGameFromFile(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood, saveInput);
                     break;
                 default:
                     WrongInput();
@@ -376,8 +443,13 @@ class SaveData
     }
     public void LoadGameFromFile(Player p, Shop s, Battle b, List<Potion> p1, List<Potion> p2, List<Potion> p3, List<Potion> p4, string fileName)
     {
+        if (!File.Exists(fileName))
+        {
+            Console.WriteLine("저장된 데이터가 없습니다.");
+            Console.ReadKey();
+            return;
+        }
         string savedData = File.ReadAllText(fileName);
-
         SaveData? loadedGame = JsonConvert.DeserializeObject<SaveData>(savedData);
         p.Name = loadedGame.PlayerData.Name;
         p.job = loadedGame.PlayerData.job;
@@ -407,9 +479,6 @@ class Shop
 {
     Player p;
     public InventoryManager shopInven = new InventoryManager();
-
-    public object name { get; private set; }
-
     public Shop(Player player)
     {
         p = player;
@@ -642,13 +711,13 @@ class Player
     public void CheckLvUp(int ex)
     {
         Exp += ex;
-        if (Exp >= M_Exp)
+        while (Exp >= M_Exp)
         {
             Lv++;
             Atk += 0.5f;
             Def++;
             M_Hp += 10;
-            Exp = 0;
+            Exp -= M_Exp;
             M_Exp *= 1.5f;
             M_mp += 10;
         }
@@ -1411,7 +1480,7 @@ class Battle
             int pDamage = 0;
             if (useSkill)
             {
-                pDamage = (int)skillDmg * (damage_sub==0?damage_sub=100:damage_sub) / 100;
+                pDamage = (int)skillDmg * (damage_sub == 0 ? damage_sub = 100 : damage_sub) / 100;
             }
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
             Console.Clear();

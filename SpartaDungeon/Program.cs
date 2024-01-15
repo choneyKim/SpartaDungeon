@@ -632,8 +632,7 @@ class Player
                 {
                     return -1;// -1은 마나가 부족시 
                 }
-                Program.ran.Next(1, 5);
-                if (Program.ran.Next(1, 5) < 3)
+                if (Program.ran.Next(1, 5) <= 3)
                 {
                     mp -= 10;
                 }

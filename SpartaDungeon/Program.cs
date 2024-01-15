@@ -4,6 +4,7 @@ using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Newtonsoft.Json;
 using Txt_Game;
 
 internal class Program
@@ -24,10 +25,11 @@ internal class Program
         manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
         hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
         mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
-        MainManu(nP, sh, battle);
+        SaveData saveData = new SaveData(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood);
+        MainMenu(nP, sh, battle, saveData);
 
     }
-    public static void MainManu(Player nP, Shop sh, Battle battle)
+    public static void MainMenu(Player nP, Shop sh, Battle battle, SaveData saveData)
     {
         while (true)
         {
@@ -42,6 +44,8 @@ internal class Program
             Program.Firstlettercolor("3.", " 상점");
             Program.Firstlettercolor("4.", " 전투 시작");
             Program.Firstlettercolor("5.", " 회복아이템");
+            Program.Firstlettercolor("6.", " 저장하기");
+            Program.Firstlettercolor("7.", " 불러오기");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
 
@@ -66,6 +70,16 @@ internal class Program
                     break;
                 case "5":
                     Recovery(nP);
+                    break;
+                case "6":
+                    Console.WriteLine("저장할 파일명을 입력하여 주십시오");
+                    string save = Console.ReadLine() ?? "Default";
+                    saveData.SaveGameToFile(save);
+                    break;
+                case "7":
+                    Console.WriteLine("불러올 파일명을 입력하여 주십시오");
+                    string load = Console.ReadLine() ?? "Default";
+                    saveData.LoadGameFromFile(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood, load);
                     break;
                 default:
                     WrongInput();
@@ -334,10 +348,65 @@ internal class Program
     //}
 
 }
+class SaveData
+{
+    public Player PlayerData { get; set; }
+    public Shop ShopData { get; set; }
+    public Battle BattleData { get; set; }
+    public List<Potion> Potions1 { get; set; }
+    public List<Potion> Potions2 { get; set; }
+    public List<Potion> Potions3 { get; set; }
+    public List<Potion> Potions4 { get; set; }
+
+    public SaveData(Player player, Shop shop, Battle battle, List<Potion> potions1, List<Potion> potions2, List<Potion> potions3, List<Potion> potions4)
+    {
+        PlayerData = player;
+        ShopData = shop;
+        BattleData = battle;
+        Potions1 = potions1;
+        Potions2 = potions2;
+        Potions3 = potions3;
+        Potions4 = potions4;
+    }
+
+    public void SaveGameToFile(string fileName)
+    {
+        string serializedData = JsonConvert.SerializeObject(this);
+        File.WriteAllText(fileName, serializedData);
+    }
+    public void LoadGameFromFile(Player p, Shop s, Battle b, List<Potion> p1, List<Potion> p2, List<Potion> p3, List<Potion> p4, string fileName)
+    {
+        string savedData = File.ReadAllText(fileName);
+
+        SaveData? loadedGame = JsonConvert.DeserializeObject<SaveData>(savedData);
+        p.Name = loadedGame.PlayerData.Name;
+        p.job = loadedGame.PlayerData.job;
+        p.Atk = loadedGame.PlayerData.Atk;
+        p.Def = loadedGame.PlayerData.Def;
+        p.Gold = loadedGame.PlayerData.Gold;
+        p.Hp = loadedGame.PlayerData.Hp;
+        p.M_Hp = loadedGame.PlayerData.M_Hp;
+        p.mp = loadedGame.PlayerData.mp;
+        p.M_mp = loadedGame.PlayerData.M_mp;
+        p.Lv = loadedGame.PlayerData.Lv;
+        p.Exp = loadedGame.PlayerData.Exp;
+        p.M_Exp = loadedGame.PlayerData.M_Exp;
+        p.WeaponSlot = loadedGame.PlayerData.WeaponSlot;
+        p.ArmorSlot = loadedGame.PlayerData.ArmorSlot;
+        p.inven = loadedGame.PlayerData.inven;
+        s.shopInven = loadedGame.ShopData.shopInven;
+        b.stage = loadedGame.BattleData.stage;
+        p1 = loadedGame.Potions1;
+        p2 = loadedGame.Potions2;
+        p3 = loadedGame.Potions3;
+        p4 = loadedGame.Potions4;
+
+    }
+}
 class Shop
 {
     Player p;
-    InventoryManager shopInven = new InventoryManager();
+    public InventoryManager shopInven = new InventoryManager();
 
     public object name { get; private set; }
 
@@ -557,9 +626,9 @@ class Player
     public InventoryManager inven = new InventoryManager();
     public string Name { get; set; }
     public JOB job;
-    float Atk;
+    public float Atk;
     public float totalAtk { get { return WeaponSlot != null ? WeaponSlot.Atk + Atk : Atk; } }
-    float Def;
+    public float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
     public float Hp;
@@ -569,7 +638,7 @@ class Player
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
     public float Exp;
-    float M_Exp;
+    public float M_Exp;
     public void CheckLvUp(int ex)
     {
         Exp += ex;
@@ -1032,6 +1101,7 @@ class Battle
     public int stage = 1;
     float skillDmg;
     bool useSkill = false;
+    bool playerDie = false;
     int skillSelect = 0;
     public Battle(Player p, Shop s)
     {
@@ -1042,6 +1112,7 @@ class Battle
     {
         Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster(this);
+        playerHp = p.Hp;
         while (true)
         {
             Console.Clear();
@@ -1071,8 +1142,13 @@ class Battle
             {
                 if (temp == 1)
                 {
-                    playerHp = p.Hp; //여기서 초기화되어서 Result의 체력 변화 부분이 던전 진입시 체력을 보여주지 않음.
                     BattleAttack();
+                    if (Monster.monsters.Count == 0) return;
+                    if (playerDie == true)
+                    {
+                        playerDie = false;
+                        return;
+                    }
                 }
                 else if (temp == 2)
                 {
@@ -1087,6 +1163,7 @@ class Battle
                         useSkill = true;
                         skillDmg = SkillChoice();
                         if (useSkill == true) BattleAttack();
+                        if (Monster.monsters.Count == 0) return;
                     }
 
                 }
@@ -1134,6 +1211,10 @@ class Battle
                     {
                         temp -= 1;
                         BattleTurn(temp);
+                        if (playerDie == true)
+                        {
+                            return;
+                        }
                         for (int i = 0; i < Monster.monsters.Count; i++)
                         {
                             IsClear = Monster.monsters[i].IsDead && IsClear;
@@ -1141,6 +1222,7 @@ class Battle
                         if (IsClear)
                         {
                             BattleResult(p.IsDead);
+                            Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
                             return;
                         }
                         else return;
@@ -1183,6 +1265,8 @@ class Battle
             Console.WriteLine($"현재 경험치: {p.Exp}");
             Console.WriteLine("완전 회복 상태로 부활합니다.");
             p.Hp = p.M_Hp;
+            stage--;
+            playerDie = true;
         }
         else
         {
@@ -1222,13 +1306,12 @@ class Battle
             {
                 p.mp = p.M_mp;
             }
+            stage++;
         }
         Console.WriteLine();
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
-        if (p.IsDead == false) stage++;
         Console.ReadKey();
-        Program.MainManu(p, s, this);
 
     }
     public void BattleTurn(int temp)
@@ -1347,7 +1430,11 @@ class Battle
                     Console.WriteLine();
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");
-                    if (p.IsDead == true) { BattleResult(p.IsDead); }
+                    if (p.IsDead == true)
+                    {
+                        BattleResult(p.IsDead);
+                        return;
+                    }
                     Console.ReadKey(); continue;
                 }
             }

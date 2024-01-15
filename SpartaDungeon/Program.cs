@@ -1204,7 +1204,7 @@ class Battle
             Console.WriteLine("");
             Console.WriteLine("획득 보상");
 
-            switch (Program.ran.Next(1, 7))
+            switch (Program.ran.Next(1, 12))
             {
                 case 1:Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
                     Console.WriteLine("힐 포션 획득");

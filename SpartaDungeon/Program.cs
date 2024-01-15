@@ -95,17 +95,14 @@ internal class Program
                     {
                         case "1":
                             saveInput += "1";
-                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "2":
                             saveInput += "2";
-                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "3":
                             saveInput += "3";
-                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "0":
@@ -482,9 +479,6 @@ class Shop
 {
     Player p;
     public InventoryManager shopInven = new InventoryManager();
-
-    public object name { get; private set; }
-
     public Shop(Player player)
     {
         p = player;
@@ -717,13 +711,13 @@ class Player
     public void CheckLvUp(int ex)
     {
         Exp += ex;
-        if (Exp >= M_Exp)
+        while (Exp >= M_Exp)
         {
             Lv++;
             Atk += 0.5f;
             Def++;
             M_Hp += 10;
-            Exp = 0;
+            Exp -= M_Exp;
             M_Exp *= 1.5f;
             M_mp += 10;
         }
@@ -739,7 +733,7 @@ class Player
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 20;
-        M_mp = 50 + job.mp;
+        M_mp = 70 + job.mp;
         mp = M_mp;
     }
 
@@ -749,7 +743,7 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
+            case JOB.Job.crusader:
                 if (mp < 10)
                 {
                     return -1; // -1 은 마나가 부족시 
@@ -786,7 +780,7 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
+            case JOB.Job.crusader:
                 if (mp < 30)
                 {
                     return -1;
@@ -825,12 +819,12 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
-                if (mp < 30)
+            case JOB.Job.crusader:
+                if (mp < 35)
                 {
                     return -1;
                 }
-                mp -= 30;
+                mp -= 35;
                 if (WeaponSlot == null)
                 {
                     return 10;//데미지 무기공격력 4배|| 방어구 장착 안할시 기본데미지 10
@@ -865,8 +859,6 @@ class Player
                 return -2;
         }
     }
-<<<<<<< Updated upstream
-=======
     // 전체 스킬 추가
     public float AllAttackSkill()
     {
@@ -879,7 +871,7 @@ class Player
                 }
                 mp -= 40;
                 float totalDamage = 15;
- 
+
                 return totalDamage;
             case JOB.Job.Wizrd:
                 if (mp <= 0)
@@ -898,7 +890,7 @@ class Player
                     return -1; // 마나 부족시
                 }
                 mp -= 25;
-                float chefDamage = 10f; 
+                float chefDamage = 10f;
                 //float totalGold = 0;  갈취한 총 골드
                 //foreach (var monster in Monster.monsters)
                 //{
@@ -918,12 +910,11 @@ class Player
     // 전체 스킬인데 공격후에 또 공격할 대상이 뜸
 
 
->>>>>>> Stashed changes
     public class JOB
     {
         public enum Job
         {
-            Warrior, Wizrd, Chef
+            crusader, Wizrd, Chef
         }
         public string jobName = "백수";
         public float atk;
@@ -935,8 +926,8 @@ class Player
         {
             switch (job)
             {
-                case Job.Warrior:
-                    jobName = "워리어";
+                case Job.crusader:
+                    jobName = "크루세이더";
                     atk = 5;
                     def = 3;
                     hp = -5;
@@ -945,12 +936,13 @@ class Player
                     jobName = "위자드";
                     atk = -5;
                     def = -2;
-                    mp = 20;
+                    mp = 35;
                     break;
                 case Job.Chef:
                     jobName = "쉐프";
+                    atk = 2;
                     def = 5;
-                    hp = 10;
+                    mp = 30;
                     break;
             }
             joben = job;
@@ -965,12 +957,12 @@ class Player
             string name = Console.ReadLine() ?? "철수";
         w:
             Console.WriteLine("직업을 입력하여 주십시오.");
-            Console.WriteLine("1.워리어 2.위자드 3.쉐프");
+            Console.WriteLine("1.크루세이더 2.위자드 3.쉐프");
             JOB job;
             switch (Console.ReadLine())
             {
                 case "1":
-                    job = new JOB(JOB.Job.Warrior);
+                    job = new JOB(JOB.Job.crusader);
                     break;
                 case "2":
                     job = new JOB(JOB.Job.Wizrd);
@@ -1132,19 +1124,19 @@ class Monster
         int dif = stage.stage;
         if (dif % 5 == 0 && dif / 5 == 1)
         {
-            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
+            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 100, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Atk: 1)));
         }
         else if (dif % 5 == 0 && dif / 5 == 2)
         {
-            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새를 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
+            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 100, "진한 술냄새를 풍기고있다.", Item.ItemType.Weapon, Atk: 1)));
         }
         else if (dif % 5 == 0 && dif / 5 == 3)
         {
-            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
+            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 100, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 1)));
         }
         else if (dif % 5 == 0 && dif / 5 == 4)
         {
-            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
+            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어소트락강의", 100, "이것은 치트키다", Item.ItemType.Weapon, Atk: 1)));
         }
         else
         {
@@ -1152,57 +1144,29 @@ class Monster
             {
 
 
-                switch (Program.ran.Next(1, 6))
+                switch (Program.ran.Next(1, 4))
                 {
                     case 1:
                         {
-                            monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 10 + dif, 6 + dif, 3, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                            monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 10 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                             break;
                         }
                     case 2:
                         {
-                            monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17 + dif, 4 + dif, 3, new Item("공허충의 이빨", 150, "물리면 아프다.", Item.ItemType.Weapon, Atk: 3)));
+                            monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17 + dif, 4 + dif));
                             break;
                         }
                     case 3:
                         {
-                            monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif,2, new Item("미니언 갑옷", 200, "작다..", Item.ItemType.Weapon, Def: 5)));
+                            monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif));
                             break;
                         }
-                    case 4:
-                        {
-                            monsters.Add(new Monster("공허의 사제", 5 + dif, 20 + dif * 2, 25 + dif * 2, 20 + dif, 10 + dif,1, new Item("사제가 떨군 성경책", 500, "한번도 읽지 않은거같다.", Item.ItemType.Weapon, Atk: 20)));
-                            break;
-                        }
-                    case 5:
-                        {
-                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif,2, new Item("십일조", 311, "나쁘지않게 들어있다.", Item.ItemType.Weapon, Atk: 0)));
-                            break;
-                        }
-
                 }
 
             }
         }
 
     }
-    public class BossMonsterSkill
-    {
-        public void UseBossSkill(Player player,Monster boss)
-        {
-            Console.WriteLine($"{boss.Name}이(가) 강력한 스킬을 사용합니다!");
-
-            int damage = CalculateDamage();
-            player.Hp = player.Hp - damage;
-        }
-        private int CalculateDamage()
-        {
-            Random random = new Random();
-            return random.Next(20, 35); 
-        }
-
-    }
-
     public void GetReward(Player p, ref int gold, ref int exp)
     {
         p.CheckLvUp(Level);
@@ -1258,6 +1222,7 @@ class Battle
     public int stage = 1;
     float skillDmg;
     bool useSkill = false;
+    bool playerDie = false;
     int skillSelect = 0;
     public Battle(Player p, Shop s)
     {
@@ -1268,6 +1233,8 @@ class Battle
     {
         Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster(this);
+        playerHp = p.Hp;
+        int tryCount = 0;
         while (true)
         {
             Console.Clear();
@@ -1288,6 +1255,8 @@ class Battle
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
             Console.WriteLine("");
+            Console.WriteLine("0. 도망가기");
+            Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
 
@@ -1295,10 +1264,37 @@ class Battle
             string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp))
             {
-                if (temp == 1)
+                if (temp == 0)
                 {
-                    playerHp = p.Hp; //여기서 초기화되어서 Result의 체력 변화 부분이 던전 진입시 체력을 보여주지 않음.
+                    if (Program.ran.Next(1, 101) <= 35)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (tryCount == 0)
+                        {
+                            Console.WriteLine("도망에 실패하였습니다. (1회 무료)");
+                            Console.ReadKey();
+                            tryCount++;
+                        }
+                        else
+                        {
+                            p.Gold -= 100;
+                            Console.WriteLine("도망에 실패하였습니다. (-100G) ");
+                            Console.ReadKey();
+                        }
+                    }
+                }
+                else if (temp == 1)
+                {
                     BattleAttack();
+                    if (Monster.monsters.Count == 0) return;
+                    if (playerDie == true)
+                    {
+                        playerDie = false;
+                        return;
+                    }
                 }
                 else if (temp == 2)
                 {
@@ -1313,6 +1309,7 @@ class Battle
                         useSkill = true;
                         skillDmg = SkillChoice();
                         if (useSkill == true) BattleAttack();
+                        if (Monster.monsters.Count == 0) return;
                     }
 
                 }
@@ -1378,6 +1375,10 @@ class Battle
                     {
                         temp -= 1;
                         BattleTurn(temp);
+                        if (playerDie == true)
+                        {
+                            return;
+                        }
                         for (int i = 0; i < Monster.monsters.Count; i++)
                         {
                             IsClear = Monster.monsters[i].IsDead && IsClear;
@@ -1385,6 +1386,7 @@ class Battle
                         if (IsClear)
                         {
                             BattleResult(p.IsDead);
+                            Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
                             return;
                         }
                         else return;
@@ -1427,6 +1429,8 @@ class Battle
             Console.WriteLine($"현재 경험치: {p.Exp}");
             Console.WriteLine("완전 회복 상태로 부활합니다.");
             p.Hp = p.M_Hp;
+            stage--;
+            playerDie = true;
         }
         else
         {
@@ -1435,16 +1439,20 @@ class Battle
 
             switch (Program.ran.Next(1, 12))
             {
-                case 1:Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+                case 1:
+                    Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
                     Console.WriteLine("힐 포션 획득");
                     break;
-                case 2:Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
+                case 2:
+                    Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
                     Console.WriteLine("마나 포션 획득");
                     break;
-                case 3:Program.hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
+                case 3:
+                    Program.hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
                     Console.WriteLine("쿠키 획득");
                     break;
-                case 4:Program.mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
+                case 4:
+                    Program.mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
                     Console.WriteLine("파워에이드 획득");
                     break;
                 default:
@@ -1462,12 +1470,13 @@ class Battle
             {
                 p.mp = p.M_mp;
             }
+            stage++;
         }
         Console.WriteLine();
         Console.WriteLine("0. 다음");
         Console.WriteLine("");
-        if (p.IsDead == false) stage++;
         Console.ReadKey();
+
     }
     public void BattleTurn(int temp)
     {
@@ -1483,7 +1492,7 @@ class Battle
             int forthSkillDmg = 0;
             if (useSkill)
             {
-                pDamage = (int)skillDmg * (damage_sub) / 100;
+                pDamage = (int)skillDmg * (damage_sub == 0 ? damage_sub = 100 : damage_sub) / 100;
             }
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
             if (skillSelect == 4)
@@ -1522,20 +1531,20 @@ class Battle
             {
                 switch (p.job.joben)
                 {
-                    case Player.JOB.Job.Warrior:
+                    case Player.JOB.Job.crusader:
                         switch (skillSelect)
                         {
                             case 1:
                                 Program.PrintTextWithHighlights("플레이어가", "머리치기", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "운칠기삼", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
-                                Program.PrintTextWithHighlights("플레이어가", "웨폰스페셜리스트", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                Program.PrintTextWithHighlights("플레이어가", "홀리웨폰", $"를 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
                                 Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.  " +
@@ -1548,16 +1557,16 @@ class Battle
                         switch (skillSelect)
                         {
                             case 1:
-                                Program.PrintTextWithHighlights("플레이어가", "마나순환", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                Program.PrintTextWithHighlights("플레이어가", "에너지볼트", $"을 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "발버둥", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "마나공격", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
                                 Program.PrintTextWithHighlights("플레이어가", "메테오 스트라이크", $"를 시전합니다.  " +
@@ -1571,16 +1580,16 @@ class Battle
                         switch (skillSelect)
                         {
                             case 1:
-                                Program.PrintTextWithHighlights("플레이어가", "체력보충제", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                Program.PrintTextWithHighlights("플레이어가", "프로틴쉐이크", $"를 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "공방일체", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "아머 마스터", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
                                 Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"를 시전합니다.  " +
@@ -1593,11 +1602,11 @@ class Battle
                 }
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
-                $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
             Console.WriteLine();
             if (skillSelect == 4)
             {
-                foreach(var i in Monster.monsters)
+                foreach (var i in Monster.monsters)
                 {
                     Console.WriteLine($"Lv. {i.Level} {i.Name}");
                     Console.WriteLine($"HP  {i.Hp + forthSkillDmg} - > {(i.IsDead ? "Dead" : i.Hp)}");
@@ -1609,7 +1618,7 @@ class Battle
                 Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
                 Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
                 Console.WriteLine();
-            }            
+            }
             Console.WriteLine("0. 다음");
             useSkill = false;
             Console.WriteLine("");
@@ -1635,10 +1644,14 @@ class Battle
                     Console.WriteLine();
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");
-                    if (p.IsDead == true) { BattleResult(p.IsDead); }
+                    if (p.IsDead == true)
+                    {
+                        BattleResult(p.IsDead);
+                        return;
+                    }
                     Console.ReadKey(); continue;
                 }
-            }            
+            }
         }
     }
 
@@ -1661,18 +1674,21 @@ class Battle
             Console.WriteLine();
             switch (p.job.joben)
             {
-                case Player.JOB.Job.Warrior:
+                case Player.JOB.Job.crusader:
                     Console.WriteLine("1.머리치기 - Mp 10");
                     Console.WriteLine("  심플하게 15의 데미지를 준다.");
                     Console.WriteLine("");
                     Console.WriteLine("2.운칠기삼 - Mp 30");
                     Console.WriteLine("  10부터 45의 랜덤한 데미지");
                     Console.WriteLine("");
-                    Console.WriteLine("3.웨펀스페셜리스트 - Mp 30");
-                    Console.WriteLine("  장비한 무기의 4배 데미지 (장비미착용 데미지:10)");
+                    Console.WriteLine("3.홀리웨폰 - Mp 35");
+                    Console.WriteLine("  성스러운 기운을 담아 장비한 무기의 4배 데미지를 준다 (장비미착용 데미지:10)");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. 브류나크 - Mp 40");
+                    Console.WriteLine("  세라핌이 하늘에서 성스러운 창 브류나크를 지상으로 던진다. 그 창은 폭발하며 광역 마법 피해를 입힌다");
                     break;
                 case Player.JOB.Job.Wizrd:
-                    Console.WriteLine("1.마나순환 -Mp 10");
+                    Console.WriteLine("1.에너지볼트 -Mp 10");
                     Console.WriteLine("  1.2배의 데미지 운이 좋으면 마나를 사용하지 않는다");
                     Console.WriteLine("");
                     Console.WriteLine("2.발버둥 -Mp 30");
@@ -1680,9 +1696,12 @@ class Battle
                     Console.WriteLine("");
                     Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. 메테오 스트라이크 - Mp 40");
+                    Console.WriteLine("  현재 mp의 50%를 소모하여 운석을 소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");
                     break;
                 case Player.JOB.Job.Chef:
-                    Console.WriteLine("1.체력보충제 - Mp 10");
+                    Console.WriteLine("1.프로틴쉐이크 - Mp 10");
                     Console.WriteLine("  체력을 소량 회복하고 방어력에 비례한 데미지를 준다");
                     Console.WriteLine("");
                     Console.WriteLine("2.공방일체 -Mp 15 ");
@@ -1690,6 +1709,9 @@ class Battle
                     Console.WriteLine("");
                     Console.WriteLine("3.아머 마스터 -Mp 30");
                     Console.WriteLine("  장비한 방어구의 4배 데미지 (장비미착용 데미지:10)");
+                    Console.WriteLine("");
+                    Console.WriteLine("4.강제 취식 -Mp 25");
+                    Console.WriteLine("  몬스터에게 강제로 만든 음식을 먹이고 돈을 걷는다. 몬스터는 음식맛의 만족도에 비례하여 HP가 줄어든다.");
                     break;
             }
             Console.WriteLine("");
@@ -1709,6 +1731,9 @@ class Battle
                     break;
                 case "3":
                     temp = p.ThirdSkill();
+                    break;
+                case "4":
+                    temp = p.AllAttackSkill();
                     break;
                 case "0":
                     useSkill = false;

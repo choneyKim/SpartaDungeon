@@ -908,15 +908,16 @@ class Player
                 // 총 입힌 데미지 만큼 돈을 플레이어에게 주기
                 Gold += (int)chefDamage;
                 Program.PrintTextWithHighlights("플레이어가", "갈취", $"했습니다. [총 갈취한 골드: {totalGold}]");
+                Console.ReadKey();
                 return chefDamage;
             default:
                 return -2; // -2는 직업을 못불러 왔을때 
         }
     }
-
-    // 가끔 스킬이 이미 선택되었다는 오류가 떠서 수정 필요함.
-    // 전체 스킬인데 공격후에 또 공격할 대상이 뜸
-
+    //수정사항 & Q
+    // 1. 가끔 스킬이 이미 선택되었다는 오류가 떠서 수정 필요함.
+    // 2. 전체 스킬인데 공격후에 또 공격할 대상이 뜸
+    // 3. 강제 취식 스킬 후 갈취한 돈이 안나옴.
 
     public class JOB
     {
@@ -1694,3 +1695,24 @@ class Battle
         }
     }
 }
+
+// 전체 스킬용 함수
+
+//            if (!p.IsDead && !Monster.monsters[temp].IsDead)
+//        {
+//            int random = Program.ran.Next(1, 101);
+//    int damage_sub = 0;
+//            if (random <= 15) { damage_sub = 160; }
+//            else if (random > 85) { damage_sub = 0; }
+//else { damage_sub = 100; }
+//int pDamage = 0;
+//if (useSkill)
+//{
+//    pDamage = (int)skillDmg * (damage_sub == 0 ? damage_sub = 100 : damage_sub) / 100;
+//}
+//else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
+//Console.Clear();
+//Program.ShowHighlightedText_Y("Battle!!");
+//Console.WriteLine();
+//Console.WriteLine($"{p.Name} 의 공격!");
+//}

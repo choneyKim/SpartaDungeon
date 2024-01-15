@@ -865,6 +865,60 @@ class Player
                 return -2;
         }
     }
+<<<<<<< Updated upstream
+=======
+    // 전체 스킬 추가
+    public float AllAttackSkill()
+    {
+        switch (job.joben)
+        {
+            case JOB.Job.crusader:
+                if (mp < 40)
+                {
+                    return -1; // -1 은 마나가 부족시 
+                }
+                mp -= 40;
+                float totalDamage = 15;
+ 
+                return totalDamage;
+            case JOB.Job.Wizrd:
+                if (mp <= 0)
+                {
+                    return -1; //  마나 부족시 
+                }
+                float manaCost = mp * 0.5f;
+                mp -= (int)manaCost;
+
+                float wizardDamage = manaCost; //Program.ran.Next(8, 16) / 10.0f;  현재 마나의 50%를 사용하여 마나사용량의 0.8배에서 1.5배의 랜덤한 데미지를 입힘
+                return wizardDamage;
+
+            case JOB.Job.Chef:
+                if (mp < 25)
+                {
+                    return -1; // 마나 부족시
+                }
+                mp -= 25;
+                float chefDamage = 10f; 
+                //float totalGold = 0;  갈취한 총 골드
+                //foreach (var monster in Monster.monsters)
+                //{
+                //    monster.Hp -= chefDamage;
+                //    totalGold += chefDamage; // 몬스터마다 입힌 데미지만큼 골드를 증가시킴
+                //}
+                // 총 입힌 데미지 만큼 돈을 플레이어에게 주기
+                //Gold += (int)chefDamage;
+                //Program.PrintTextWithHighlights("플레이어가", "갈취", $"했습니다. [총 갈취한 골드: {totalGold}]");
+                return chefDamage;
+            default:
+                return -2; // -2는 직업을 못불러 왔을때 
+        }
+    }
+
+    // 가끔 스킬이 이미 선택되었다는 오류가 떠서 수정 필요함.
+    // 전체 스킬인데 공격후에 또 공격할 대상이 뜸
+
+
+>>>>>>> Stashed changes
     public class JOB
     {
         public enum Job
@@ -1273,6 +1327,8 @@ class Battle
     }
     public void BattleAttack()
     {
+        int anynum = 0;
+
         while (true)
         {
             bool IsClear = true;
@@ -1292,6 +1348,22 @@ class Battle
             Console.WriteLine($"{(useSkill == true ? "스킬을 사용할" : "공격할")} 적을 선택해주세요.");
             Console.Write(">>");
 
+            if (skillSelect == 4)
+            {
+                BattleTurn(anynum);
+
+                for (int i = 0; i < Monster.monsters.Count; i++)
+                {
+                    IsClear = Monster.monsters[i].IsDead && IsClear;
+                }
+                if (IsClear)
+                {
+                    BattleResult(p.IsDead);
+                    Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
+                    return;
+                }
+                else return;
+            }
 
             string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp) && temp <= Monster.monsters.Count)
@@ -1399,6 +1471,7 @@ class Battle
     }
     public void BattleTurn(int temp)
     {
+        int totalGold = 0;
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
             int random = Program.ran.Next(1, 101);
@@ -1407,11 +1480,36 @@ class Battle
             else if (random > 85) { damage_sub = 0; }
             else { damage_sub = 100; }
             int pDamage = 0;
+            int forthSkillDmg = 0;
             if (useSkill)
             {
                 pDamage = (int)skillDmg * (damage_sub) / 100;
             }
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
+            if (skillSelect == 4)
+            {
+                foreach (var i in Monster.monsters)
+                {
+                    switch (p.job.joben)
+                    {
+                        case Player.JOB.Job.crusader:
+                            forthSkillDmg = (pDamage + Program.ran.Next(0, 16));
+                            i.Hp -= forthSkillDmg;
+                            break;
+                        case Player.JOB.Job.Wizrd:
+                            forthSkillDmg = pDamage * Program.ran.Next(8, 16) / 10;
+                            i.Hp -= forthSkillDmg;
+                            break;
+                        case Player.JOB.Job.Chef:
+                            forthSkillDmg = pDamage + Program.ran.Next(0, 21);
+                            i.Hp -= forthSkillDmg;
+                            totalGold += forthSkillDmg;
+                            p.Gold += totalGold;
+                            break;
+                    }
+                }
+            }
+            else Monster.monsters[temp].Hp -= pDamage;
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
@@ -1439,6 +1537,10 @@ class Battle
                                 Program.PrintTextWithHighlights("플레이어가", "웨폰스페셜리스트", $"를 시전합니다.  " +
                                     $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
+                            case 4:
+                                Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}]");
+                                break;
 
                         }
                         break;
@@ -1456,6 +1558,10 @@ class Battle
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "마나공격", $"을 시전합니다.  " +
                                     $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                break;
+                            case 4:
+                                Program.PrintTextWithHighlights("플레이어가", "메테오 스트라이크", $"를 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}]");
                                 break;
 
                         }
@@ -1476,6 +1582,11 @@ class Battle
                                 Program.PrintTextWithHighlights("플레이어가", "아머 마스터", $"를 시전합니다.  " +
                                     $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
+                            case 4:
+                                Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"를 시전합니다.  " +
+                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}] " +
+                                    $"/ [갈취골드 : {totalGold}G]");
+                                break;
 
                         }
                         break;
@@ -1484,10 +1595,21 @@ class Battle
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
                 $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
             Console.WriteLine();
-            Monster.monsters[temp].Hp -= pDamage;
-            Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
-            Console.WriteLine();
+            if (skillSelect == 4)
+            {
+                foreach(var i in Monster.monsters)
+                {
+                    Console.WriteLine($"Lv. {i.Level} {i.Name}");
+                    Console.WriteLine($"HP  {i.Hp + forthSkillDmg} - > {(i.IsDead ? "Dead" : i.Hp)}");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
+                Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+                Console.WriteLine();
+            }            
             Console.WriteLine("0. 다음");
             useSkill = false;
             Console.WriteLine("");
@@ -1516,7 +1638,7 @@ class Battle
                     if (p.IsDead == true) { BattleResult(p.IsDead); }
                     Console.ReadKey(); continue;
                 }
-            }
+            }            
         }
     }
 

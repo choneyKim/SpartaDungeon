@@ -82,14 +82,14 @@ internal class Program
 
             PrintTextWithHighlights("[", "회복", "]");
             Console.WriteLine("");
-            Console.WriteLine("현재 HP: "+P.Hp+"/"+P.M_Hp);
-            Console.WriteLine("현재 MP: "+P.mp+"/"+P.M_mp);
+            Console.WriteLine("현재 HP: " + P.Hp + "/" + P.M_Hp);
+            Console.WriteLine("현재 MP: " + P.mp + "/" + P.M_mp);
             Console.WriteLine("");
-            PrintTextWithHighlights("["," 사용하기","]");
-            Firstlettercolor("1. ","힐 포션: " +"HP를 15 회복시켜줍니다.(남은포션: " + healPotion.Count + ")");
-            Firstlettercolor("2. ","마나 포션: " +"MP를 15 회복시켜줍니다.(남은포션: " + manaPotion.Count + ")");
-            Firstlettercolor("3. ","내가 만든 쿠키: " + "HP를 20 회복시켜줍니다.(남은포션: " + hpFood.Count + ")");
-            Firstlettercolor("4. ","파워에이드: " + "MP를 20 회복시켜줍니다.(남은포션: " + mpfood.Count + ")");
+            PrintTextWithHighlights("[", " 사용하기", "]");
+            Firstlettercolor("1. ", "힐 포션: " + "HP를 15 회복시켜줍니다.(남은포션: " + healPotion.Count + ")");
+            Firstlettercolor("2. ", "마나 포션: " + "MP를 15 회복시켜줍니다.(남은포션: " + manaPotion.Count + ")");
+            Firstlettercolor("3. ", "내가 만든 쿠키: " + "HP를 20 회복시켜줍니다.(남은포션: " + hpFood.Count + ")");
+            Firstlettercolor("4. ", "파워에이드: " + "MP를 20 회복시켜줍니다.(남은포션: " + mpfood.Count + ")");
 
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -132,7 +132,7 @@ internal class Program
                         Console.ReadKey();
                         continue;
                     }
-                    UsingPotion(P,popo);
+                    UsingPotion(P, popo);
                     break;
                 case "0":
                     return;
@@ -143,7 +143,7 @@ internal class Program
         }
 
     }
-    
+
     private static void UsingPotion(Player player, int num)
     {
         if (num == 1)
@@ -614,8 +614,8 @@ class Player
         mp = M_mp;
     }
 
-   // 스킬 계수 정리
-   //return 뒤의 양수는 모두 데미지 관련
+    // 스킬 계수 정리
+    //return 뒤의 양수는 모두 데미지 관련
     public float FirstSkill()
     {
         switch (job.joben)
@@ -780,7 +780,7 @@ class Player
             Console.Clear();
             Console.WriteLine("캐릭터 이름을 입력하여 주십시오.");
             string name = Console.ReadLine() ?? "철수";
-            w:
+        w:
             Console.WriteLine("직업을 입력하여 주십시오.");
             Console.WriteLine("1.워리어 2.위자드 3.쉐프");
             JOB job;
@@ -930,7 +930,7 @@ class Monster
 
     public static List<Monster> monsters = new List<Monster>();
 
-    public Monster(string name, int level, int hP,int m_hp, int aTK, int def, int dLv = 0, params Item[] drop)
+    public Monster(string name, int level, int hP, int m_hp, int aTK, int def, int dLv = 0, params Item[] drop)
     {
         Name = name;
         Level = level;
@@ -990,7 +990,7 @@ class Monster
 
             }
         }
-            
+
     }
     public void GetReward(Player p, ref int gold, ref int exp)
     {
@@ -1055,17 +1055,17 @@ class Battle
     }
     public void BattleDisplay()
     {
-        Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false); 
+        Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster(this);
         while (true)
         {
             Console.Clear();
             Program.ShowHighlightedText_Y($"Battle!! - Stage {stage}");
             Console.WriteLine();
-            if (stage / 5 == 1) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다."); //stage 5~9 true
-            if (stage / 5 == 2) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다."); //stage 10 ~ 14 true
-            if (stage / 5 == 3) Program.ShowHighlightedText_R("어디선가 음악소리가 들리며 용욱몬이 등장하였다.");
-            if (stage / 5 == 4) Program.ShowHighlightedText_R("C#강의와 함께 재영몬 등장!! 48강짜리 강의를 들어야 할 것만 같다.");
+            if (stage / 5 == 1 && stage % 5 == 0) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다."); 
+            if (stage / 5 == 2 && stage % 5 == 0) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다."); 
+            if (stage / 5 == 3 && stage % 5 == 0) Program.ShowHighlightedText_R("어디선가 음악소리가 들리며 용욱몬이 등장하였다.");
+            if (stage / 5 == 4 && stage % 5 == 0) Program.ShowHighlightedText_R("C#강의와 함께 재영몬 등장!! 48강짜리 강의를 들어야 할 것만 같다.");
             Monster.DisplayMonster();
             Console.WriteLine();
             Console.WriteLine();
@@ -1145,7 +1145,7 @@ class Battle
                 }
                 else
                 {
-                    if (temp > 0 && temp <= Monster.monsters.Count) 
+                    if (temp > 0 && temp <= Monster.monsters.Count)
                     {
                         temp -= 1;
                         BattleTurn(temp);
@@ -1193,11 +1193,11 @@ class Battle
         {
             Console.WriteLine("몬스터에게 잡아먹혔습니다.");
             Console.WriteLine("경험치가 10% 감소합니다.");
-            getExp = (int)(p.Exp* 0.1f * -1);
+            getExp = (int)(p.Exp * 0.1f * -1);
             p.Exp += getExp;
-            Console.WriteLine($"현재 경험치: {p.Exp }") ;
-            Console.WriteLine("완전 회복 상태로 부활합니다.") ;
-            p.Hp = p.M_Hp;  
+            Console.WriteLine($"현재 경험치: {p.Exp}");
+            Console.WriteLine("완전 회복 상태로 부활합니다.");
+            p.Hp = p.M_Hp;
         }
 
         else
@@ -1237,15 +1237,15 @@ class Battle
             int pDamage = 0;
             if (useSkill)
             {
-                pDamage = (int)skillDmg*(damage_sub)/100;
+                pDamage = (int)skillDmg * (damage_sub) / 100;
             }
-            else pDamage = p.PlayerDamage(Monster.monsters[temp].Def)*(damage_sub)/100;
+            else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
 
-            
+
             //스킬 사용시
 
             if (useSkill)
@@ -1310,11 +1310,11 @@ class Battle
                 }
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
-                $"[데미지 : {(random <= 15 ? pDamage+" (치명타)" : (random > 85 ? pDamage+ " (회피)" : pDamage))}]");
+                $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
             Console.WriteLine();
             Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-            Console.WriteLine($"HP  {Monster.monsters[temp].Hp+pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+            Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             useSkill = false;
@@ -1347,8 +1347,8 @@ class Battle
             }
         }
     }
-    
-   //skill 선택
+
+    //skill 선택
     public float SkillChoice()
     {
         float temp = 0;

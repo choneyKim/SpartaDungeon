@@ -99,7 +99,7 @@ internal class Program
             switch (input)
             {
                 case "1": //0보다 작을때 즉 -1이하만 거짓이 됨
-                    if (healPotion.Count < 0)//0이여도 거짓이 되게 해야함
+                    if (healPotion.Count <= 0)//0이여도 거짓이 되게 해야함
                     {
                         Console.WriteLine("포션이 부족합니다.");
                         Console.ReadKey();
@@ -157,11 +157,8 @@ internal class Program
             player.Hp += healPotion[0].Point; //여기서 한번 더 하고
             if (player.Hp < player.M_Hp)
             {
-                player.Hp += healPotion[0].Point; //여기서 두번 더 해서 총 두번 회복 됨.
-                if (player.Hp >= player.M_Hp)//다른 아이템도 같음
-                {
                     player.Hp = player.M_Hp;
-                }
+
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + healPotion[0].Point + "만큼 회복되었습니다.");
                 healPotion.RemoveAt(0);
@@ -180,11 +177,8 @@ internal class Program
             player.mp += manaPotion[0].Point;
             if (player.mp < player.M_mp)
             {
-                player.mp += manaPotion[0].Point;
-                if (player.mp >= player.M_mp)
-                {
                     player.mp = player.M_mp;
-                }
+                
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + manaPotion[0].Point + "만큼 회복되었습니다.");
                 manaPotion.RemoveAt(0);
@@ -203,11 +197,8 @@ internal class Program
             player.Hp += hpFood[0].Point;
             if (player.Hp < player.M_Hp)
             {
-                player.Hp += hpFood[0].Point;
-                if (player.Hp >= player.M_Hp)
-                {
                     player.Hp = player.M_Hp;
-                }
+                
                 Console.WriteLine("HP 회복을 완료했습니다.");
                 Console.WriteLine("체력이" + hpFood[0].Point + "만큼 회복되었습니다.");
                 hpFood.RemoveAt(0);
@@ -226,11 +217,8 @@ internal class Program
             player.mp += mpfood[0].Point;
             if (player.mp < player.M_mp)
             {
-                player.mp += mpfood[0].Point;
-                if (player.mp >= player.M_mp)
-                {
                     player.mp = player.M_mp;
-                }
+               
                 Console.WriteLine("MP 회복을 완료했습니다.");
                 Console.WriteLine("마나가" + mpfood[0].Point + "만큼 회복되었습니다.");
                 mpfood.RemoveAt(0);

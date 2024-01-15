@@ -683,13 +683,13 @@ class Player
     public void CheckLvUp(int ex)
     {
         Exp += ex;
-        if (Exp >= M_Exp)
+        while (Exp >= M_Exp)
         {
             Lv++;
             Atk += 0.5f;
             Def++;
             M_Hp += 10;
-            Exp = 0;
+            Exp -= M_Exp;
             M_Exp *= 1.5f;
             M_mp += 10;
         }

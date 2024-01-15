@@ -540,7 +540,7 @@ class Shop
                     return;
                 }
                 temp -= 1;
-                if (temp > -1 && temp <= shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
+                if (temp > -1 && temp < shopInven.Count() && p.Gold >= shopInven.ItemAccess(temp).Price)
                 {
                     if (!shopInven.ItemAccess(temp).HaveItem)
                     {
@@ -550,7 +550,7 @@ class Shop
                         //shopInven.RemoveItem(shopInven.ItemAccess(temp));
                     }
                 }
-                else if (temp > -1 && temp <= shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
+                else if (temp > -1 && temp < shopInven.Count() && p.Gold < shopInven.ItemAccess(temp).Price)
                 {
                     Program.ShowHighlightedText_R("돈이 부족합니다.");
                     Console.ReadKey();

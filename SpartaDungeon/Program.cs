@@ -1326,7 +1326,7 @@ class Battle
             int pDamage = 0;
             if (useSkill)
             {
-                pDamage = (int)skillDmg * (damage_sub) / 100;
+                pDamage = (int)skillDmg * (damage_sub==0?damage_sub=100:damage_sub) / 100;
             }
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
             Console.Clear();
@@ -1346,15 +1346,15 @@ class Battle
                         {
                             case 1:
                                 Program.PrintTextWithHighlights("플레이어가", "머리치기", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "운칠기삼", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "웨폰스페셜리스트", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
 
                         }
@@ -1364,15 +1364,15 @@ class Battle
                         {
                             case 1:
                                 Program.PrintTextWithHighlights("플레이어가", "마나순환", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "발버둥", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "마나공격", $"을 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
 
                         }
@@ -1383,15 +1383,15 @@ class Battle
                         {
                             case 1:
                                 Program.PrintTextWithHighlights("플레이어가", "체력보충제", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
                                 Program.PrintTextWithHighlights("플레이어가", "공방일체", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "아머 마스터", $"를 시전합니다.  " +
-                                    $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                                    $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
 
                         }
@@ -1399,7 +1399,7 @@ class Battle
                 }
             }
             else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
-                $"[데미지 : {(random <= 15 ? pDamage + " (치명타)" : (random > 85 ? pDamage + " (회피)" : pDamage))}]");
+                $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
             Console.WriteLine();
             Monster.monsters[temp].Hp -= pDamage;
             Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");

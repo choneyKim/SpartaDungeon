@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using Txt_Game;
@@ -14,6 +15,38 @@ internal class Program
     public static List<Potion> manaPotion = new List<Potion>();
     public static List<Potion> hpFood = new List<Potion>();
     public static List<Potion> mpfood = new List<Potion>();
+    public static StringBuilder saveSlot1 = new StringBuilder();
+    public static StringBuilder saveSlot2 = new StringBuilder();
+    public static StringBuilder saveSlot3 = new StringBuilder();
+    static void SaveSlot(params StringBuilder[] sbd)
+    {
+        string slotname = "Terrible thing";
+        for (int i = 0; i < sbd.Length; i++)
+        {
+            string serializedData = JsonConvert.SerializeObject(sbd[i].ToString());
+            File.WriteAllText(slotname + i, serializedData);
+        }
+    }
+    static void LoadSlot()
+    {
+        string slotname = "Terrible thing";
+        if (!File.Exists(slotname + 0))
+        {
+            saveSlot1.Append("빈 슬롯 입니다.");
+            saveSlot2.Append("빈 슬롯 입니다.");
+            saveSlot3.Append("빈 슬롯 입니다.");
+            return;
+        }
+        string loadSlotName = File.ReadAllText(slotname + 0);
+        saveSlot1.Append(loadSlotName);
+        saveSlot1.Replace("\"","");
+        loadSlotName = File.ReadAllText(slotname + 1);
+        saveSlot2.Append(loadSlotName);
+        saveSlot2.Replace("\"", "");
+        loadSlotName = File.ReadAllText(slotname + 2);
+        saveSlot3.Append(loadSlotName);
+        saveSlot3.Replace("\"", "");
+    }
     static void Main(string[] args)
     {
         printStartLogo();
@@ -25,15 +58,13 @@ internal class Program
         manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
         hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
         mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
+        LoadSlot();
         SaveData saveData = new SaveData(nP, sh, battle, healPotion, manaPotion, hpFood, mpfood);
         MainMenu(nP, sh, battle, saveData);
 
     }
     public static void MainMenu(Player nP, Shop sh, Battle battle, SaveData saveData)
     {
-        string saveSlot1 = "빈 슬롯 입니다.";
-        string saveSlot2 = "빈 슬롯 입니다.";
-        string saveSlot3 = "빈 슬롯 입니다.";
         while (true)
         {
             Console.Clear();
@@ -95,15 +126,24 @@ internal class Program
                     {
                         case "1":
                             saveInput += "1";
-                            saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            saveSlot1.Clear();
+                            Console.WriteLine("저장할 이름을 정해주세요");
+                            saveSlot1.Append(Console.ReadLine() + "  (" + DateTime.Now + ")");
+                            SaveSlot(saveSlot1, saveSlot2, saveSlot3);
                             break;
                         case "2":
                             saveInput += "2";
-                            saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            saveSlot2.Clear();
+                            Console.WriteLine("저장할 이름을 정해주세요");
+                            saveSlot2.Append(Console.ReadLine() + "  (" + DateTime.Now + ")");
+                            SaveSlot(saveSlot1, saveSlot2, saveSlot3);
                             break;
                         case "3":
                             saveInput += "3";
-                            saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
+                            saveSlot3.Clear();
+                            Console.WriteLine("저장할 이름을 정해주세요");
+                            saveSlot3.Append(Console.ReadLine() + "  (" + DateTime.Now + ")");
+                            SaveSlot(saveSlot1, saveSlot2, saveSlot3);
                             break;
                         case "0":
                             continue;
@@ -1387,11 +1427,11 @@ class Battle
                     Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
                     return;
                 }
-                else 
+                else
                 {
                     useSkill = false;
                     skillSelect = 0;
-                    return; 
+                    return;
                 }
             }
 

@@ -150,7 +150,7 @@ internal class Program
         {
             if (player.Hp >= player.M_Hp)
             {
-                Console.WriteLine("최대체력 입니다.");
+                Console.WriteLine("체력이 최대 입니다.");
                 Console.ReadKey();
                 return;
             }
@@ -170,7 +170,7 @@ internal class Program
         {
             if (player.mp >= player.M_mp)
             {
-                Console.WriteLine("최대마나 입니다.");
+                Console.WriteLine("마나가 최대 입니다.");
                 Console.ReadKey();
                 return;
             }
@@ -190,7 +190,7 @@ internal class Program
         {
             if (player.Hp >= player.M_Hp)
             {
-                Console.WriteLine("최대체력 입니다.");
+                Console.WriteLine("체력이 최대 입니다.");
                 Console.ReadKey();
                 return;
             }
@@ -210,7 +210,7 @@ internal class Program
         {
             if (player.mp >= player.M_mp)
             {
-                Console.WriteLine("최대마나 입니다.");
+                Console.WriteLine("마나가 최대 입니다.");
                 Console.ReadKey();
                 return;
             }

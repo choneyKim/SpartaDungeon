@@ -1086,7 +1086,7 @@ class Battle
             {
                 if (temp == 1)
                 {
-                    playerHp = p.Hp;
+                    playerHp = p.Hp; //여기서 초기화되어서 Result의 체력 변화 부분이 던전 진입시 체력을 보여주지 않음.
                     BattleAttack();
                 }
                 else if (temp == 2)

@@ -536,6 +536,7 @@ class Shop
         shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
         shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
         shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
+        
         //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
 
         //갑옷
@@ -604,6 +605,7 @@ class Shop
             }
             Console.WriteLine("");
             Program.Firstlettercolor("1.", " 아이템 구매");
+            Program.ShowHighlightedText_D("아이템 구매하기에서 포션을 살수있습니다.");
             Program.Firstlettercolor("2.", " 아이템 판매");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
@@ -636,12 +638,45 @@ class Shop
             Console.WriteLine(p.Gold + " G");
             shopInven.DisplayShopInventory();
             Console.WriteLine("");
+            Program.ShowHighlightedText_Y("Q를 누르시면 HP포션을 구입할수있습니다.(500 G)");
+            Program.ShowHighlightedText_Y("W를 누르시면 MP포션을 구입할수있습니다.(500 G)");
+            Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
             Console.SetCursorPosition(2, 15 + shopInven.Count());
             string? input = Console.ReadLine();
 
+            if (input == "Q" || input == "q")
+            {
+                if (500 <= p.Gold)
+                {
+                    Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+                    p.Gold -= 500;
+                    Console.WriteLine("구매완료");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Program.ShowHighlightedText_R("돈이 부족합니다.");
+                    Console.ReadKey();
+                }
+            }
+            if (input == "W" || input == "w")
+            {
+                if (500 <= p.Gold)
+                {
+                    Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
+                    p.Gold -= 500;
+                    Console.WriteLine("구매완료");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Program.ShowHighlightedText_R("돈이 부족합니다.");
+                    Console.ReadKey();
+                }
+            }
             if (Int32.TryParse(input, out int temp))
             {
                 if (temp == 0)

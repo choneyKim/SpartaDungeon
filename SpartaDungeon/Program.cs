@@ -1154,6 +1154,7 @@ class Battle
         Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster(this);
         playerHp = p.Hp;
+        int tryCount = 0;
         while (true)
         {
             Console.Clear();
@@ -1174,6 +1175,8 @@ class Battle
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
             Console.WriteLine("");
+            Console.WriteLine("0. 도망가기");
+            Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
 
@@ -1181,7 +1184,29 @@ class Battle
             string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp))
             {
-                if (temp == 1)
+                if (temp == 0)
+                {
+                    if (Program.ran.Next(1, 101) <= 35)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (tryCount == 0)
+                        {
+                            Console.WriteLine("도망에 실패하였습니다. (1회 무료)");
+                            Console.ReadKey();
+                            tryCount++;
+                        }
+                        else
+                        {
+                            p.Gold -= 100;
+                            Console.WriteLine("도망에 실패하였습니다. (-100G) ");
+                            Console.ReadKey();
+                        }
+                    }
+                }
+                else if (temp == 1)
                 {
                     BattleAttack();
                     if (Monster.monsters.Count == 0) return;

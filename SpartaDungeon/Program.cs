@@ -95,14 +95,17 @@ internal class Program
                     {
                         case "1":
                             saveInput += "1";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "2":
                             saveInput += "2";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "3":
                             saveInput += "3";
+                            Console.WriteLine("저장할 이름을 적어주세요");
                             saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "0":
@@ -1153,7 +1156,7 @@ class Monster
             {
 
 
-                switch (Program.ran.Next(1, 4))
+                switch (Program.ran.Next(1, 6))
                 {
                     case 1:
                         {
@@ -1170,6 +1173,17 @@ class Monster
                             monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif));
                             break;
                         }
+                    case 4:
+                        {
+                            monsters.Add(new Monster("공허의 사제", 5 + dif, 20 + dif * 2, 25 + dif * 2, 20 + dif, 10 + dif,3, new Item("사제가 떨군 성경책", 350, "한번도 읽지 않은거같다.", Item.ItemType.Weapon, Atk: 1)));
+                            break;
+                        }
+                    case 5:
+                        {
+                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif,1, new Item("십일조", 1100, "두둑하게 들어있다.", Item.ItemType.Weapon, Atk: 11)));
+                            break;
+                        }
+
                 }
 
             }

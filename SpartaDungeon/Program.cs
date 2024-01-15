@@ -154,11 +154,11 @@ internal class Program
                 Console.ReadKey();
                 return;
             }
-            player.Hp += healPotion[0].Point;
+            player.Hp += healPotion[0].Point; //여기서 한번 더 하고
             if (player.Hp < player.M_Hp)
             {
-                player.Hp += healPotion[0].Point;
-                if (player.Hp >= player.M_Hp)
+                player.Hp += healPotion[0].Point; //여기서 두번 더 해서 총 두번 회복 됨.
+                if (player.Hp >= player.M_Hp)//다른 아이템도 같음
                 {
                     player.Hp = player.M_Hp;
                 }

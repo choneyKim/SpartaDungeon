@@ -1359,7 +1359,12 @@ class Battle
                     Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
                     return;
                 }
-                else return;
+                else 
+                {
+                    useSkill = false;
+                    skillSelect = 0;
+                    return; 
+                }
             }
 
             string? input = Console.ReadLine();
@@ -1621,6 +1626,7 @@ class Battle
             }
             Console.WriteLine("0. 다음");
             useSkill = false;
+            skillSelect = 0;
             Console.WriteLine("");
             Console.ReadKey();
             for (int i = 0; i < Monster.monsters.Count; i++)

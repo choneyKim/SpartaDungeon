@@ -31,6 +31,9 @@ internal class Program
     }
     public static void MainMenu(Player nP, Shop sh, Battle battle, SaveData saveData)
     {
+        string saveSlot1 = "빈 슬롯 입니다.";
+        string saveSlot2 = "빈 슬롯 입니다.";
+        string saveSlot3 = "빈 슬롯 입니다.";
         while (true)
         {
             Console.Clear();
@@ -48,6 +51,8 @@ internal class Program
             Console.WriteLine("");
             Console.Write("원하시는 행동을 선택하세요.\n>>"); string? input = Console.ReadLine();
             string saveInput = "Save";
+
+
             switch (input)
             {
                 case "1":
@@ -71,21 +76,34 @@ internal class Program
                     Recovery(nP);
                     break;
                 case "6":
-                    backcase6:
+                backcase6:
                     Console.Clear();
                     Console.WriteLine("저장할 슬롯을 정해주세요");
-                    Console.WriteLine("1, 2, 3");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
                     Console.WriteLine("0. 나가기");
                     switch (Console.ReadLine())
                     {
                         case "1":
                             saveInput += "1";
+                            saveSlot1 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "2":
                             saveInput += "2";
+                            saveSlot2 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "3":
                             saveInput += "3";
+                            saveSlot3 = Console.ReadLine() + "  (" + DateTime.Now + ")";
                             break;
                         case "0":
                             continue;
@@ -96,10 +114,20 @@ internal class Program
                     saveData.SaveGameToFile(saveInput);
                     break;
                 case "7":
-                    backcase7:
+                backcase7:
                     Console.Clear();
                     Console.WriteLine("불러올 슬롯을 정해주세요");
-                    Console.WriteLine("1,2,3");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
+                    Console.WriteLine($"1, {saveSlot1}");
+                    Console.WriteLine();
+                    Console.WriteLine($"2, {saveSlot2}");
+                    Console.WriteLine();
+                    Console.WriteLine($"3, {saveSlot3}");
+                    Console.WriteLine();
+                    Console.WriteLine("=================================");
+                    Console.WriteLine();
                     Console.WriteLine("0. 나가기");
                     switch (Console.ReadLine())
                     {

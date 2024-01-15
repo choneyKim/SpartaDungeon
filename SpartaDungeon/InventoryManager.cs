@@ -6,7 +6,7 @@ namespace Txt_Game
 
     public class InventoryManager
     {
-        private List<Item> Items { get;  set; }
+        public List<Item> Items { get;  set; }
 
         public InventoryManager()
 

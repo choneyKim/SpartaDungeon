@@ -1062,8 +1062,8 @@ class Battle
             Console.Clear();
             Program.ShowHighlightedText_Y($"Battle!! - Stage {stage}");
             Console.WriteLine();
-            if (stage / 5 == 1 && stage % 5 == 0) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다."); 
-            if (stage / 5 == 2 && stage % 5 == 0) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다."); 
+            if (stage / 5 == 1 && stage % 5 == 0) Program.ShowHighlightedText_R("청소를 하던 도비가 붙잡혀 왔다.");
+            if (stage / 5 == 2 && stage % 5 == 0) Program.ShowHighlightedText_R("물뜨러 갔던 고운몬 등장!! 기억을 잃은듯 하다.");
             if (stage / 5 == 3 && stage % 5 == 0) Program.ShowHighlightedText_R("어디선가 음악소리가 들리며 용욱몬이 등장하였다.");
             if (stage / 5 == 4 && stage % 5 == 0) Program.ShowHighlightedText_R("C#강의와 함께 재영몬 등장!! 48강짜리 강의를 들어야 할 것만 같다.");
             Monster.DisplayMonster();
@@ -1199,11 +1199,24 @@ class Battle
             Console.WriteLine("완전 회복 상태로 부활합니다.");
             p.Hp = p.M_Hp;
         }
-
         else
         {
             Console.WriteLine("");
             Console.WriteLine("획득 보상");
+
+            switch (Program.ran.Next(1, 7))
+            {
+                case 1:Program.healPotion.Add(new Potion("힐 포션", 15, "HP 15 회복"));
+                    break;
+                case 2:Program.manaPotion.Add(new Potion("마나 포션", 15, "MP 15 회복"));
+                    break;
+                case 3:Program.hpFood.Add(new Potion("내가 만든 쿠키", 20, "HP 20 회복"));
+                    break;
+                case 4:Program.mpfood.Add(new Potion("파워에이드", 20, "MP 20 회복"));
+                    break;
+                default:
+                    break;
+            }
             for (int i = 0; i < Monster.monsters.Count; i++)
             {
                 Monster.monsters[i].GetReward(p, ref getGold, ref getExp);

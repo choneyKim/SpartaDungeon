@@ -664,7 +664,7 @@ class Player
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 20;
-        M_mp = 50 + job.mp;
+        M_mp = 70 + job.mp;
         mp = M_mp;
     }
 
@@ -674,7 +674,7 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
+            case JOB.Job.crusader:
                 if (mp < 10)
                 {
                     return -1; // -1 은 마나가 부족시 
@@ -711,7 +711,7 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
+            case JOB.Job.crusader:
                 if (mp < 30)
                 {
                     return -1;
@@ -750,12 +750,12 @@ class Player
     {
         switch (job.joben)
         {
-            case JOB.Job.Warrior:
-                if (mp < 30)
+            case JOB.Job.crusader:
+                if (mp < 35)
                 {
                     return -1;
                 }
-                mp -= 30;
+                mp -= 35;
                 if (WeaponSlot == null)
                 {
                     return 10;//데미지 무기공격력 4배|| 방어구 장착 안할시 기본데미지 10
@@ -790,11 +790,70 @@ class Player
                 return -2;
         }
     }
+    // 전체 스킬 추가
+    public float AllAttackSkill()
+    {
+        switch (job.joben)
+        {
+            case JOB.Job.crusader:
+                if (mp < 40)
+                {
+                    return -1; // -1 은 마나가 부족시 
+                }
+                mp -= 40;
+                float totalDamage = 0;
+                foreach (var monster in Monster.monsters)
+                {
+                    float monsterDamage = Program.ran.Next(15,31); // 15~30 사이의 랜덤 데미지
+                    totalDamage += monsterDamage;
+                    monster.Hp -= monsterDamage; // 몬스터에게 개별 데미지 적용
+                }
+                return totalDamage;
+            case JOB.Job.Wizrd:
+                if (mp <= 0)
+                {
+                    return -1; //  마나 부족시 
+                }
+                float manaCost = mp * 0.5f;
+                mp -= (int)manaCost;
+
+                float wizardDamage = manaCost * Program.ran.Next(8, 16) / 10.0f; // 현재 마나의 50%를 사용하여 마나사용량의 0.8배에서 1.5배의 랜덤한 데미지를 입힘
+                foreach (var monster in Monster.monsters)
+                {
+                    monster.Hp -= wizardDamage;
+                }
+                return wizardDamage;
+            case JOB.Job.Chef:
+                if (mp < 25)
+                {
+                    return -1; // 마나 부족시
+                }
+                mp -= 25;
+                float chefDamage = Program.ran.Next(10, 31); // 10에서 30의 랜덤한 데미지를 입힘
+                float totalGold = 0; // 갈취한 총 골드
+                foreach (var monster in Monster.monsters)
+                {
+                    monster.Hp -= chefDamage;
+                    totalGold += chefDamage; // 몬스터마다 입힌 데미지만큼 골드를 증가시킴
+                }
+                // 총 입힌 데미지 만큼 돈을 플레이어에게 주기
+                Gold += (int)chefDamage;
+                Program.PrintTextWithHighlights("플레이어가", "갈취", $"했습니다. [총 갈취한 골드: {totalGold}]");
+                return chefDamage;
+            default:
+                return -2; // -2는 직업을 못불러 왔을때 
+        }
+    }
+
+    // 가끔 스킬이 이미 선택되었다는 오류가 떠서 수정 필요함.
+    // 전체 스킬인데 공격후에 또 공격할 대상이 뜸
+
+
     public class JOB
     {
         public enum Job
         {
-            Warrior, Wizrd, Chef
+            crusader, Wizrd, Chef
         }
         public string jobName = "백수";
         public float atk;
@@ -806,8 +865,8 @@ class Player
         {
             switch (job)
             {
-                case Job.Warrior:
-                    jobName = "워리어";
+                case Job.crusader:
+                    jobName = "크루세이더";
                     atk = 5;
                     def = 3;
                     hp = -5;
@@ -816,12 +875,13 @@ class Player
                     jobName = "위자드";
                     atk = -5;
                     def = -2;
-                    mp = 20;
+                    mp = 35;
                     break;
                 case Job.Chef:
                     jobName = "쉐프";
+                    atk = 2;
                     def = 5;
-                    hp = 10;
+                    mp = 30;
                     break;
             }
             joben = job;
@@ -836,12 +896,12 @@ class Player
             string name = Console.ReadLine() ?? "철수";
         w:
             Console.WriteLine("직업을 입력하여 주십시오.");
-            Console.WriteLine("1.워리어 2.위자드 3.쉐프");
+            Console.WriteLine("1.크루세이더 2.위자드 3.쉐프");
             JOB job;
             switch (Console.ReadLine())
             {
                 case "1":
-                    job = new JOB(JOB.Job.Warrior);
+                    job = new JOB(JOB.Job.crusader);
                     break;
                 case "2":
                     job = new JOB(JOB.Job.Wizrd);
@@ -1366,7 +1426,7 @@ class Battle
             {
                 switch (p.job.joben)
                 {
-                    case Player.JOB.Job.Warrior:
+                    case Player.JOB.Job.crusader:
                         switch (skillSelect)
                         {
                             case 1:
@@ -1378,7 +1438,7 @@ class Battle
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
-                                Program.PrintTextWithHighlights("플레이어가", "웨폰스페셜리스트", $"를 시전합니다.  " +
+                                Program.PrintTextWithHighlights("플레이어가", "홀리웨폰", $"를 시전합니다.  " +
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
 
@@ -1388,7 +1448,7 @@ class Battle
                         switch (skillSelect)
                         {
                             case 1:
-                                Program.PrintTextWithHighlights("플레이어가", "마나순환", $"을 시전합니다.  " +
+                                Program.PrintTextWithHighlights("플레이어가", "에너지볼트", $"을 시전합니다.  " +
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
@@ -1407,7 +1467,7 @@ class Battle
                         switch (skillSelect)
                         {
                             case 1:
-                                Program.PrintTextWithHighlights("플레이어가", "체력보충제", $"를 시전합니다.  " +
+                                Program.PrintTextWithHighlights("플레이어가", "프로틴쉐이크", $"를 시전합니다.  " +
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 2:
@@ -1485,18 +1545,21 @@ class Battle
             Console.WriteLine();
             switch (p.job.joben)
             {
-                case Player.JOB.Job.Warrior:
+                case Player.JOB.Job.crusader:
                     Console.WriteLine("1.머리치기 - Mp 10");
                     Console.WriteLine("  심플하게 15의 데미지를 준다.");
                     Console.WriteLine("");
                     Console.WriteLine("2.운칠기삼 - Mp 30");
                     Console.WriteLine("  10부터 45의 랜덤한 데미지");
                     Console.WriteLine("");
-                    Console.WriteLine("3.웨펀스페셜리스트 - Mp 30");
-                    Console.WriteLine("  장비한 무기의 4배 데미지 (장비미착용 데미지:10)");
+                    Console.WriteLine("3.홀리웨폰 - Mp 35");
+                    Console.WriteLine("  성스러운 기운을 담아 장비한 무기의 4배 데미지를 준다 (장비미착용 데미지:10)");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. 브류나크 - Mp 40");
+                    Console.WriteLine("  세라핌이 하늘에서 성스러운 창 브류나크를 지상으로 던진다. 그 창은 폭발하며 광역 마법 피해를 입힌다");
                     break;
                 case Player.JOB.Job.Wizrd:
-                    Console.WriteLine("1.마나순환 -Mp 10");
+                    Console.WriteLine("1.에너지볼트 -Mp 10");
                     Console.WriteLine("  1.2배의 데미지 운이 좋으면 마나를 사용하지 않는다");
                     Console.WriteLine("");
                     Console.WriteLine("2.발버둥 -Mp 30");
@@ -1504,9 +1567,12 @@ class Battle
                     Console.WriteLine("");
                     Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. 메테오 스트라이크 - Mp 40");
+                    Console.WriteLine("  현재 mp의 50%를 소모하여 운석을 소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");
                     break;
                 case Player.JOB.Job.Chef:
-                    Console.WriteLine("1.체력보충제 - Mp 10");
+                    Console.WriteLine("1.프로틴쉐이크 - Mp 10");
                     Console.WriteLine("  체력을 소량 회복하고 방어력에 비례한 데미지를 준다");
                     Console.WriteLine("");
                     Console.WriteLine("2.공방일체 -Mp 15 ");
@@ -1514,6 +1580,9 @@ class Battle
                     Console.WriteLine("");
                     Console.WriteLine("3.아머 마스터 -Mp 30");
                     Console.WriteLine("  장비한 방어구의 4배 데미지 (장비미착용 데미지:10)");
+                    Console.WriteLine("");
+                    Console.WriteLine("4.강제 취식 -Mp 25");
+                    Console.WriteLine("  몬스터에게 강제로 만든 음식을 먹이고 돈을 걷는다. 몬스터는 음식맛의 만족도에 비례하여 HP가 줄어든다.");
                     break;
             }
             Console.WriteLine("");
@@ -1533,6 +1602,9 @@ class Battle
                     break;
                 case "3":
                     temp = p.ThirdSkill();
+                    break;
+                case "4":
+                    temp = p.AllAttackSkill();
                     break;
                 case "0":
                     useSkill = false;

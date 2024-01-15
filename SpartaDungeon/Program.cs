@@ -1124,19 +1124,19 @@ class Monster
         int dif = stage.stage;
         if (dif % 5 == 0 && dif / 5 == 1)
         {
-            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 100, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Atk: 1)));
+            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
         }
         else if (dif % 5 == 0 && dif / 5 == 2)
         {
-            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 100, "진한 술냄새를 풍기고있다.", Item.ItemType.Weapon, Atk: 1)));
+            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새를 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
         }
         else if (dif % 5 == 0 && dif / 5 == 3)
         {
-            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 100, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 1)));
+            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
         }
         else if (dif % 5 == 0 && dif / 5 == 4)
         {
-            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어소트락강의", 100, "이것은 치트키다", Item.ItemType.Weapon, Atk: 1)));
+            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
         }
         else
         {
@@ -1144,26 +1144,54 @@ class Monster
             {
 
 
-                switch (Program.ran.Next(1, 4))
+                switch (Program.ran.Next(1, 6))
                 {
                     case 1:
                         {
-                            monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 10 + dif, 6 + dif, 2, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
+                            monsters.Add(new Monster("미니언", 1 + dif, 13 + dif * 2, 13 + dif * 2, 10 + dif, 6 + dif, 3, new Item("나무 검", 100, "훈련용으로 사용되는 물건이다", Item.ItemType.Weapon, Atk: 1)));
                             break;
                         }
                     case 2:
                         {
-                            monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17 + dif, 4 + dif));
+                            monsters.Add(new Monster("공허충", 2 + dif, 8 + dif * 2, 8 + dif * 2, 17 + dif, 4 + dif, 3, new Item("공허충의 이빨", 150, "물리면 아프다.", Item.ItemType.Weapon, Atk: 3)));
                             break;
                         }
                     case 3:
                         {
-                            monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif));
+                            monsters.Add(new Monster("대포미니언", 4 + dif, 23 + dif * 2, 23 + dif * 2, 15 + dif, 12 + dif, 2, new Item("미니언 갑옷", 200, "작다..", Item.ItemType.Weapon, Def: 5)));
                             break;
                         }
+                    case 4:
+                        {
+                            monsters.Add(new Monster("공허의 사제", 5 + dif, 20 + dif * 2, 25 + dif * 2, 20 + dif, 10 + dif, 1, new Item("사제가 떨군 성경책", 500, "한번도 읽지 않은거같다.", Item.ItemType.Weapon, Atk: 20)));
+                            break;
+                        }
+                    case 5:
+                        {
+                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif, 2, new Item("십일조", 311, "나쁘지않게 들어있다.", Item.ItemType.Weapon, Atk: 0)));
+                            break;
+                        }
+
                 }
 
             }
+        }
+
+    }
+    public class BossMonsterSkill
+    {
+        public void UseBossSkill(Player player, Monster boss)
+        {
+            Console.WriteLine($"{boss.Name}이(가) 신성한 스킬을 사용합니다!");
+
+            int damage = CalculateDamage();
+            player.Hp = player.Hp - damage;
+        }
+        private int CalculateDamage()
+        {
+            Random random = new Random();
+            return random.Next(20, 35);
+
         }
 
     }

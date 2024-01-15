@@ -670,6 +670,7 @@ class Player
                 {
                     return -1;
                 }
+                mp -= 30;
                 if (WeaponSlot != null)
                 {
                     WeaponSlot.Equipped = false;

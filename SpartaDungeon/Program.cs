@@ -1760,10 +1760,6 @@ class Battle
                     Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
                     Console.WriteLine();
                 }
-                foreach (var i in Monster.monsters)
-                {
-                    
-                }
             }
             else
             {

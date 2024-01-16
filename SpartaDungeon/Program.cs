@@ -1274,42 +1274,54 @@ class Monster
     {
         public static void UseBossSkill(Player player, Monster boss)
         {
+            int Damage = Program.ran.Next(20, 40);
+            int MPDamage = Program.ran.Next(5, 10);
             switch (boss.Name)
             {
                 case "김치몬":
+                    
                     Program.ShowHighlightedText_R("[Boss Skill] 빗자루 쓸기!");
-                    Console.WriteLine("김치몬의 빗자루쓸기가 추가로 발동됩니다. [Hp -10]");
-                    player.Hp -= 10;
+                    Console.WriteLine("김치몬의 빗자루쓸기가 발동됩니다. [Boss Hp +10]");
+                    boss.Hp += 10;
                     Console.WriteLine("");
-                    Console.WriteLine($"HP  {player.Hp + 10} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    Console.WriteLine($"HP  {boss.Hp - 10} - > {(boss.IsDead ? "Dead" : boss.Hp)}");
                     Console.WriteLine("");
                     break;
                 case "고운몬":
+                    Damage = Program.ran.Next(20, 40);
                     Program.ShowHighlightedText_R("[Boss Skill] 참X슬 투척!");
-                    Console.WriteLine("고운몬이 공격 후 참X슬을 투척합니다. [Hp -20]");
-                    player.Hp -= 20;
+                    Console.WriteLine($"고운몬이 공격 후 참X슬을 투척합니다. [Player Hp -{Damage}]");
+                    player.Hp -= Damage;
+                    Console.WriteLine("");
                     Console.WriteLine($"HP  {player.Hp + 20} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    Console.WriteLine("");
                     break;
                 case "용욱몬":
                     Program.ShowHighlightedText_R("[Boss Skill] 노동요!");
-                    Console.WriteLine("용욱몬이 노동요를 틀기 시작합니다. 청각손실이 발생! [Mp -30]");
-                    player.mp -= 30;
+                    Console.WriteLine($"용욱몬이 노동요를 틀기 시작합니다. 청각손실이 발생! [Player MP -{MPDamage}]");
+                    player.mp -= MPDamage;
+                    Console.WriteLine("");
                     Console.WriteLine($"HP  {player.Hp + 30} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    Console.WriteLine("");
                     break;
                 case "재영몬":
                     if (boss.IsDead != true)
                     {
                         Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락!");
-                        Console.WriteLine("재용몬이 어X트락 강의를 들으며 행복해합니다. [Boss Hp +40]");
+                        Console.WriteLine($"재용몬이 어X트락 강의를 들으며 행복해합니다. [Boss Hp +40/Player Hp -{Damage}/Player Mp -{MPDamage}]");
                         boss.Hp += 40;
+                        player.Hp -= Damage;
+                        player.mp -= MPDamage;
                         Console.WriteLine($"HP  {boss.Hp-40 } - > {(boss.IsDead ? "Dead" : boss.Hp)}");
                     }
                     else
                     {
-                        Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 변신한다!!");
-                        Console.WriteLine("재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20]");
-                        boss.Hp += 40;
+                        Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 죽었지만 오히려좋아!!");
+                        Console.WriteLine($"재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20/Player Hp -{Damage}/Player Mp -{MPDamage}]");
+                        boss.Hp += 140;
                         boss.Atk += 20;
+                        player.Hp -= Damage;
+                        player.mp -= MPDamage;
                         Console.WriteLine($"HP  {boss.Hp - 40} - > {(boss.IsDead ? "Dead" : boss.Hp)}");
                     }
                     break;

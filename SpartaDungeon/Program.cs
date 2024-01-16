@@ -787,7 +787,7 @@ class Player
     public float Hp { get { return _Hp; } set { _Hp = value; if (value > M_Hp) { _Hp = M_Hp; } } }
     public float M_Hp;
     private int _mp;
-    public int mp { get { return _mp; } set { _mp = value; if (value > M_mp) { _mp = M_mp; } } }
+    public int mp { get { return _mp; } set { _mp = value; if (value > M_mp) { _mp = M_mp; } if (value < 0) { _mp = 0; } } }
     public int M_mp;
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
@@ -1216,19 +1216,19 @@ class Monster
         int dif = stage.stage;
         if (dif % 5 == 0 && dif / 5 == 1)
         {
-            monsters.Add(new Monster("김치몬", 7 + dif, 45 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
+            monsters.Add(new Monster("김치몬", 7 + dif, 450 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
         }
         else if (dif % 5 == 0 && dif / 5 == 2)
         {
-            monsters.Add(new Monster("고운몬", 13 + dif, 65 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새을(를) 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
+            monsters.Add(new Monster("고운몬", 13 + dif, 650 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새을(를) 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
         }
         else if (dif % 5 == 0 && dif / 5 == 3)
         {
-            monsters.Add(new Monster("용욱몬", 19 + dif, 85 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
+            monsters.Add(new Monster("용욱몬", 19 + dif, 850 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
         }
         else if (dif % 5 == 0 && dif / 5 == 4)
         {
-            monsters.Add(new Monster("재영몬", 25 + dif, 110 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
+            monsters.Add(new Monster("재영몬", 25 + dif, 1100 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
         }
         else
         {
@@ -1325,7 +1325,7 @@ class Monster
                         {
                             Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 죽었지만 오히려좋아!!");
                             Console.WriteLine($"재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20/Player Hp -{Damage}/Player Mp -{MPDamage}]");
-                            boss.Hp += 140;
+                            boss.Hp += 450;
                             boss.Atk += 20;
                             player.Hp -= Damage;
                             player.mp -= MPDamage;

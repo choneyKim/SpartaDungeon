@@ -932,7 +932,7 @@ class Player
                 Hp -= 10;
                 float mprecovery = Atk*Program.ran.Next(12, 19) / 10.0f;
                 mp += (int)mprecovery;
-                return Atk;
+                return mprecovery;
 
             default:
                 return -2;
@@ -1816,7 +1816,7 @@ class Battle
                             case 3:
                                 Program.PrintTextWithHighlights("플레이어가", "파워에이드의 비밀", $"을(를)시전합니다.  " +
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
-                                Console.WriteLine($"  [회복한 MP : ]");
+                                Console.WriteLine($"  [회복한 MP: {pDamage} ]");
                                 break;
                             case 4:
                                 Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"을(를)시전합니다.");

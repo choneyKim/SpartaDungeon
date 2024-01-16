@@ -76,7 +76,7 @@ internal class Program
             Program.Firstlettercolor("1.", " 상태 보기");
             Program.Firstlettercolor("2.", " 인벤토리");
             Program.Firstlettercolor("3.", " 상점");
-            Program.Firstlettercolor("4.", " 전투 시작");
+            Program.Firstlettercolor("4.", " 던전 진입" + "  층수 :" + battle.stage);
             Program.Firstlettercolor("5.", " 회복아이템");
             Program.Firstlettercolor("6.", " 저장하기");
             Program.Firstlettercolor("7.", " 불러오기");
@@ -102,7 +102,10 @@ internal class Program
                         Console.WriteLine("체력을(를)회복하여 주십시오");
                         Console.ReadKey();
                     }
-                    else battle.BattleDisplay();
+                    else 
+                    {
+                        battle.BattleDisplay();
+                    }
                     break;
                 case "5":
                     Recovery(nP);
@@ -1578,6 +1581,10 @@ class Battle
             Console.WriteLine("완전 회복 상태로 부활합니다.");
             p.Hp = p.M_Hp;
             stage--;
+            if (stage <= 0)
+            {
+                stage = 1;
+            }
             playerDie = true;
         }
         else

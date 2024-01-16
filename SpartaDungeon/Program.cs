@@ -1757,7 +1757,7 @@ class Battle
                 for (int i=0; i<Monster.monsters.Count; i++)
                 {
                     Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
-                    Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
+                    Console.WriteLine($"HP  {(monsterHpNow[i] <= 0f ? "Dead" : monsterHpNow[i])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
                     Console.WriteLine();
                 }
             }

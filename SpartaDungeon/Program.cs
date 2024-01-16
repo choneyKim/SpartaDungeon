@@ -778,9 +778,11 @@ class Player
     public float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
-    public float Hp;
+    private float _Hp; 
+    public float Hp { get { return _Hp; } set { _Hp += value; if (_Hp > M_Hp) { _Hp = M_Hp; } } }
     public float M_Hp;
-    public int mp;
+    private int _mp;
+    public int mp { get { return _mp; } set { _mp += value; if (_mp > M_mp) { _mp = M_mp; } } }
     public int M_mp;
     public bool IsDead => Hp <= 0;
     public int Lv = 1;
@@ -1366,7 +1368,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
-            Console.WriteLine("3. 막기(체력,마나 회복)");
+            Console.WriteLine("3. 막기(마나 회복)");
             Console.WriteLine("");
             Console.WriteLine("0. 도망가기");
             Console.WriteLine("");
@@ -1942,7 +1944,7 @@ class Battle
                     Console.WriteLine("  총 공격력에 방어력만큼 추가한 데미지를 준다");
                     Console.WriteLine("");
                     Console.WriteLine("3.파워에이드의 비밀 -Hp 10");
-                    Console.WriteLine("  Hp 10을(를)소모하여 몬스터 착즙을 한다. 쉐프 순수공격력의 1.2배에서 1.8배 만큼 MP를 회복한다.");
+                    Console.WriteLine("  Hp 10을(를)소모하여 몬스터 착즙을 한다. 쉐프 순수공격력의 1.2배에서 1.8배 만큼 피해를 주고 MP를 회복한다.");
                     Console.WriteLine("");
                     Console.WriteLine("4.강제 취식 -Mp 25");
                     Console.WriteLine("  몬스터에게 강제로 만든 음식을 먹이고 돈을 걷는다. 몬스터는 음식 맛의 만족도에 비례하여 HP가 줄어든다.");

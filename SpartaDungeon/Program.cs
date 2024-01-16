@@ -1372,7 +1372,12 @@ class Battle
             string? input = Console.ReadLine();
             if (Int32.TryParse(input, out int temp))
             {
-                if (temp == 0)
+                if (useSkill == true)
+                {
+                    Console.WriteLine("스킬이 선택되어 도망갈 수 없습니다.");
+                    Console.ReadKey();
+                }
+                else if (temp == 0)
                 {
                     if (Program.ran.Next(1, 101) <= 35)
                     {
@@ -1388,9 +1393,17 @@ class Battle
                         }
                         else
                         {
-                            p.Gold -= 100;
-                            Console.WriteLine("도망에 실패하였습니다. (-100G) ");
-                            Console.ReadKey();
+                            if (p.Gold >= 100)
+                            {
+                                p.Gold -= 100;
+                                Console.WriteLine("도망에 실패하였습니다. (-100G) ");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.WriteLine("골드가 부족합니다.");
+                                Console.ReadKey();
+                            }
                         }
                     }
                 }
@@ -1603,6 +1616,7 @@ class Battle
             else { damage_sub = 100; }
             int pDamage = 0;
             int forthSkillDmg = 0;
+            int[] allSkill = new int[Monster.monsters.Count];
             if (useSkill)
             {
                 pDamage = (int)skillDmg * (damage_sub == 0 ? damage_sub = 100 : damage_sub) / 100;
@@ -1610,28 +1624,33 @@ class Battle
             else pDamage = p.PlayerDamage(Monster.monsters[temp].Def) * (damage_sub) / 100;
             if (skillSelect == 4)
             {
-                foreach (var i in Monster.monsters)
+                for (int i = 0; i < Monster.monsters.Count; i++)
                 {
                     switch (p.job.joben)
                     {
                         case Player.JOB.Job.crusader:
                             forthSkillDmg = (pDamage + Program.ran.Next(0, 16));
-                            i.Hp -= forthSkillDmg;
+                            allSkill[i] = forthSkillDmg;
+                            Monster.monsters[i].Hp -= forthSkillDmg;
                             break;
                         case Player.JOB.Job.Wizrd:
                             forthSkillDmg = pDamage * Program.ran.Next(8, 16) / 10;
-                            i.Hp -= forthSkillDmg;
+                            allSkill[i] = forthSkillDmg;
+                            Monster.monsters[i].Hp -= forthSkillDmg;
                             break;
                         case Player.JOB.Job.Chef:
                             forthSkillDmg = pDamage + Program.ran.Next(0, 21);
-                            i.Hp -= forthSkillDmg;
+                            allSkill[i] = forthSkillDmg;
+                            Monster.monsters[i].Hp -= forthSkillDmg;
                             totalGold += forthSkillDmg;
                             p.Gold += totalGold;
                             break;
                     }
                 }
+
+
             }
-            else Monster.monsters[temp].Hp -= pDamage;
+            else { Monster.monsters[temp].Hp -= pDamage; }
             Console.Clear();
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
@@ -1660,8 +1679,12 @@ class Battle
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
-                                Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.  " +
-                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}]");
+                                Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.");
+                                for (int i = 0; i<Monster.monsters.Count; i++)
+                                {
+                                    Console.Write($" 몬스터{i+1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                }
+                                Console.WriteLine();    
                                 break;
 
                         }
@@ -1682,8 +1705,12 @@ class Battle
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
-                                Program.PrintTextWithHighlights("플레이어가", "메테오 스트라이크", $"를 시전합니다.  " +
-                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}]");
+                                Program.PrintTextWithHighlights("플레이어가", "메테오 스트라이크", $"를 시전합니다.");
+                                for (int i = 0; i < Monster.monsters.Count; i++)
+                                {
+                                    Console.Write($" 몬스터{i + 1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                }
+                                Console.WriteLine();
                                 break;
 
                         }
@@ -1705,9 +1732,12 @@ class Battle
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
-                                Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"를 시전합니다.  " +
-                                    $"[데미지 : {(damage_sub == 160 ? forthSkillDmg + " (치명타)" : (damage_sub == 0 ? forthSkillDmg + " (회피)" : forthSkillDmg))}] " +
-                                    $"/ [갈취골드 : {totalGold}G]");
+                                Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"를 시전합니다.");
+                                for (int i = 0; i < Monster.monsters.Count; i++)
+                                {
+                                    Console.Write($" 몬스터{i + 1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                }
+                                Console.WriteLine($"  [갈취골드 : {totalGold}G]");
                                 break;
 
                         }
@@ -1719,11 +1749,15 @@ class Battle
             Console.WriteLine();
             if (skillSelect == 4)
             {
+                for (int i=0; i<Monster.monsters.Count; i++)
+                {
+                    Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
+                    Console.WriteLine($"HP  {Monster.monsters[i].Hp + allSkill[i]} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
+                    Console.WriteLine();
+                }
                 foreach (var i in Monster.monsters)
                 {
-                    Console.WriteLine($"Lv. {i.Level} {i.Name}");
-                    Console.WriteLine($"HP  {i.Hp + forthSkillDmg} - > {(i.IsDead ? "Dead" : i.Hp)}");
-                    Console.WriteLine();
+                    
                 }
             }
             else

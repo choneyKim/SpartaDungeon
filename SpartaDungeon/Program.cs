@@ -609,8 +609,8 @@ class Shop
             Program.Firstlettercolor("2.", " 아이템 판매");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
-            Console.SetCursorPosition(2, 15 + shopInven.Count());
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
 
             string? input = Console.ReadLine();
             switch (input)
@@ -643,8 +643,8 @@ class Shop
             Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
-            Console.SetCursorPosition(2, 15 + shopInven.Count());
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
             string? input = Console.ReadLine();
 
             if (input == "Q" || input == "q")
@@ -655,11 +655,13 @@ class Shop
                     p.Gold -= 500;
                     Console.WriteLine("구매완료");
                     Console.ReadKey();
+                    continue;
                 }
                 else
                 {
                     Program.ShowHighlightedText_R("돈이 부족합니다.");
                     Console.ReadKey();
+                    continue;
                 }
             }
             if (input == "W" || input == "w")
@@ -670,11 +672,13 @@ class Shop
                     p.Gold -= 500;
                     Console.WriteLine("구매완료");
                     Console.ReadKey();
+                    continue;
                 }
                 else
                 {
                     Program.ShowHighlightedText_R("돈이 부족합니다.");
                     Console.ReadKey();
+                    continue;
                 }
             }
             if (Int32.TryParse(input, out int temp))
@@ -980,9 +984,7 @@ class Player
                 return -2; // -2는 직업을 못불러 왔을때 
         }
     }
-    //1. 도망시 차감 골드로 플레이어 골드가 마이너스까지 갈수도 있음
-    //2. 스킬을 발동시키고 0번으로 던전에서 나가고 재입성할시 여전히 스킬 선택이 유지 됨.
-    //3. 몬스터의 체력이 0이 된 상태에서도 계속해서 데미지를 받아 음수까지 떨어짐 큰 문제가 없어보일수 있으나 쉐프의 3번 스킬이 시체에서도 돈을 강탈함
+    //3. 몬스터의 체력이 0이 된 상태에서도 계속해서 데미지를 받아 음수까지 떨어짐 큰 문제가 없어보일수 있으나 쉐프의 4번 스킬이 시체에서도 돈을 강탈함
     //4. 0번 인덱스의 몬스터를 잡고 allatackskill 사용시 발동되지 않음 1461쪽 고치면 될듯 싶음
     //5. 위자드의 4번 스킬 소비 mp 표시가 40으로 고정되어 있음
     //6. allattackskill로 공격시 때때로 맞은 몬스터의 맞기전 체력이 똑바로 표기되지 않는 경우가 있음 어쩌면 표기 문제가 아니라 체력값이 실제로 변한것일수도?
@@ -1075,7 +1077,8 @@ class Player
             Console.WriteLine("");
             Program.Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해 주세요.\n>>");
+            Console.WriteLine("원하시는 행동을 입력해 주세요.");
+            Console.Write(">>");
             switch (Console.ReadLine())
             {
                 case "0":

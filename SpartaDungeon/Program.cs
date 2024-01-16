@@ -102,7 +102,7 @@ internal class Program
                         Console.WriteLine("체력을(를)회복하여 주십시오");
                         Console.ReadKey();
                     }
-                    else 
+                    else
                     {
                         battle.BattleDisplay();
                     }
@@ -783,7 +783,7 @@ class Player
     public float Def;
     public float totalDef { get { return ArmorSlot != null ? ArmorSlot.Def + Def : Def; } }
     public int Gold;
-    private float _Hp; 
+    private float _Hp;
     public float Hp { get { return _Hp; } set { _Hp = value; if (value > M_Hp) { _Hp = M_Hp; } } }
     public float M_Hp;
     private int _mp;
@@ -813,10 +813,10 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 10 + job.atk;
+        Atk = 200 + job.atk;
         Def = 5 + job.def;
         Gold = 1500;
-        M_Hp = 100 + job.hp;
+        M_Hp = 1000 + job.hp;
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 20;
@@ -838,7 +838,7 @@ class Player
                     return -1; // -1 은 마나가 부족시 
                 }
                 mp -= 10;
-                return 15; 
+                return 15;
 
             case JOB.Job.Wizrd:
                 if (mp < 10)
@@ -939,7 +939,7 @@ class Player
                     return -1; // 마나 부족
                 }
                 Hp -= 10;
-                float mprecovery = Atk*Program.ran.Next(12, 19) / 10.0f;
+                float mprecovery = Atk * Program.ran.Next(12, 19) / 10.0f;
                 mp += (int)mprecovery;
                 return mprecovery;
 
@@ -950,8 +950,8 @@ class Player
 
 
 
-// 전체 스킬 추가
-public float AllAttackSkill()
+    // 전체 스킬 추가
+    public float AllAttackSkill()
     {
         switch (job.joben)
         {
@@ -1260,7 +1260,7 @@ class Monster
                         }
                     case 5:
                         {
-                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif, 7, new Item("십일조","나쁘지 않게 들어있다 (환급용)",Item.ItemType.Sell,1200)));
+                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif, 7, new Item("십일조", "나쁘지 않게 들어있다 (환급용)", Item.ItemType.Sell, 1200)));
                             break;
                         }
 
@@ -1384,7 +1384,7 @@ class Battle
     //Battle b;
     Shop s;
     float playerHp;
-    public int stage = 5;
+    public int stage = 20;
     float skillDmg;
     bool useSkill = false;
     bool playerDie = false;
@@ -1400,6 +1400,7 @@ class Battle
         Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
         Monster.AddMonster(this);
         playerHp = p.Hp;
+        playerDie = false;
         int tryCount = 0;
         while (true)
         {
@@ -1413,10 +1414,13 @@ class Battle
             Monster.DisplayMonster();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("내정보");
+            Console.WriteLine("================================");
+            Console.WriteLine("           내정보");
+            Console.WriteLine("================================");
             Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine($"Mp  {p.mp} / {p.M_mp}");
+            Console.WriteLine("================================");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -1470,12 +1474,9 @@ class Battle
                 else if (temp == 1)
                 {
                     BattleAttack();
+                    if (playerDie == true) return;
                     if (Monster.monsters.Count == 0) return;
-                    if (playerDie == true)
-                    {
-                        playerDie = false;
-                        return;
-                    }
+
                 }
                 else if (temp == 2)
                 {
@@ -1505,6 +1506,7 @@ class Battle
                     {
                         isBlock = true;
                         BattleBlock();
+                        if (playerDie == true) return;
                         if (Monster.monsters.Count == 0) return;
                     }
                 }
@@ -1529,11 +1531,13 @@ class Battle
             Console.WriteLine();
             Monster.DisplayMonster();
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("내정보");
+            Console.WriteLine("================================");
+            Console.WriteLine("           내정보");
+            Console.WriteLine("================================");
             Console.WriteLine($"Lv. {p.Lv} {p.Name} ({p.job.jobName})");
             Console.WriteLine($"HP  {p.Hp} / {p.M_Hp}");
             Console.WriteLine($"Mp  {p.mp} / {p.M_mp}");
+            Console.WriteLine("================================");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
@@ -1575,10 +1579,7 @@ class Battle
                     {
                         temp -= 1;
                         BattleTurn(temp);
-                        if (playerDie == true)
-                        {
-                            return;
-                        }
+                        if (playerDie == true) return;
                         for (int i = 0; i < Monster.monsters.Count; i++)
                         {
                             IsClear = Monster.monsters[i].IsDead && IsClear;
@@ -1630,11 +1631,11 @@ class Battle
             Console.WriteLine("완전 회복 상태로 부활합니다.");
             p.Hp = p.M_Hp;
             stage--;
+            playerDie = true;
             if (stage <= 0)
             {
                 stage = 1;
             }
-            playerDie = true;
         }
         else
         {
@@ -1687,14 +1688,9 @@ class Battle
     {
         for (int i = 0; i < Monster.monsters.Count; i++)
         {
-            if (p.IsDead == true)
-            {
-                BattleResult(p.IsDead);
-                Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
-                return;
-            }
+
             if (Monster.monsters[i].IsDead == false && p.IsDead == false)
-            {                
+            {
                 if (Program.ran.Next(1, 11) <= p.Block && isBlock == true) //플레이어 블럭 확률 기본값:5=50%
                 {
                     int defDamage = Monster.MonsterDamage(i, (int)p.totalDef) / 2;
@@ -1704,16 +1700,14 @@ class Battle
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
                     Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {defDamage}]");
                     Console.WriteLine($"{p.Name} 이 방어를 성공하여 마나를 10 회복합니다.");
-                    if (p.Hp - defDamage < 0)
-                    {
-                        p.Hp = 0;
-                    }
-                    else p.Hp -= defDamage;
+                    p.Hp -= defDamage;
                     p.mp += p.ManaRegen;
                     isBlock = false;
                     Console.WriteLine();
+                    Console.WriteLine("==========================");
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
                     Console.WriteLine($"HP  {p.Hp + defDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                    Console.WriteLine("==========================");
                     Console.WriteLine();
                     if (stage % 5 == 0)
                     {
@@ -1731,15 +1725,13 @@ class Battle
                     Console.WriteLine();
                     Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
                     Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");
-                    if (p.Hp - mDamage < 0)
-                    {
-                        p.Hp = 0;
-                    }
-                    else p.Hp -= mDamage;
+                    p.Hp -= mDamage;
                     p.mp += 5;
                     Console.WriteLine();
+                    Console.WriteLine("==========================");
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
                     Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                    Console.WriteLine("==========================");
                     Console.WriteLine();
                     if (stage % 5 == 0)
                     {
@@ -1748,11 +1740,17 @@ class Battle
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");
                     Console.ReadKey(); continue;
-                }               
+                }
             }
-
-
-            
+        }
+        if (p.IsDead == true)
+        {
+            BattleResult(p.IsDead);
+            if(playerDie==false) 
+            {
+                Monster.monsters.RemoveAll(x => x.IsDead == true || x.IsDead == false);
+            }            
+            return;
         }
     }
     public void BattleTurn(int temp)
@@ -1813,6 +1811,8 @@ class Battle
             Program.ShowHighlightedText_Y("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{p.Name} 의 공격!");
+            Console.WriteLine();
+            
 
 
             //스킬 사용시
@@ -1903,24 +1903,25 @@ class Battle
                         break;
                 }
             }
-            else Console.WriteLine($"{Monster.monsters[temp].Name} 을(을(를)) 맞췄습니다. " +
+            else Console.WriteLine($"{Monster.monsters[temp].Name} 을(를) 맞췄습니다. " +
                 $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
             Console.WriteLine();
+            Console.WriteLine("==========================");            
             if (skillSelect == 4)
             {
                 for (int i = 0; i < Monster.monsters.Count; i++)
                 {
                     Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
                     Console.WriteLine($"HP  {(monsterHpNow[i] <= 0f ? "Dead" : monsterHpNow[i])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
-                    Console.WriteLine();
                 }
             }
             else
             {
                 Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-                Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
-                Console.WriteLine();
+                Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");      
             }
+            Console.WriteLine("==========================");
+            Console.WriteLine();
             Console.WriteLine("0. 다음");
             useSkill = false;
             skillSelect = 0;
@@ -1929,10 +1930,10 @@ class Battle
 
 
         }
-               
+
         BattleBlock();
         return;
-       
+
     }
 
     //skill 선택
@@ -1977,7 +1978,7 @@ class Battle
                     Console.WriteLine($"3.그레이트힐 -Mp 30");
                     Console.WriteLine(" 허공에 광휘의 빛을 띄워 15H를 채우고, 몬스터에도 소량의 데미지를 입힌다 ");
                     Console.WriteLine("");
-                    Console.WriteLine($"4. 메테오 스트라이크 -Mp {p.mp/2}");
+                    Console.WriteLine($"4. 메테오 스트라이크 -Mp {p.mp / 2}");
                     Console.WriteLine("  현재 mp의 50%을(를) 소모하여 운석을(를)소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");
                     break;
                 case Player.JOB.Job.Chef:

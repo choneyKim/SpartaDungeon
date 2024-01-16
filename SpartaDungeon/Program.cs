@@ -1445,7 +1445,7 @@ class Battle
     }
     public void BattleAttack()
     {
-        int anynum = 0;
+        int anynum = Monster.monsters.FindIndex(x=> x.IsDead==false);
 
         while (true)
         {
@@ -1752,7 +1752,7 @@ class Battle
                 for (int i=0; i<Monster.monsters.Count; i++)
                 {
                     Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
-                    Console.WriteLine($"HP  {Monster.monsters[i].Hp + allSkill[i]} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
+                    Console.WriteLine($"HP  {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp + allSkill[i])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
                     Console.WriteLine();
                 }
                 foreach (var i in Monster.monsters)

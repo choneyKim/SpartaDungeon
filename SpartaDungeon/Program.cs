@@ -534,23 +534,23 @@ class Shop
     private void InitializeItems()
     {
         //무기
-        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터을(를) 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
+        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
         shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
         shopInven.AddItem(new Item("청동검", 500, "사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
         shopInven.AddItem(new Item("철창", 1000, "철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
-        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두을(를) 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
+        shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
         shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
         shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을(를)가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
-        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두을(를)때 눈보라가 일어나 약 100의 추가 데미지을(를) 줍니다", Item.ItemType.Weapon, Atk: 200));
+        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
         
         //갑옷
         shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
-        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기을(를) 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
+        shopInven.AddItem(new Item("가죽 옷", 800, "동물의 할퀴기를 막기에 좋은 갑옷입니다", Item.ItemType.Armor, Def: 7));
         shopInven.AddItem(new Item("무쇠 갑옷", 1700, "무쇠로 만들어져 튼튼한 갑옷입니다.", Item.ItemType.Armor, Def: 9));
         shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
         shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
         shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을(를)자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
 
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어을(를) 누르면 한턴당 HP을(를) 200 회복합니다"));
     }
@@ -924,13 +924,15 @@ class Player
                     return WeaponSlot.Atk * 4;
                 }
             case JOB.Job.Wizrd:
-                if (mp < M_mp / 2)
+                if (mp < 30)
                 {
                     return -1;
                 }
                 int temp = mp;
-                mp -= M_mp / 2;
-                return temp * 2;
+                mp -= 30;
+                Hp += 15;
+                return Atk;
+
             case JOB.Job.Chef:
                 if (Hp < 10)
                 {
@@ -1857,7 +1859,7 @@ class Battle
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 3:
-                                Program.PrintTextWithHighlights("플레이어가", "마나공격", $"을(를)시전합니다.  " +
+                                Program.PrintTextWithHighlights("플레이어가", "그레이트힐", $"을(를)시전합니다.  " +
                                     $"[데미지 : {(damage_sub == 160 ? pDamage + " (치명타)" : (damage_sub == 0 ? pDamage + " (회피)" : pDamage))}]");
                                 break;
                             case 4:
@@ -1972,8 +1974,8 @@ class Battle
                     Console.WriteLine("2.에라!자폭이다! -Mp 30");
                     Console.WriteLine("  데미지 40을 주지만 장비가 벗겨진다");
                     Console.WriteLine("");
-                    Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
-                    Console.WriteLine("  mp최대치의 절반을(를)소모해 현재 mp의 두배 데미지");
+                    Console.WriteLine($"3.그레이트힐 -Mp 30");
+                    Console.WriteLine(" 허공에 광휘의 빛을 띄워 15H를 채우고, 몬스터에도 소량의 데미지를 입힌다 ");
                     Console.WriteLine("");
                     Console.WriteLine($"4. 메테오 스트라이크 -Mp {p.mp/2}");
                     Console.WriteLine("  현재 mp의 50%을(를) 소모하여 운석을(를)소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");

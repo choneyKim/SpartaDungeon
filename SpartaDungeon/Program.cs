@@ -1268,19 +1268,52 @@ class Monster
         }
 
     }
+
+
     public class BossMonsterSkill
     {
-        public void UseBossSkill(Player player, Monster boss)
+        public static void UseBossSkill(Player player, Monster boss)
         {
-            Console.WriteLine($"{boss.Name}이(가) 신성한 스킬을(를)사용합니다!");
-
-            int damage = CalculateDamage();
-            player.Hp = player.Hp - damage;
-        }
-        private int CalculateDamage()
-        {
-            Random random = new Random();
-            return random.Next(20, 35);
+            switch (boss.Name)
+            {
+                case "김치몬":
+                    Program.ShowHighlightedText_R("[Boss Skill] 빗자루 쓸기!");
+                    Console.WriteLine("김치몬의 빗자루쓸기가 추가로 발동됩니다. [Hp -10]");
+                    player.Hp -= 10;
+                    Console.WriteLine("");
+                    Console.WriteLine($"HP  {player.Hp + 10} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    Console.WriteLine("");
+                    break;
+                case "고운몬":
+                    Program.ShowHighlightedText_R("[Boss Skill] 참X슬 투척!");
+                    Console.WriteLine("고운몬이 공격 후 참X슬을 투척합니다. [Hp -20]");
+                    player.Hp -= 20;
+                    Console.WriteLine($"HP  {player.Hp + 20} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    break;
+                case "용욱몬":
+                    Program.ShowHighlightedText_R("[Boss Skill] 노동요!");
+                    Console.WriteLine("용욱몬이 노동요를 틀기 시작합니다. 청각손실이 발생! [Mp -30]");
+                    player.mp -= 30;
+                    Console.WriteLine($"HP  {player.Hp + 30} - > {(player.IsDead ? "Dead" : player.Hp)}");
+                    break;
+                case "재영몬":
+                    if (boss.IsDead != true)
+                    {
+                        Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락!");
+                        Console.WriteLine("재용몬이 어X트락 강의를 들으며 행복해합니다. [Boss Hp +40]");
+                        boss.Hp += 40;
+                        Console.WriteLine($"HP  {boss.Hp-40 } - > {(boss.IsDead ? "Dead" : boss.Hp)}");
+                    }
+                    else
+                    {
+                        Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 변신한다!!");
+                        Console.WriteLine("재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20]");
+                        boss.Hp += 40;
+                        boss.Atk += 20;
+                        Console.WriteLine($"HP  {boss.Hp - 40} - > {(boss.IsDead ? "Dead" : boss.Hp)}");
+                    }
+                    break;
+            }
 
         }
 
@@ -1337,7 +1370,7 @@ class Battle
     //Battle b;
     Shop s;
     float playerHp;
-    public int stage = 1;
+    public int stage = 5;
     float skillDmg;
     bool useSkill = false;
     bool playerDie = false;
@@ -1647,7 +1680,7 @@ class Battle
                 return;
             }
             if (Monster.monsters[i].IsDead == false && p.IsDead == false)
-            {
+            {                
                 if (Program.ran.Next(1, 11) <= p.Block && isBlock == true) //플레이어 블럭 확률 기본값:5=50%
                 {
                     int defDamage = Monster.MonsterDamage(i, (int)p.totalDef) / 2;
@@ -1668,6 +1701,10 @@ class Battle
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
                     Console.WriteLine($"HP  {p.Hp + defDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
                     Console.WriteLine();
+                    if (stage % 5 == 0)
+                    {
+                        Monster.BossMonsterSkill.UseBossSkill(p, Monster.monsters[0]);
+                    }
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");
                     Console.ReadKey(); continue;
@@ -1690,6 +1727,10 @@ class Battle
                     Console.WriteLine($"Lv. {p.Lv} {p.Name}");
                     Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
                     Console.WriteLine();
+                    if (stage % 5 == 0)
+                    {
+                        Monster.BossMonsterSkill.UseBossSkill(p, Monster.monsters[0]);
+                    }
                     Console.WriteLine("0. 다음");
                     Console.WriteLine("");
                     Console.ReadKey(); continue;

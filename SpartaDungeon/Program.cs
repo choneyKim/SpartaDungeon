@@ -39,7 +39,7 @@ internal class Program
         }
         string loadSlotName = File.ReadAllText(slotname + 0);
         saveSlot1.Append(loadSlotName);
-        saveSlot1.Replace("\"","");
+        saveSlot1.Replace("\"", "");
         loadSlotName = File.ReadAllText(slotname + 1);
         saveSlot2.Append(loadSlotName);
         saveSlot2.Replace("\"", "");
@@ -536,7 +536,7 @@ class Shop
         shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
         shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
         shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
-        
+
         //shopInven.AddItem(new Item("흡혈 지팡이", 70000, "공격력 +290", "휘두를때 마다 적의 HP를 200씩 뺏습니다"));
 
         //갑옷
@@ -787,6 +787,8 @@ class Player
     public int Lv = 1;
     public float Exp;
     public float M_Exp;
+    public int Block;
+    public int ManaRegen;
     public void CheckLvUp(int ex)
     {
         Exp += ex;
@@ -813,6 +815,8 @@ class Player
         Lv = 1;
         M_Exp = 20;
         M_mp = 70 + job.mp;
+        Block = 5;  //플레이어 블럭 확률 기본값:3=30%
+        ManaRegen = 10; //막았을때 
         mp = M_mp;
     }
 
@@ -1331,6 +1335,7 @@ class Battle
     float skillDmg;
     bool useSkill = false;
     bool playerDie = false;
+    bool isBlock = false;
     int skillSelect = 0;
     public Battle(Player p, Shop s)
     {
@@ -1362,6 +1367,7 @@ class Battle
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
+            Console.WriteLine("3. 막기(체력,마나 회복)");
             Console.WriteLine("");
             Console.WriteLine("0. 도망가기");
             Console.WriteLine("");
@@ -1434,6 +1440,20 @@ class Battle
                     }
 
                 }
+                else if (temp == 3)
+                {
+                    if (useSkill == true)
+                    {
+                        Console.WriteLine("스킬선택상태에서 방어를 할 수 없습니다.");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        isBlock = true;
+                        BattleBlock();
+                        if (Monster.monsters.Count == 0) return;
+                    }
+                }
                 else Program.WrongInput(); continue;
             }
             else
@@ -1445,7 +1465,7 @@ class Battle
     }
     public void BattleAttack()
     {
-        int anynum = Monster.monsters.FindIndex(x=> x.IsDead==false);
+        int anynum = Monster.monsters.FindIndex(x => x.IsDead == false);
 
         while (true)
         {
@@ -1604,6 +1624,66 @@ class Battle
         Console.ReadKey();
 
     }
+    public void BattleBlock()
+    {
+        for (int i = 0; i < Monster.monsters.Count; i++)
+        {
+            if (Monster.monsters[i].IsDead == false && p.IsDead == false)
+            {
+                if (Program.ran.Next(1, 11) <= p.Block && isBlock == true) //플레이어 블럭 확률 기본값:5=50%
+                {
+                    int defDamage = Monster.MonsterDamage(i, (int)p.totalDef) / 2;
+                    Console.Clear();
+                    Program.ShowHighlightedText_Y("Battle!!");
+                    Console.WriteLine();
+                    Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
+                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {defDamage}]");
+                    Console.WriteLine($"{p.Name} 이 방어를 성공하여 마나를 10 회복합니다.");
+                    if (p.Hp - defDamage < 0)
+                    {
+                        p.Hp = 0;
+                    }
+                    else p.Hp -= defDamage;
+                    p.mp += p.ManaRegen;
+                    isBlock = false;
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv. {p.Lv} {p.Name}");
+                    Console.WriteLine($"HP  {p.Hp + defDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 다음");
+                    Console.WriteLine("");
+                }
+                else
+                {
+                    int mDamage = Monster.MonsterDamage(i, (int)p.totalDef);
+                    Console.Clear();
+                    Program.ShowHighlightedText_Y("Battle!!");
+                    Console.WriteLine();
+                    Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
+                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");
+                    if (p.Hp - mDamage < 0)
+                    {
+                        p.Hp = 0;
+                    }
+                    else p.Hp -= mDamage;
+                    p.mp += 5;
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv. {p.Lv} {p.Name}");
+                    Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 다음");
+                    Console.WriteLine("");
+                }
+
+                if (p.IsDead == true)
+                {
+                    BattleResult(p.IsDead);
+                    return;
+                }
+                Console.ReadKey(); continue;
+            }
+        }
+    }
     public void BattleTurn(int temp)
     {
         int totalGold = 0;
@@ -1614,6 +1694,8 @@ class Battle
         }
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
+
+
             int random = Program.ran.Next(1, 101);
             int damage_sub = 0;
             if (random <= 15) { damage_sub = 160; }
@@ -1685,11 +1767,11 @@ class Battle
                                 break;
                             case 4:
                                 Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.");
-                                for (int i = 0; i<Monster.monsters.Count; i++)
+                                for (int i = 0; i < Monster.monsters.Count; i++)
                                 {
                                     Console.Write($" {Monster.monsters[i].Name} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
                                 }
-                                Console.WriteLine();    
+                                Console.WriteLine();
                                 break;
 
                         }
@@ -1754,7 +1836,7 @@ class Battle
             Console.WriteLine();
             if (skillSelect == 4)
             {
-                for (int i=0; i<Monster.monsters.Count; i++)
+                for (int i = 0; i < Monster.monsters.Count; i++)
                 {
                     Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
                     Console.WriteLine($"HP  {(monsterHpNow[i] <= 0f ? "Dead" : monsterHpNow[i])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
@@ -1772,36 +1854,10 @@ class Battle
             skillSelect = 0;
             Console.WriteLine("");
             Console.ReadKey();
-            for (int i = 0; i < Monster.monsters.Count; i++)
-            {
-                if (Monster.monsters[i].IsDead == false)
-                {
-                    int mDamage = Monster.MonsterDamage(i, (int)p.totalDef);
-                    Console.Clear();
-                    Program.ShowHighlightedText_Y("Battle!!");
-                    Console.WriteLine();
-                    Console.WriteLine($"{Monster.monsters[i].Name} 의 공격!");
-                    Console.WriteLine($"{p.Name} 을(를) 맞췄습니다. [데미지 : {mDamage}]");
-                    if (p.Hp - mDamage < 0)
-                    {
-                        p.Hp = 0;
-                    }
-                    else p.Hp -= mDamage;
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv. {p.Lv} {p.Name}");
-                    Console.WriteLine($"HP  {p.Hp + mDamage} - > {(p.IsDead ? "Dead" : p.Hp)}");
-                    Console.WriteLine();
-                    Console.WriteLine("0. 다음");
-                    Console.WriteLine("");
-                    if (p.IsDead == true)
-                    {
-                        BattleResult(p.IsDead);
-                        return;
-                    }
-                    Console.ReadKey(); continue;
-                }
-            }
         }
+
+        BattleBlock();
+       
     }
 
     //skill 선택
@@ -1846,7 +1902,7 @@ class Battle
                     Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
                     Console.WriteLine("");
-                    Console.WriteLine($"4. 메테오 스트라이크 - {p.mp/2}");
+                    Console.WriteLine($"4. 메테오 스트라이크 - {p.mp / 2}");
                     Console.WriteLine("  현재 mp의 50%를 소모하여 운석을 소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");
                     break;
                 case Player.JOB.Job.Chef:

@@ -218,7 +218,9 @@ internal class Program
 
             Firstlettercolor("0.", " 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을(를)입력해주세요.\n>>"); string? input = Console.ReadLine();
+            Console.WriteLine("원하시는 행동을(를)입력해주세요.");
+            Console.Write("");
+            string? input = Console.ReadLine();
             bool isnum = int.TryParse(input, out int popo);
 
             switch (input)

@@ -53,6 +53,13 @@ namespace Txt_Game
             Console.WriteLine("\n[아이템 목록]");
             for (int i = 0; i < Items.Count; i++)
             {
+                if (Items[i].type == Item.ItemType.Sell)
+                {
+                    Console.Write(PadRightForMixedText($"{i + 1} {Items[i].Name} ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
+                    continue;
+                }
                 Item item = Items[i];
                 Console.Write(PadRightForMixedText($"{i + 1} {(item.Equipped ? "[E]" : "")}{item.Name} ", 20));
                 Console.Write(PadRightForMixedText($"| 가격: {item.Price} G ", 20));

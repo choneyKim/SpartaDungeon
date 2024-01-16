@@ -4,7 +4,7 @@
     {
         public enum ItemType
         {
-            Weapon,Armor
+            Weapon,Armor,Sell
         }
         public string Name { get; set; }
         public int Price { get; set; }
@@ -16,6 +16,16 @@
         public int Stack { get; set; }
 
         public ItemType type;
+        public Item(string name, string description, ItemType type,int price)
+        {
+            Stack = 1;
+            Name = name;
+            Description = description;
+            this.type = type;
+            Price = price;
+            HaveItem = false;
+            Equipped = false;
+        }
         public Item(string name, int price,string description ,ItemType type,int Atk = 0,int Def = 0)
         {
             Stack = 1;

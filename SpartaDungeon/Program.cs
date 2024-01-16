@@ -1256,7 +1256,7 @@ class Monster
                         }
                     case 5:
                         {
-                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif, 2, new Item("십일조", 311, "나쁘지않게 들어있다.", Item.ItemType.Weapon, Atk: 0)));
+                            monsters.Add(new Monster("광신도", 3 + dif, 19 + dif * 2, 10 + dif * 2, 7 + dif, 8 + dif, 2, new Item("십일조","나쁘지 않게 들어있다 (환급용)",Item.ItemType.Sell,1200)));
                             break;
                         }
 

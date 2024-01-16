@@ -1607,6 +1607,11 @@ class Battle
     public void BattleTurn(int temp)
     {
         int totalGold = 0;
+        float[] monsterHpNow = new float[Monster.monsters.Count];
+        for (int i = 0; i < Monster.monsters.Count; i++)
+        {
+            monsterHpNow[i] = Monster.monsters[i].Hp;
+        }
         if (!p.IsDead && !Monster.monsters[temp].IsDead)
         {
             int random = Program.ran.Next(1, 101);
@@ -1752,7 +1757,7 @@ class Battle
                 for (int i=0; i<Monster.monsters.Count; i++)
                 {
                     Console.WriteLine($"Lv. {Monster.monsters[i].Level} {Monster.monsters[i].Name}");
-                    Console.WriteLine($"HP  {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp + allSkill[i])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
+                    Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[i].IsDead ? "Dead" : Monster.monsters[i].Hp)}");
                     Console.WriteLine();
                 }
                 foreach (var i in Monster.monsters)
@@ -1763,7 +1768,7 @@ class Battle
             else
             {
                 Console.WriteLine($"Lv. {Monster.monsters[temp].Level} {Monster.monsters[temp].Name}");
-                Console.WriteLine($"HP  {Monster.monsters[temp].Hp + pDamage} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
+                Console.WriteLine($"HP  {(monsterHpNow[temp] <= 0f ? "Dead" : monsterHpNow[temp])} - > {(Monster.monsters[temp].IsDead ? "Dead" : Monster.monsters[temp].Hp)}");
                 Console.WriteLine();
             }
             Console.WriteLine("0. 다음");
@@ -1845,7 +1850,7 @@ class Battle
                     Console.WriteLine($"3.마나공격 -Mp {p.M_mp / 2}");
                     Console.WriteLine("  mp최대치의 절반을 소모해 현재 mp의 두배 데미지");
                     Console.WriteLine("");
-                    Console.WriteLine("4. 메테오 스트라이크 - Mp 40");
+                    Console.WriteLine($"4. 메테오 스트라이크 - {p.mp/2}");
                     Console.WriteLine("  현재 mp의 50%를 소모하여 운석을 소환해 광범위한 지역을 불바다로 만들어 버린다. 메테오의 크기는 mp 사용량에 따라 달라진다.");
                     break;
                 case Player.JOB.Job.Chef:

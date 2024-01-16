@@ -1687,7 +1687,7 @@ class Battle
                                 Program.PrintTextWithHighlights("플레이어가", "브류나크", $"를 시전합니다.");
                                 for (int i = 0; i<Monster.monsters.Count; i++)
                                 {
-                                    Console.Write($" 몬스터{i+1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                    Console.Write($" {Monster.monsters[i].Name} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
                                 }
                                 Console.WriteLine();    
                                 break;
@@ -1713,7 +1713,7 @@ class Battle
                                 Program.PrintTextWithHighlights("플레이어가", "메테오 스트라이크", $"를 시전합니다.");
                                 for (int i = 0; i < Monster.monsters.Count; i++)
                                 {
-                                    Console.Write($" 몬스터{i + 1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                    Console.Write($" {Monster.monsters[i].Name} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
                                 }
                                 Console.WriteLine();
                                 break;
@@ -1740,7 +1740,7 @@ class Battle
                                 Program.PrintTextWithHighlights("플레이어가", "강제 취식", $"를 시전합니다.");
                                 for (int i = 0; i < Monster.monsters.Count; i++)
                                 {
-                                    Console.Write($" 몬스터{i + 1} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
+                                    Console.Write($" {Monster.monsters[i].Name} [데미지 : {(damage_sub == 160 ? allSkill[i] + " (치명타)" : (damage_sub == 0 ? allSkill[i] + " (회피)" : allSkill[i]))}]  |");
                                 }
                                 Console.WriteLine($"  [갈취골드 : {totalGold}G]");
                                 break;

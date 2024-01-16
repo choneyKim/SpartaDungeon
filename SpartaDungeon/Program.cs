@@ -1274,10 +1274,12 @@ class Monster
 
     public class BossMonsterSkill
     {
+        static int deathCount = 1;
         public static void UseBossSkill(Player player, Monster boss)
         {
             int Damage = Program.ran.Next(20, 40);
             int MPDamage = Program.ran.Next(5, 10);
+            
             switch (boss.Name)
             {
                 case "김치몬":
@@ -1318,13 +1320,19 @@ class Monster
                     }
                     else
                     {
-                        Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 죽었지만 오히려좋아!!");
-                        Console.WriteLine($"재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20/Player Hp -{Damage}/Player Mp -{MPDamage}]");
-                        boss.Hp += 140;
-                        boss.Atk += 20;
-                        player.Hp -= Damage;
-                        player.mp -= MPDamage;
-                        Console.WriteLine($"HP  {boss.Hp - 40} - > {(boss.IsDead ? "Dead" : boss.Hp)}");
+                        
+                        if (deathCount == 1) 
+                        {
+                            Program.ShowHighlightedText_R("[Boss Skill] 행복한 어X트락! 죽었지만 오히려좋아!!");
+                            Console.WriteLine($"재용몬이 어X트락 강의를 완강하여 변신합니다. [Boss Hp +140 / Atk +20/Player Hp -{Damage}/Player Mp -{MPDamage}]");
+                            boss.Hp += 140;
+                            boss.Atk += 20;
+                            player.Hp -= Damage;
+                            player.mp -= MPDamage;
+                            Console.WriteLine($"HP  {boss.Hp - 40} - > {(boss.IsDead ? "Dead" : boss.Hp)}");
+                            deathCount--;
+                        }
+                        
                     }
                     break;
             }
@@ -1922,6 +1930,10 @@ class Battle
             }
             Console.WriteLine("==========================");
             Console.WriteLine();
+            if (stage % 5 == 0 && stage == 20 && Monster.monsters[0].IsDead)
+            {
+                Monster.BossMonsterSkill.UseBossSkill(p, Monster.monsters[0]);
+            }
             Console.WriteLine("0. 다음");
             useSkill = false;
             skillSelect = 0;

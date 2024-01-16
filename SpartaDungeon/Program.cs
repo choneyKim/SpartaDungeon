@@ -1216,19 +1216,19 @@ class Monster
         int dif = stage.stage;
         if (dif % 5 == 0 && dif / 5 == 1)
         {
-            monsters.Add(new Monster("김치몬", 7 + dif, 450 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
+            monsters.Add(new Monster("김치몬", 7 + dif, 100 + dif * 2, 45 + dif * 2, 30 + dif, 20 + dif, 2, new Item("도비는무료에요", 0, "도비의 슬픈마음이 느껴진다", Item.ItemType.Weapon, Def: 25)));
         }
         else if (dif % 5 == 0 && dif / 5 == 2)
         {
-            monsters.Add(new Monster("고운몬", 13 + dif, 650 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새을(를) 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
+            monsters.Add(new Monster("고운몬", 13 + dif, 300 + dif * 2, 65 + dif * 2, 50 + dif, 30 + dif, 2, new Item("잃어버린기억", 500, "진한 술냄새을(를) 풍기고있다.", Item.ItemType.Weapon, Atk: 10)));
         }
         else if (dif % 5 == 0 && dif / 5 == 3)
         {
-            monsters.Add(new Monster("용욱몬", 19 + dif, 850 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
+            monsters.Add(new Monster("용욱몬", 19 + dif, 550 + dif * 2, 85 + dif * 2, 70 + dif, 40 + dif, 2, new Item("DJ의턴테이블", 500, "어디선가 음악소리가 들려온다", Item.ItemType.Weapon, Atk: 30)));
         }
         else if (dif % 5 == 0 && dif / 5 == 4)
         {
-            monsters.Add(new Monster("재영몬", 25 + dif, 1100 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
+            monsters.Add(new Monster("재영몬", 25 + dif, 1000 + dif * 2, 110 + dif * 2, 80 + dif, 60 + dif, 2, new Item("어X트X 강의", 1000, "이것은 치트키다", Item.ItemType.Weapon, Atk: 70)));
         }
         else
         {

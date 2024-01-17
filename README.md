@@ -50,7 +50,8 @@
   <!-- 내용 -->
   
   #### 마을
-  ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/f5e1bca0-feaa-4aea-970f-cc051fcb337d)
+  ![마을홈](https://github.com/choneyKim/SpartaDungeon/assets/30296431/5e09fc29-30fe-492b-aff6-90f814153199)
+
   #### 캐릭터 상태보기
   ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/a9f5baf5-76ea-46ea-beac-841632b28f19)
   <br>

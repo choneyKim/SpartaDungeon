@@ -25,33 +25,56 @@
 
 ## 필수요구사항
 
-### 1. 게임 시작 화면
 
-##### 게임 메인 화면
-![게임 시작화면](https://github.com/choneyKim/SpartaDungeon/assets/30296431/26cb9193-ce8a-4e2f-bd24-05b26ee233ca)
+<details>
+  <summary> 1. 게임시작 화면 </summary>
+  
+  <!-- 내용 -->
+  #### 게임 메인
+  ![게임 시작화면](https://github.com/choneyKim/SpartaDungeon/assets/30296431/26cb9193-ce8a-4e2f-bd24-05b26ee233ca)
+  <br> 아라비안나이트 풍의 화면이 반겨준다 <br> 
+  ##### 캐릭터 이름 입력
+  ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/1122e660-aafe-4617-b328-37351835165a)
+  <br> 개성있게 이름을 적어주세요 <br>
+  ##### 캐릭터 직업 선택
+  ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/98e34a13-9075-4fc3-90bf-9f67901698f1)
+  <br> 3가지 직업마다의 독특한 스킬을 써보세요 <br>
 
-##### 캐릭터 이름 입력
-![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/1122e660-aafe-4617-b328-37351835165a)
 
-##### 캐릭터 직업 선택
-![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/98e34a13-9075-4fc3-90bf-9f67901698f1)
+</details>
 
 
-### 2. 상태 보기
-
-#### 마을
-![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/f5e1bca0-feaa-4aea-970f-cc051fcb337d)
-
-#### 캐릭터 상태보기
-![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/a9f5baf5-76ea-46ea-beac-841632b28f19)
-돈이 많은 쉐프
+<details>
+  <summary> 2. 상태 보기 </summary>
+  
+  <!-- 내용 -->
+  
+  #### 마을
+  ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/f5e1bca0-feaa-4aea-970f-cc051fcb337d)
+  #### 캐릭터 상태보기
+  ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/a9f5baf5-76ea-46ea-beac-841632b28f19)
+  <br>
+  돈이 많은 쉐프 부럽.. 
+  <br>
   
 
-### 3. 전투 시작
+</details>
 
+
+
+
+<details>
+  <summary> 3. 전투 시작 </summary>
+  
+  <!-- 내용 -->
+  
 #### 보스몹과의 조우
 ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/8fa055a4-afaf-4b12-86ef-86d5e8be3887)
-20탄 끝판왕
+<br> 20탄 끝판왕 이기려면 ***강의를 들어야*** 한다 <br>
+
+</details>
+
+
 
 
 <br>

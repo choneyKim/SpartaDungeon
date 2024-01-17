@@ -25,19 +25,34 @@
 
 ## 필수요구사항
 
-1. 게임 시작 화면
+### 1. 게임 시작 화면
 
+##### 게임 메인 화면
+![게임 시작화면](https://github.com/choneyKim/SpartaDungeon/assets/30296431/26cb9193-ce8a-4e2f-bd24-05b26ee233ca)
 
-캐릭터 이름 입력
+##### 캐릭터 이름 입력
 ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/1122e660-aafe-4617-b328-37351835165a)
 
-캐릭터 직업 선택
+##### 캐릭터 직업 선택
 ![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/98e34a13-9075-4fc3-90bf-9f67901698f1)
 
 
-3. 상태 보기
+### 2. 상태 보기
 
-4. 전투 시작
+#### 마을
+![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/f5e1bca0-feaa-4aea-970f-cc051fcb337d)
+
+#### 캐릭터 상태보기
+![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/a9f5baf5-76ea-46ea-beac-841632b28f19)
+돈이 많은 쉐프
+  
+
+### 3. 전투 시작
+
+#### 보스몹과의 조우
+![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/8fa055a4-afaf-4b12-86ef-86d5e8be3887)
+20탄 끝판왕
+
 
 <br>
 

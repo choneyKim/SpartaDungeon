@@ -27,9 +27,17 @@
 
 1. 게임 시작 화면
 
-2. 상태 보기
 
-3. 전투 시작
+캐릭터 이름 입력
+![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/1122e660-aafe-4617-b328-37351835165a)
+
+캐릭터 직업 선택
+![image](https://github.com/choneyKim/SpartaDungeon/assets/30296431/98e34a13-9075-4fc3-90bf-9f67901698f1)
+
+
+3. 상태 보기
+
+4. 전투 시작
 
 <br>
 

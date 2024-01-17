@@ -19,8 +19,8 @@
 <br>
 
 ## :notebook_with_decorative_cover:개발 언어
-C# 
-
+<img src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white"/>
+</p>
 <br>
 
 ## 필수요구사항

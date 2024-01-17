@@ -76,7 +76,7 @@ internal class Program
             Program.Firstlettercolor("1.", " 상태 보기");
             Program.Firstlettercolor("2.", " 인벤토리");
             Program.Firstlettercolor("3.", " 상점");
-            Program.Firstlettercolor("4.", " 던전 진입" + "  층수 :" + battle.stage);
+            Program.Firstlettercolor("4.", " 던전 진입" + " (" + battle.stage+"층)");
             Program.Firstlettercolor("5.", " 회복아이템");
             Program.Firstlettercolor("6.", " 저장하기");
             Program.Firstlettercolor("7.", " 불러오기");
@@ -534,14 +534,14 @@ class Shop
     private void InitializeItems()
     {
         //무기
-        shopInven.AddItem(new Item("버터 나이프", 100, "빵에 버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
+        shopInven.AddItem(new Item("버터 나이프", 100, "버터를 바르기에 적합한 나이프 입니다", Item.ItemType.Weapon, Atk: 2));
         shopInven.AddItem(new Item("소형 검", 200, "사냥에도 쓸만한 검입니다", Item.ItemType.Weapon, Atk: 5));
         shopInven.AddItem(new Item("청동검", 500, "사용한 흔적이 있는 청동검입니다", Item.ItemType.Weapon, Atk: 7));
         shopInven.AddItem(new Item("철창", 1000, "철로 만들어진 창입니다", Item.ItemType.Weapon, Atk: 10));
         shopInven.AddItem(new Item("철검", 2000, "창보다 빠르게 휘두를 수 있는 검입니다", Item.ItemType.Weapon, Atk: 22));
         shopInven.AddItem(new Item("강철창", 4000, "강철로 만든 강력한 창입니다", Item.ItemType.Weapon, Atk: 50));
-        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을(를)가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
-        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 눈보라가 일어나 약 100의 추가 데미지를 줍니다", Item.ItemType.Weapon, Atk: 200));
+        shopInven.AddItem(new Item("백금검", 17000, "백금으로 홀려서 강력한 공격을 가할 수 있습니다", Item.ItemType.Weapon, Atk: 150));
+        shopInven.AddItem(new Item("얼음의 지팡이", 35000, "휘두를때 강력한 눈보라가 발생합니다", Item.ItemType.Weapon, Atk: 200));
         
         //갑옷
         shopInven.AddItem(new Item("천 옷", 100, "침대에서 잠자기 좋은 옷입니다", Item.ItemType.Armor, Def: 2));
@@ -550,7 +550,7 @@ class Shop
         shopInven.AddItem(new Item("강철 갑옷", 3300, "강철로 만들어져 방어력이 향상된 갑옷 입니다.", Item.ItemType.Armor, Def: 15));
         shopInven.AddItem(new Item("수정 갑옷", 4500, "신비한 수정으로 만들어진 갑옷 입니다.", Item.ItemType.Armor, Def: 20));
         shopInven.AddItem(new Item("성스러운 갑옷", 10000, "성스러운 기운이 깃든 갑옷 입니다.", Item.ItemType.Armor, Def: 55));
-        shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을 자랑하기 위해서 만든 갑옷이지만 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
+        shopInven.AddItem(new Item("백금 갑옷", 20000, "백금을 자랑하기 위한 갑옷, 의외로 딱딱합니다", Item.ItemType.Armor, Def: 130));
 
         //shopInven.AddItem(new Item("회복의 갑옷", 36000, "방어력 +150", " 방어을(를) 누르면 한턴당 HP을(를) 200 회복합니다"));
     }
@@ -813,10 +813,10 @@ class Player
     {
         Name = name;
         this.job = job;
-        Atk = 200 + job.atk;
+        Atk = 10 + job.atk;
         Def = 5 + job.def;
-        Gold = 1500;
-        M_Hp = 1000 + job.hp;
+        Gold = 150000;
+        M_Hp = 100 + job.hp;
         Hp = M_Hp;
         Lv = 1;
         M_Exp = 20;

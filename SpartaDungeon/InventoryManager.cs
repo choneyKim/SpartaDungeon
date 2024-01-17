@@ -56,15 +56,15 @@ namespace Txt_Game
                 if (Items[i].type == Item.ItemType.Sell)
                 {
                     Console.Write(PadRightForMixedText($"{i + 1} {Items[i].Name} ", 20));
-                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 15));
                     Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
                     continue;
                 }
                 Item item = Items[i];
                 Console.Write(PadRightForMixedText($"{i + 1} {(item.Equipped ? "[E]" : "")}{item.Name} ", 20));
-                Console.Write(PadRightForMixedText($"| 가격: {item.Price} G ", 20));
+                Console.Write(PadRightForMixedText($"| 가격: {item.Price} G ", 15));
                 Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
-                Console.Write(PadRightForMixedText($"| {item.Description} ", 45));
+                Console.Write(PadRightForMixedText($"| {item.Description} ", 60));
                 Console.WriteLine(PadRightForMixedText($"| 갯수: {item.Stack} ", 10));
             }
         }
@@ -76,18 +76,18 @@ namespace Txt_Game
                 if (Items[i].HaveItem == false)
                 {
                     Console.Write(PadRightForMixedText($"{i+1} {Items[i].Name} ", 20));
-                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 15));
                     Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
-                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
+                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 60));
 
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(PadRightForMixedText($"{i + 1} {Items[i].Name} ", 20));
-                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 20));
+                    Console.Write(PadRightForMixedText($"| 가격: {Items[i].Price} G ", 15));
                     Console.Write(PadRightForMixedText($"| {(Items[i].type == 0 ? "공격력" : "방어력")} {(Items[i].type == 0 ? $"{Items[i].Atk}" : $"{Items[i].Def}")}", 15));
-                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 45));
+                    Console.WriteLine(PadRightForMixedText($"| {Items[i].Description}", 60));
                     Console.ResetColor();
                 }
 
